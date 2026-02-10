@@ -1,0 +1,4037 @@
+[
+  {
+    "id": 1,
+    "parent_id": 1,
+    "name": "SARMI"
+  },
+  {
+    "id": 2,
+    "parent_id": 1,
+    "name": "SORENDIWERI"
+  },
+  {
+    "id": 3,
+    "parent_id": 1,
+    "name": "SUPIORI"
+  },
+  {
+    "id": 4,
+    "parent_id": 1,
+    "name": "TOLIKARA"
+  },
+  {
+    "id": 5,
+    "parent_id": 2,
+    "name": "PALANGKA RAYA"
+  },
+  {
+    "id": 6,
+    "parent_id": 2,
+    "name": "KASONGAN"
+  },
+  {
+    "id": 7,
+    "parent_id": 2,
+    "name": "KATINGAN"
+  },
+  {
+    "id": 8,
+    "parent_id": 2,
+    "name": "KAPUAS"
+  },
+  {
+    "id": 9,
+    "parent_id": 3,
+    "name": "MOJOKERTO"
+  },
+  {
+    "id": 10,
+    "parent_id": 3,
+    "name": "JOMBANG"
+  },
+  {
+    "id": 11,
+    "parent_id": 3,
+    "name": "SITUBONDO"
+  },
+  {
+    "id": 12,
+    "parent_id": 4,
+    "name": "KOTA PADANG"
+  },
+  {
+    "id": 13,
+    "parent_id": 4,
+    "name": "PADANG"
+  },
+  {
+    "id": 14,
+    "parent_id": 4,
+    "name": "KOTAPADANG"
+  },
+  {
+    "id": 15,
+    "parent_id": 5,
+    "name": "KAMPAR"
+  },
+  {
+    "id": 16,
+    "parent_id": 5,
+    "name": "BENGKALIS"
+  },
+  {
+    "id": 17,
+    "parent_id": 4,
+    "name": "KAB. TANAH DATAR"
+  },
+  {
+    "id": 18,
+    "parent_id": 4,
+    "name": "TANAH DATAR"
+  },
+  {
+    "id": 19,
+    "parent_id": 4,
+    "name": "KAB.TANAH DATAR"
+  },
+  {
+    "id": 20,
+    "parent_id": 3,
+    "name": "LUMAJANG"
+  },
+  {
+    "id": 21,
+    "parent_id": 3,
+    "name": "KAB.SITUBONDO "
+  },
+  {
+    "id": 22,
+    "parent_id": 2,
+    "name": "KUALA KAPUAS"
+  },
+  {
+    "id": 23,
+    "parent_id": 1,
+    "name": "KEPULAUAN YAPEN"
+  },
+  {
+    "id": 24,
+    "parent_id": 1,
+    "name": "JAYAWIJAYA"
+  },
+  {
+    "id": 25,
+    "parent_id": 1,
+    "name": "KELILA"
+  },
+  {
+    "id": 26,
+    "parent_id": 1,
+    "name": "LANNY JAYA"
+  },
+  {
+    "id": 27,
+    "parent_id": 1,
+    "name": "YALIMO"
+  },
+  {
+    "id": 28,
+    "parent_id": 3,
+    "name": "KEDIRI"
+  },
+  {
+    "id": 29,
+    "parent_id": 6,
+    "name": "MANADO"
+  },
+  {
+    "id": 30,
+    "parent_id": 6,
+    "name": "KOTAMOBAGU"
+  },
+  {
+    "id": 31,
+    "parent_id": 6,
+    "name": "BOLAANG MONGONDOW UTARA"
+  },
+  {
+    "id": 32,
+    "parent_id": 6,
+    "name": "BOLAANG MONGONDOW"
+  },
+  {
+    "id": 33,
+    "parent_id": 6,
+    "name": "BOLAANG ITANG"
+  },
+  {
+    "id": 34,
+    "parent_id": 6,
+    "name": "BOLAANG MONGONDOW SELATAN"
+  },
+  {
+    "id": 35,
+    "parent_id": 6,
+    "name": "BOLAANG MONGONDOW TIMUR"
+  },
+  {
+    "id": 36,
+    "parent_id": 7,
+    "name": "MUNA"
+  },
+  {
+    "id": 37,
+    "parent_id": 7,
+    "name": "KONAWE"
+  },
+  {
+    "id": 38,
+    "parent_id": 7,
+    "name": "KONAWE KEPULAUAN"
+  },
+  {
+    "id": 39,
+    "parent_id": 8,
+    "name": "TIMOR TENGAH SELATAN"
+  },
+  {
+    "id": 40,
+    "parent_id": 8,
+    "name": "SABU RAIJUA"
+  },
+  {
+    "id": 41,
+    "parent_id": 9,
+    "name": "KARAWANG"
+  },
+  {
+    "id": 42,
+    "parent_id": 7,
+    "name": "KOLAKA"
+  },
+  {
+    "id": 43,
+    "parent_id": 7,
+    "name": "KOLAKA TIMUR"
+  },
+  {
+    "id": 44,
+    "parent_id": 7,
+    "name": "RAHA"
+  },
+  {
+    "id": 45,
+    "parent_id": 7,
+    "name": "BUTON UTARA"
+  },
+  {
+    "id": 46,
+    "parent_id": 7,
+    "name": "KAB.BUTON UTARA"
+  },
+  {
+    "id": 47,
+    "parent_id": 7,
+    "name": "MUNA BARAT"
+  },
+  {
+    "id": 48,
+    "parent_id": 7,
+    "name": "TIKEP"
+  },
+  {
+    "id": 49,
+    "parent_id": 7,
+    "name": "WAKORUMBA"
+  },
+  {
+    "id": 50,
+    "parent_id": 7,
+    "name": "BOMBANA"
+  },
+  {
+    "id": 51,
+    "parent_id": 7,
+    "name": "BUTON"
+  },
+  {
+    "id": 52,
+    "parent_id": 8,
+    "name": "ALOR"
+  },
+  {
+    "id": 53,
+    "parent_id": 8,
+    "name": "TIMOR TENGAH UTARA"
+  },
+  {
+    "id": 54,
+    "parent_id": 7,
+    "name": "KONAWE UTARA"
+  },
+  {
+    "id": 55,
+    "parent_id": 8,
+    "name": "KUPANG"
+  },
+  {
+    "id": 56,
+    "parent_id": 8,
+    "name": "SUMBA TENGAH "
+  },
+  {
+    "id": 57,
+    "parent_id": 8,
+    "name": "SUMBA TENGAH"
+  },
+  {
+    "id": 58,
+    "parent_id": 8,
+    "name": "SUMBA TIMUR"
+  },
+  {
+    "id": 59,
+    "parent_id": 6,
+    "name": "PASSI"
+  },
+  {
+    "id": 60,
+    "parent_id": 7,
+    "name": "WAWONII"
+  },
+  {
+    "id": 61,
+    "parent_id": 7,
+    "name": "WAWORETE"
+  },
+  {
+    "id": 62,
+    "parent_id": 8,
+    "name": "BELU"
+  },
+  {
+    "id": 63,
+    "parent_id": 8,
+    "name": "MALAKA"
+  },
+  {
+    "id": 64,
+    "parent_id": 10,
+    "name": "KAB.BELU "
+  },
+  {
+    "id": 65,
+    "parent_id": 8,
+    "name": "SUMBA BARAT"
+  },
+  {
+    "id": 66,
+    "parent_id": 8,
+    "name": "ALOR "
+  },
+  {
+    "id": 67,
+    "parent_id": 6,
+    "name": "KAB.BOLAANG MONGONDOW"
+  },
+  {
+    "id": 68,
+    "parent_id": 11,
+    "name": "BENGKULU"
+  },
+  {
+    "id": 69,
+    "parent_id": 11,
+    "name": "BENGKULU UTARA"
+  },
+  {
+    "id": 70,
+    "parent_id": 9,
+    "name": "BOGOR"
+  },
+  {
+    "id": 71,
+    "parent_id": 12,
+    "name": "ACEH BESAR"
+  },
+  {
+    "id": 72,
+    "parent_id": 12,
+    "name": "KAB.ACEH BESAR "
+  },
+  {
+    "id": 73,
+    "parent_id": 12,
+    "name": "BIREUEN"
+  },
+  {
+    "id": 74,
+    "parent_id": 12,
+    "name": "PIDIE"
+  },
+  {
+    "id": 75,
+    "parent_id": 11,
+    "name": "SELUMA"
+  },
+  {
+    "id": 76,
+    "parent_id": 12,
+    "name": "ACEH BARAT"
+  },
+  {
+    "id": 77,
+    "parent_id": 9,
+    "name": "CIANJUR"
+  },
+  {
+    "id": 78,
+    "parent_id": 9,
+    "name": "BEKASI"
+  },
+  {
+    "id": 79,
+    "parent_id": 9,
+    "name": "KAB. BEKASI"
+  },
+  {
+    "id": 80,
+    "parent_id": 13,
+    "name": "KENDAL"
+  },
+  {
+    "id": 81,
+    "parent_id": 14,
+    "name": "KUTAI KARTANEGARA"
+  },
+  {
+    "id": 82,
+    "parent_id": 15,
+    "name": "EMPAT LAWANG"
+  },
+  {
+    "id": 83,
+    "parent_id": 15,
+    "name": "OGAN ILIR"
+  },
+  {
+    "id": 84,
+    "parent_id": 16,
+    "name": "BANGGAI KEPULAUAN"
+  },
+  {
+    "id": 85,
+    "parent_id": 13,
+    "name": "DEMAK"
+  },
+  {
+    "id": 86,
+    "parent_id": 13,
+    "name": "SEMARANG"
+  },
+  {
+    "id": 87,
+    "parent_id": 3,
+    "name": "LAMONGAN"
+  },
+  {
+    "id": 88,
+    "parent_id": 17,
+    "name": "MAYBRAT"
+  },
+  {
+    "id": 89,
+    "parent_id": 17,
+    "name": "SORONG SELATAN"
+  },
+  {
+    "id": 90,
+    "parent_id": 17,
+    "name": "RASEI"
+  },
+  {
+    "id": 91,
+    "parent_id": 17,
+    "name": "TAMBRAUW"
+  },
+  {
+    "id": 92,
+    "parent_id": 13,
+    "name": "PURBALINGGA"
+  },
+  {
+    "id": 93,
+    "parent_id": 3,
+    "name": "BANGKALAN"
+  },
+  {
+    "id": 94,
+    "parent_id": 3,
+    "name": "KAB.BANGKALAN"
+  },
+  {
+    "id": 95,
+    "parent_id": 13,
+    "name": "JEPARA"
+  },
+  {
+    "id": 96,
+    "parent_id": 13,
+    "name": "KUDUS"
+  },
+  {
+    "id": 97,
+    "parent_id": 12,
+    "name": "TAKENGON"
+  },
+  {
+    "id": 98,
+    "parent_id": 12,
+    "name": "ACEH TENGAH"
+  },
+  {
+    "id": 99,
+    "parent_id": 11,
+    "name": "REJANG LEBONG"
+  },
+  {
+    "id": 100,
+    "parent_id": 14,
+    "name": "BERAU"
+  },
+  {
+    "id": 101,
+    "parent_id": 14,
+    "name": "BERAU "
+  },
+  {
+    "id": 102,
+    "parent_id": 14,
+    "name": "PENAJAM PASER UTARA"
+  },
+  {
+    "id": 103,
+    "parent_id": 18,
+    "name": "LABUHANBATU UTARA"
+  },
+  {
+    "id": 104,
+    "parent_id": 18,
+    "name": "KAB.LABUHANBATU UTARA"
+  },
+  {
+    "id": 105,
+    "parent_id": 13,
+    "name": "MAGELANG"
+  },
+  {
+    "id": 106,
+    "parent_id": 11,
+    "name": "BENGKULU TENGAH"
+  },
+  {
+    "id": 107,
+    "parent_id": 14,
+    "name": "BALIKPAPAN"
+  },
+  {
+    "id": 108,
+    "parent_id": 12,
+    "name": "KAB.BIREUEN "
+  },
+  {
+    "id": 109,
+    "parent_id": 14,
+    "name": "PASER"
+  },
+  {
+    "id": 110,
+    "parent_id": 11,
+    "name": "KAB.BENGKULU TENGAH"
+  },
+  {
+    "id": 111,
+    "parent_id": 6,
+    "name": "MINAHASA TENGGARA"
+  },
+  {
+    "id": 112,
+    "parent_id": 6,
+    "name": "TOMOHON"
+  },
+  {
+    "id": 113,
+    "parent_id": 6,
+    "name": "KEPULAUAN SIAU TAGULANDANG BIARO (SITARO)"
+  },
+  {
+    "id": 114,
+    "parent_id": 3,
+    "name": "MADIUN"
+  },
+  {
+    "id": 115,
+    "parent_id": 15,
+    "name": "OGAN KOMERING ILIR"
+  },
+  {
+    "id": 116,
+    "parent_id": 15,
+    "name": "LAHAT"
+  },
+  {
+    "id": 117,
+    "parent_id": 15,
+    "name": "MERAPI"
+  },
+  {
+    "id": 118,
+    "parent_id": 15,
+    "name": "TANJUNG SAKTI"
+  },
+  {
+    "id": 119,
+    "parent_id": 3,
+    "name": "CARUBAN"
+  },
+  {
+    "id": 120,
+    "parent_id": 3,
+    "name": "MAGETAN"
+  },
+  {
+    "id": 121,
+    "parent_id": 3,
+    "name": "PONOROGO"
+  },
+  {
+    "id": 122,
+    "parent_id": 18,
+    "name": "MEDAN"
+  },
+  {
+    "id": 123,
+    "parent_id": 18,
+    "name": "KOTA MEDAN"
+  },
+  {
+    "id": 124,
+    "parent_id": 3,
+    "name": "KARTOHARJO "
+  },
+  {
+    "id": 125,
+    "parent_id": 3,
+    "name": "NGAWI"
+  },
+  {
+    "id": 126,
+    "parent_id": 3,
+    "name": "KENDUNGAN"
+  },
+  {
+    "id": 127,
+    "parent_id": 3,
+    "name": "PACITAN"
+  },
+  {
+    "id": 128,
+    "parent_id": 6,
+    "name": "MINAHASA SELATAN"
+  },
+  {
+    "id": 129,
+    "parent_id": 15,
+    "name": "PEMATANG PANGGANG"
+  },
+  {
+    "id": 130,
+    "parent_id": 15,
+    "name": "MUARA ENIM"
+  },
+  {
+    "id": 131,
+    "parent_id": 15,
+    "name": "PENUKAL ABAB LEMATANG ILIR"
+  },
+  {
+    "id": 132,
+    "parent_id": 2,
+    "name": "LAMANDAU"
+  },
+  {
+    "id": 133,
+    "parent_id": 2,
+    "name": "PULANG PISAU"
+  },
+  {
+    "id": 134,
+    "parent_id": 2,
+    "name": "SUKAMARA"
+  },
+  {
+    "id": 135,
+    "parent_id": 15,
+    "name": "PALEMBANG"
+  },
+  {
+    "id": 136,
+    "parent_id": 15,
+    "name": "MUARA BELITI BARU"
+  },
+  {
+    "id": 137,
+    "parent_id": 15,
+    "name": "MUSI RAWAS"
+  },
+  {
+    "id": 138,
+    "parent_id": 15,
+    "name": "MUSI RAWAS UTARA"
+  },
+  {
+    "id": 139,
+    "parent_id": 15,
+    "name": "MUARA RUPIT"
+  },
+  {
+    "id": 140,
+    "parent_id": 15,
+    "name": "BATURAJA"
+  },
+  {
+    "id": 141,
+    "parent_id": 15,
+    "name": "OGAN KOMERING ULU"
+  },
+  {
+    "id": 142,
+    "parent_id": 13,
+    "name": "SUKOHARJO"
+  },
+  {
+    "id": 143,
+    "parent_id": 13,
+    "name": "WONOGIRI"
+  },
+  {
+    "id": 144,
+    "parent_id": 19,
+    "name": "HULU SUNGAI UTARA"
+  },
+  {
+    "id": 145,
+    "parent_id": 19,
+    "name": "BARITO KUALA"
+  },
+  {
+    "id": 146,
+    "parent_id": 20,
+    "name": "KEPULAUAN ARU"
+  },
+  {
+    "id": 147,
+    "parent_id": 20,
+    "name": "MALUKU TENGGARA"
+  },
+  {
+    "id": 148,
+    "parent_id": 20,
+    "name": "TUAL"
+  },
+  {
+    "id": 149,
+    "parent_id": 20,
+    "name": "BURU"
+  },
+  {
+    "id": 150,
+    "parent_id": 20,
+    "name": "BURU SELATAN"
+  },
+  {
+    "id": 151,
+    "parent_id": 21,
+    "name": "MATARAM"
+  },
+  {
+    "id": 152,
+    "parent_id": 21,
+    "name": "BIMA"
+  },
+  {
+    "id": 153,
+    "parent_id": 21,
+    "name": "KOTABIMA "
+  },
+  {
+    "id": 154,
+    "parent_id": 21,
+    "name": "DOMPU"
+  },
+  {
+    "id": 155,
+    "parent_id": 21,
+    "name": "KAB.DOMPU "
+  },
+  {
+    "id": 156,
+    "parent_id": 22,
+    "name": "KAB.DOMPU "
+  },
+  {
+    "id": 157,
+    "parent_id": 20,
+    "name": "SERAM BAGIAN BARAT "
+  },
+  {
+    "id": 158,
+    "parent_id": 20,
+    "name": "SERAM BAGIAN BARAT"
+  },
+  {
+    "id": 159,
+    "parent_id": 20,
+    "name": "BURU "
+  },
+  {
+    "id": 160,
+    "parent_id": 21,
+    "name": "LOMBOK TENGAH"
+  },
+  {
+    "id": 161,
+    "parent_id": 20,
+    "name": "KAB.SERAM BAGIAN BARAT "
+  },
+  {
+    "id": 162,
+    "parent_id": 20,
+    "name": "SERAM BAGIAN TIMUR "
+  },
+  {
+    "id": 163,
+    "parent_id": 20,
+    "name": "SERAM BAGIAN TIMUR"
+  },
+  {
+    "id": 164,
+    "parent_id": 17,
+    "name": "SORONG"
+  },
+  {
+    "id": 165,
+    "parent_id": 21,
+    "name": "LOMBOK TIMUR"
+  },
+  {
+    "id": 166,
+    "parent_id": 2,
+    "name": "MURUNG RAYA"
+  },
+  {
+    "id": 167,
+    "parent_id": 19,
+    "name": "BUNTOK"
+  },
+  {
+    "id": 168,
+    "parent_id": 2,
+    "name": "BARITO SELATAN"
+  },
+  {
+    "id": 169,
+    "parent_id": 17,
+    "name": "FAKFAK"
+  },
+  {
+    "id": 170,
+    "parent_id": 20,
+    "name": "MALUKU BARAT DAYA"
+  },
+  {
+    "id": 171,
+    "parent_id": 20,
+    "name": "KAB.MALUKU BARAT DAYA "
+  },
+  {
+    "id": 172,
+    "parent_id": 19,
+    "name": "BANJARMASIN"
+  },
+  {
+    "id": 173,
+    "parent_id": 19,
+    "name": "HULU SUNGAI TENGAH"
+  },
+  {
+    "id": 174,
+    "parent_id": 13,
+    "name": "PEKALONGAN "
+  },
+  {
+    "id": 175,
+    "parent_id": 13,
+    "name": "PEKALONGAN"
+  },
+  {
+    "id": 176,
+    "parent_id": 17,
+    "name": "KAIMANA"
+  },
+  {
+    "id": 177,
+    "parent_id": 21,
+    "name": "SUMBAWA BESAR"
+  },
+  {
+    "id": 178,
+    "parent_id": 21,
+    "name": "SUMBAWA"
+  },
+  {
+    "id": 179,
+    "parent_id": 19,
+    "name": "KAB.HULU SUNGAI TENGAH "
+  },
+  {
+    "id": 180,
+    "parent_id": 19,
+    "name": "HULU SUNGAI SELATAN"
+  },
+  {
+    "id": 181,
+    "parent_id": 23,
+    "name": "POSTAL_CITY"
+  },
+  {
+    "id": 182,
+    "parent_id": 3,
+    "name": "PASURUAN"
+  },
+  {
+    "id": 183,
+    "parent_id": 14,
+    "name": "SAMARINDA"
+  },
+  {
+    "id": 184,
+    "parent_id": 14,
+    "name": "KOTASAMARINDA "
+  },
+  {
+    "id": 185,
+    "parent_id": 17,
+    "name": "WAISAI"
+  },
+  {
+    "id": 186,
+    "parent_id": 17,
+    "name": "RAJA AMPAT"
+  },
+  {
+    "id": 187,
+    "parent_id": 21,
+    "name": "LOMBOK BARAT"
+  },
+  {
+    "id": 188,
+    "parent_id": 21,
+    "name": "LOMBOK UTARA"
+  },
+  {
+    "id": 189,
+    "parent_id": 20,
+    "name": "MALUKU TENGGARA BARAT "
+  },
+  {
+    "id": 190,
+    "parent_id": 20,
+    "name": "MALUKU TENGGARA BARAT"
+  },
+  {
+    "id": 191,
+    "parent_id": 13,
+    "name": "BOYOLALI"
+  },
+  {
+    "id": 192,
+    "parent_id": 21,
+    "name": "SUMBAWA BARAT"
+  },
+  {
+    "id": 193,
+    "parent_id": 13,
+    "name": "KARANGANYAR"
+  },
+  {
+    "id": 194,
+    "parent_id": 21,
+    "name": "KAB.BIMA "
+  },
+  {
+    "id": 195,
+    "parent_id": 13,
+    "name": "KLATEN"
+  },
+  {
+    "id": 196,
+    "parent_id": 19,
+    "name": "KAB.KOTA BARU"
+  },
+  {
+    "id": 197,
+    "parent_id": 19,
+    "name": "KOTABARU"
+  },
+  {
+    "id": 198,
+    "parent_id": 20,
+    "name": "MALUKU BARAT DAYA "
+  },
+  {
+    "id": 199,
+    "parent_id": 19,
+    "name": "KAB.KOTABARU "
+  },
+  {
+    "id": 200,
+    "parent_id": 19,
+    "name": "TABALONG"
+  },
+  {
+    "id": 201,
+    "parent_id": 20,
+    "name": "AMBON"
+  },
+  {
+    "id": 202,
+    "parent_id": 20,
+    "name": "KOTAAMBON "
+  },
+  {
+    "id": 203,
+    "parent_id": 20,
+    "name": "MALUKU TENGAH"
+  },
+  {
+    "id": 204,
+    "parent_id": 13,
+    "name": "SRAGEN"
+  },
+  {
+    "id": 205,
+    "parent_id": 19,
+    "name": "BANJAR BARU"
+  },
+  {
+    "id": 206,
+    "parent_id": 19,
+    "name": "BANJARBARU"
+  },
+  {
+    "id": 207,
+    "parent_id": 19,
+    "name": "AMUNTAI"
+  },
+  {
+    "id": 208,
+    "parent_id": 20,
+    "name": "MALUKU TENGGARA "
+  },
+  {
+    "id": 209,
+    "parent_id": 11,
+    "name": "BENGKULU SELATAN"
+  },
+  {
+    "id": 210,
+    "parent_id": 14,
+    "name": "BONTANG"
+  },
+  {
+    "id": 211,
+    "parent_id": 12,
+    "name": "ACEH SELATAN"
+  },
+  {
+    "id": 212,
+    "parent_id": 9,
+    "name": "BANDUNG BARAT"
+  },
+  {
+    "id": 213,
+    "parent_id": 9,
+    "name": "SUBANG"
+  },
+  {
+    "id": 214,
+    "parent_id": 12,
+    "name": "ACEH BARAT DAYA"
+  },
+  {
+    "id": 215,
+    "parent_id": 12,
+    "name": "ACEH TENGGARA"
+  },
+  {
+    "id": 216,
+    "parent_id": 12,
+    "name": "ACEH JAYA"
+  },
+  {
+    "id": 217,
+    "parent_id": 12,
+    "name": "ACEH SINGKIL"
+  },
+  {
+    "id": 218,
+    "parent_id": 19,
+    "name": "BALANGAN"
+  },
+  {
+    "id": 219,
+    "parent_id": 11,
+    "name": "KEPAHIANG"
+  },
+  {
+    "id": 220,
+    "parent_id": 19,
+    "name": "TANAH BUMBU"
+  },
+  {
+    "id": 221,
+    "parent_id": 11,
+    "name": "KAUR"
+  },
+  {
+    "id": 222,
+    "parent_id": 11,
+    "name": "LEBONG"
+  },
+  {
+    "id": 223,
+    "parent_id": 24,
+    "name": "KARIMUN"
+  },
+  {
+    "id": 224,
+    "parent_id": 24,
+    "name": "KEPULAUAN RIAU"
+  },
+  {
+    "id": 225,
+    "parent_id": 24,
+    "name": "KEPULAUAN ANAMBAS"
+  },
+  {
+    "id": 226,
+    "parent_id": 12,
+    "name": "BANDA ACEH"
+  },
+  {
+    "id": 227,
+    "parent_id": 12,
+    "name": "KOTABANDA ACEH "
+  },
+  {
+    "id": 228,
+    "parent_id": 19,
+    "name": "KAB.TANAH BUMBU "
+  },
+  {
+    "id": 229,
+    "parent_id": 24,
+    "name": "LINGGA"
+  },
+  {
+    "id": 230,
+    "parent_id": 24,
+    "name": "NATUNA"
+  },
+  {
+    "id": 231,
+    "parent_id": 9,
+    "name": "BANDUNG"
+  },
+  {
+    "id": 232,
+    "parent_id": 12,
+    "name": "KUTACANE"
+  },
+  {
+    "id": 233,
+    "parent_id": 12,
+    "name": "KAB.ACEH SELATAN "
+  },
+  {
+    "id": 234,
+    "parent_id": 12,
+    "name": "SABANG"
+  },
+  {
+    "id": 235,
+    "parent_id": 12,
+    "name": "KOTASABANG "
+  },
+  {
+    "id": 236,
+    "parent_id": 11,
+    "name": "MUKO-MUKO"
+  },
+  {
+    "id": 237,
+    "parent_id": 11,
+    "name": "MUKO MUKO"
+  },
+  {
+    "id": 238,
+    "parent_id": 11,
+    "name": "MUKO-MUKO SELATAN"
+  },
+  {
+    "id": 239,
+    "parent_id": 12,
+    "name": "LANGSA"
+  },
+  {
+    "id": 240,
+    "parent_id": 19,
+    "name": "BANJAR"
+  },
+  {
+    "id": 241,
+    "parent_id": 9,
+    "name": "CIMAHI "
+  },
+  {
+    "id": 242,
+    "parent_id": 9,
+    "name": "CIMAHI"
+  },
+  {
+    "id": 243,
+    "parent_id": 9,
+    "name": "SUMEDANG"
+  },
+  {
+    "id": 244,
+    "parent_id": 12,
+    "name": "LANGSA TEUNGOH"
+  },
+  {
+    "id": 245,
+    "parent_id": 12,
+    "name": "LHOKSEUMAWE"
+  },
+  {
+    "id": 246,
+    "parent_id": 19,
+    "name": "KAB.BANJAR "
+  },
+  {
+    "id": 247,
+    "parent_id": 19,
+    "name": "SIMPANG EMPAT"
+  },
+  {
+    "id": 248,
+    "parent_id": 24,
+    "name": "KAB.KARIMUN "
+  },
+  {
+    "id": 249,
+    "parent_id": 12,
+    "name": "MEULABOH"
+  },
+  {
+    "id": 250,
+    "parent_id": 9,
+    "name": "GARUT, KAB. GARUT"
+  },
+  {
+    "id": 251,
+    "parent_id": 9,
+    "name": "GARUT"
+  },
+  {
+    "id": 252,
+    "parent_id": 14,
+    "name": "SANGATTA"
+  },
+  {
+    "id": 253,
+    "parent_id": 14,
+    "name": "KUTAI TIMUR"
+  },
+  {
+    "id": 254,
+    "parent_id": 19,
+    "name": "TANAH LAUT"
+  },
+  {
+    "id": 255,
+    "parent_id": 19,
+    "name": "RANTAU"
+  },
+  {
+    "id": 256,
+    "parent_id": 19,
+    "name": "TAPIN"
+  },
+  {
+    "id": 257,
+    "parent_id": 19,
+    "name": "MUARA TEWEH"
+  },
+  {
+    "id": 258,
+    "parent_id": 2,
+    "name": "BARITO UTARA"
+  },
+  {
+    "id": 259,
+    "parent_id": 19,
+    "name": "BARITO TIMUR"
+  },
+  {
+    "id": 260,
+    "parent_id": 2,
+    "name": "BARITO TIMUR"
+  },
+  {
+    "id": 261,
+    "parent_id": 9,
+    "name": "PURWAKARTA"
+  },
+  {
+    "id": 262,
+    "parent_id": 14,
+    "name": "SANGKIMA"
+  },
+  {
+    "id": 263,
+    "parent_id": 14,
+    "name": "SWARGA BARA"
+  },
+  {
+    "id": 264,
+    "parent_id": 14,
+    "name": "SINGA GEMBARA"
+  },
+  {
+    "id": 265,
+    "parent_id": 24,
+    "name": "BATAM"
+  },
+  {
+    "id": 266,
+    "parent_id": 12,
+    "name": "SURO BARU"
+  },
+  {
+    "id": 267,
+    "parent_id": 12,
+    "name": "ACEH TAMIANG"
+  },
+  {
+    "id": 268,
+    "parent_id": 11,
+    "name": "TAIS"
+  },
+  {
+    "id": 269,
+    "parent_id": 19,
+    "name": "PURUK CAHU"
+  },
+  {
+    "id": 270,
+    "parent_id": 24,
+    "name": "DAIK"
+  },
+  {
+    "id": 271,
+    "parent_id": 6,
+    "name": "KEPULAUAN SANGIHE"
+  },
+  {
+    "id": 272,
+    "parent_id": 7,
+    "name": "BUTON SELATAN"
+  },
+  {
+    "id": 273,
+    "parent_id": 7,
+    "name": "BUTON TENGAH"
+  },
+  {
+    "id": 274,
+    "parent_id": 8,
+    "name": "KUPANG "
+  },
+  {
+    "id": 275,
+    "parent_id": 6,
+    "name": "KEPULAUAN TALAUD"
+  },
+  {
+    "id": 276,
+    "parent_id": 25,
+    "name": "ENREKANG"
+  },
+  {
+    "id": 277,
+    "parent_id": 25,
+    "name": "JENEPONTO"
+  },
+  {
+    "id": 278,
+    "parent_id": 25,
+    "name": "BONE"
+  },
+  {
+    "id": 279,
+    "parent_id": 6,
+    "name": "MINAHASA"
+  },
+  {
+    "id": 280,
+    "parent_id": 7,
+    "name": "KOLAKA UTARA"
+  },
+  {
+    "id": 281,
+    "parent_id": 6,
+    "name": "MINAHASA UTARA"
+  },
+  {
+    "id": 282,
+    "parent_id": 7,
+    "name": "KONAWE SELATAN"
+  },
+  {
+    "id": 283,
+    "parent_id": 7,
+    "name": "KAB.KOLAKA UTARA"
+  },
+  {
+    "id": 284,
+    "parent_id": 7,
+    "name": "WAKATOBI"
+  },
+  {
+    "id": 285,
+    "parent_id": 7,
+    "name": "KAB.WAKATOBI"
+  },
+  {
+    "id": 286,
+    "parent_id": 25,
+    "name": "PINRANG"
+  },
+  {
+    "id": 287,
+    "parent_id": 25,
+    "name": "LUWU TIMUR"
+  },
+  {
+    "id": 288,
+    "parent_id": 25,
+    "name": "LUWU UTARA"
+  },
+  {
+    "id": 289,
+    "parent_id": 25,
+    "name": "TANA TORAJA"
+  },
+  {
+    "id": 290,
+    "parent_id": 25,
+    "name": "KAB.TANA TORAJA"
+  },
+  {
+    "id": 291,
+    "parent_id": 8,
+    "name": "BAA"
+  },
+  {
+    "id": 292,
+    "parent_id": 8,
+    "name": "ROTE NDAO"
+  },
+  {
+    "id": 293,
+    "parent_id": 8,
+    "name": "TIMOR TENGAH SELATAN "
+  },
+  {
+    "id": 294,
+    "parent_id": 26,
+    "name": "POLEWALI MANDAR"
+  },
+  {
+    "id": 295,
+    "parent_id": 25,
+    "name": "WATANSOPPENG"
+  },
+  {
+    "id": 296,
+    "parent_id": 25,
+    "name": "SOPPENG"
+  },
+  {
+    "id": 297,
+    "parent_id": 25,
+    "name": "TORAJA UTARA"
+  },
+  {
+    "id": 298,
+    "parent_id": 25,
+    "name": "KAB.TORAJA UTARA"
+  },
+  {
+    "id": 299,
+    "parent_id": 6,
+    "name": "BITUNG"
+  },
+  {
+    "id": 300,
+    "parent_id": 26,
+    "name": "MAMASA"
+  },
+  {
+    "id": 301,
+    "parent_id": 25,
+    "name": "KEPULAUAN SELAYAR"
+  },
+  {
+    "id": 302,
+    "parent_id": 25,
+    "name": "KAB.POLEWALI MANDAR"
+  },
+  {
+    "id": 303,
+    "parent_id": 25,
+    "name": "SIDENRENG"
+  },
+  {
+    "id": 304,
+    "parent_id": 25,
+    "name": "SIDENRENG RAPPANG"
+  },
+  {
+    "id": 305,
+    "parent_id": 25,
+    "name": "BALUSU"
+  },
+  {
+    "id": 306,
+    "parent_id": 8,
+    "name": "SUMBA BARAT DAYA "
+  },
+  {
+    "id": 307,
+    "parent_id": 8,
+    "name": "SUMBA BARAT DAYA"
+  },
+  {
+    "id": 308,
+    "parent_id": 25,
+    "name": "PANGKAJENE KEPULAUAN"
+  },
+  {
+    "id": 309,
+    "parent_id": 25,
+    "name": "SENGKANG"
+  },
+  {
+    "id": 310,
+    "parent_id": 25,
+    "name": "WAJO"
+  },
+  {
+    "id": 311,
+    "parent_id": 26,
+    "name": "MAMUJU UTARA"
+  },
+  {
+    "id": 312,
+    "parent_id": 26,
+    "name": "MAMUJU"
+  },
+  {
+    "id": 313,
+    "parent_id": 26,
+    "name": "MAMUJU TENGAH"
+  },
+  {
+    "id": 314,
+    "parent_id": 25,
+    "name": "KAB.MAMUJU"
+  },
+  {
+    "id": 315,
+    "parent_id": 25,
+    "name": "PANGKAJENE"
+  },
+  {
+    "id": 316,
+    "parent_id": 25,
+    "name": "PARE-PARE"
+  },
+  {
+    "id": 317,
+    "parent_id": 25,
+    "name": "PAREPARE"
+  },
+  {
+    "id": 318,
+    "parent_id": 25,
+    "name": "LUWU"
+  },
+  {
+    "id": 319,
+    "parent_id": 6,
+    "name": "TOMBASIAN"
+  },
+  {
+    "id": 320,
+    "parent_id": 25,
+    "name": "SINJAI"
+  },
+  {
+    "id": 321,
+    "parent_id": 25,
+    "name": "MAROS"
+  },
+  {
+    "id": 322,
+    "parent_id": 25,
+    "name": "GOWA"
+  },
+  {
+    "id": 323,
+    "parent_id": 25,
+    "name": "KAB.LUWU"
+  },
+  {
+    "id": 324,
+    "parent_id": 25,
+    "name": "TAKALAR"
+  },
+  {
+    "id": 325,
+    "parent_id": 25,
+    "name": "MAJENE"
+  },
+  {
+    "id": 326,
+    "parent_id": 26,
+    "name": "MAJENE"
+  },
+  {
+    "id": 327,
+    "parent_id": 6,
+    "name": "BOROKO"
+  },
+  {
+    "id": 328,
+    "parent_id": 6,
+    "name": "BINTAUNA"
+  },
+  {
+    "id": 329,
+    "parent_id": 6,
+    "name": "KAIDIPANG"
+  },
+  {
+    "id": 330,
+    "parent_id": 6,
+    "name": "PINOGALUMAN"
+  },
+  {
+    "id": 331,
+    "parent_id": 6,
+    "name": "TONDANO"
+  },
+  {
+    "id": 332,
+    "parent_id": 25,
+    "name": "KAB.TAKALAR"
+  },
+  {
+    "id": 333,
+    "parent_id": 25,
+    "name": "WATAMPONE"
+  },
+  {
+    "id": 334,
+    "parent_id": 25,
+    "name": "KAB.BONE"
+  },
+  {
+    "id": 335,
+    "parent_id": 7,
+    "name": "BURANGA"
+  },
+  {
+    "id": 336,
+    "parent_id": 25,
+    "name": "CENRANA "
+  },
+  {
+    "id": 337,
+    "parent_id": 3,
+    "name": "TUBAN"
+  },
+  {
+    "id": 338,
+    "parent_id": 27,
+    "name": "GORONTALO"
+  },
+  {
+    "id": 339,
+    "parent_id": 27,
+    "name": "GORONTALO UTARA"
+  },
+  {
+    "id": 340,
+    "parent_id": 1,
+    "name": "PUNCAK JAYA"
+  },
+  {
+    "id": 341,
+    "parent_id": 28,
+    "name": "YOGYAKARTA"
+  },
+  {
+    "id": 342,
+    "parent_id": 1,
+    "name": "NABIRE"
+  },
+  {
+    "id": 343,
+    "parent_id": 3,
+    "name": "JEMBER"
+  },
+  {
+    "id": 344,
+    "parent_id": 1,
+    "name": "MAMBERAMO TENGAH"
+  },
+  {
+    "id": 345,
+    "parent_id": 1,
+    "name": "KAB.MAMBERAMO TENGAH"
+  },
+  {
+    "id": 346,
+    "parent_id": 1,
+    "name": "NDUGA"
+  },
+  {
+    "id": 347,
+    "parent_id": 27,
+    "name": "BOALEMO"
+  },
+  {
+    "id": 348,
+    "parent_id": 27,
+    "name": "BONE BOLANGO"
+  },
+  {
+    "id": 349,
+    "parent_id": 29,
+    "name": "SINTANG"
+  },
+  {
+    "id": 350,
+    "parent_id": 1,
+    "name": "BIAK NUMFOR"
+  },
+  {
+    "id": 351,
+    "parent_id": 3,
+    "name": "BANYUWANGI"
+  },
+  {
+    "id": 352,
+    "parent_id": 1,
+    "name": "BOTAWA"
+  },
+  {
+    "id": 353,
+    "parent_id": 1,
+    "name": "WAROPEN"
+  },
+  {
+    "id": 354,
+    "parent_id": 30,
+    "name": "GIANYAR"
+  },
+  {
+    "id": 355,
+    "parent_id": 30,
+    "name": "JEMBRANA"
+  },
+  {
+    "id": 356,
+    "parent_id": 1,
+    "name": "JAYAPURA"
+  },
+  {
+    "id": 357,
+    "parent_id": 1,
+    "name": "PEGUNUNGAN BINTANG"
+  },
+  {
+    "id": 358,
+    "parent_id": 30,
+    "name": "KLUNGKUNG"
+  },
+  {
+    "id": 359,
+    "parent_id": 28,
+    "name": "GUNUNGKIDUL"
+  },
+  {
+    "id": 360,
+    "parent_id": 28,
+    "name": "GUNUNG KIDUL"
+  },
+  {
+    "id": 361,
+    "parent_id": 7,
+    "name": "KENDARI"
+  },
+  {
+    "id": 362,
+    "parent_id": 7,
+    "name": "KENDAR"
+  },
+  {
+    "id": 363,
+    "parent_id": 7,
+    "name": "BAU - BAU"
+  },
+  {
+    "id": 364,
+    "parent_id": 7,
+    "name": "BAU-BAU"
+  },
+  {
+    "id": 365,
+    "parent_id": 7,
+    "name": "KOTABAU-BAU"
+  },
+  {
+    "id": 366,
+    "parent_id": 1,
+    "name": "DEIYAI"
+  },
+  {
+    "id": 367,
+    "parent_id": 1,
+    "name": "PANIAI"
+  },
+  {
+    "id": 368,
+    "parent_id": 1,
+    "name": "KAB.PANIAI"
+  },
+  {
+    "id": 369,
+    "parent_id": 1,
+    "name": "PUNCAK"
+  },
+  {
+    "id": 370,
+    "parent_id": 1,
+    "name": "KAB.PUNCAK"
+  },
+  {
+    "id": 371,
+    "parent_id": 1,
+    "name": "MAMBERAMO RAYA"
+  },
+  {
+    "id": 372,
+    "parent_id": 27,
+    "name": "KAB.GORONTALO"
+  },
+  {
+    "id": 373,
+    "parent_id": 1,
+    "name": "INTAN JAYA"
+  },
+  {
+    "id": 374,
+    "parent_id": 9,
+    "name": "DEPOK"
+  },
+  {
+    "id": 375,
+    "parent_id": 1,
+    "name": "YAHUKIMO"
+  },
+  {
+    "id": 376,
+    "parent_id": 30,
+    "name": "BULELENG"
+  },
+  {
+    "id": 377,
+    "parent_id": 3,
+    "name": "BONDOWOSO"
+  },
+  {
+    "id": 378,
+    "parent_id": 28,
+    "name": "BANTUL"
+  },
+  {
+    "id": 379,
+    "parent_id": 28,
+    "name": "SLEMAN"
+  },
+  {
+    "id": 380,
+    "parent_id": 27,
+    "name": "POHUWATO"
+  },
+  {
+    "id": 381,
+    "parent_id": 30,
+    "name": "DENPASAR"
+  },
+  {
+    "id": 382,
+    "parent_id": 30,
+    "name": "KARANGASEM"
+  },
+  {
+    "id": 383,
+    "parent_id": 30,
+    "name": "BADUNG"
+  },
+  {
+    "id": 384,
+    "parent_id": 30,
+    "name": "KAB.BADUNG"
+  },
+  {
+    "id": 385,
+    "parent_id": 1,
+    "name": "SERUI"
+  },
+  {
+    "id": 386,
+    "parent_id": 30,
+    "name": "TABANAN"
+  },
+  {
+    "id": 387,
+    "parent_id": 1,
+    "name": "KAB.JAYAWIJAYA "
+  },
+  {
+    "id": 388,
+    "parent_id": 1,
+    "name": "KEEROM"
+  },
+  {
+    "id": 389,
+    "parent_id": 28,
+    "name": "KULON PROGO"
+  },
+  {
+    "id": 390,
+    "parent_id": 30,
+    "name": "BANGLI"
+  },
+  {
+    "id": 391,
+    "parent_id": 1,
+    "name": "BURMESO"
+  },
+  {
+    "id": 392,
+    "parent_id": 1,
+    "name": "KAB.MAMBERAMO RAYA"
+  },
+  {
+    "id": 393,
+    "parent_id": 31,
+    "name": "LAMPUNG SELATAN"
+  },
+  {
+    "id": 394,
+    "parent_id": 31,
+    "name": "MESUJI"
+  },
+  {
+    "id": 395,
+    "parent_id": 31,
+    "name": "TULANG BAWANG"
+  },
+  {
+    "id": 396,
+    "parent_id": 31,
+    "name": "KAB.TULANG BAWANG "
+  },
+  {
+    "id": 397,
+    "parent_id": 32,
+    "name": "HALMAHERA SELATAN"
+  },
+  {
+    "id": 398,
+    "parent_id": 9,
+    "name": "CIAMIS"
+  },
+  {
+    "id": 399,
+    "parent_id": 32,
+    "name": "TIDORE KEPULAUAN"
+  },
+  {
+    "id": 400,
+    "parent_id": 32,
+    "name": "PULAU MOROTAI"
+  },
+  {
+    "id": 401,
+    "parent_id": 31,
+    "name": "WAY KANAN"
+  },
+  {
+    "id": 402,
+    "parent_id": 33,
+    "name": "NUNUKAN"
+  },
+  {
+    "id": 403,
+    "parent_id": 33,
+    "name": "TANAH TIDUNG"
+  },
+  {
+    "id": 404,
+    "parent_id": 33,
+    "name": "TANA TIDUNG"
+  },
+  {
+    "id": 405,
+    "parent_id": 9,
+    "name": "TASIKMALAYA"
+  },
+  {
+    "id": 406,
+    "parent_id": 31,
+    "name": "LAMPUNG UTARA"
+  },
+  {
+    "id": 407,
+    "parent_id": 31,
+    "name": "TANGGAMUS"
+  },
+  {
+    "id": 408,
+    "parent_id": 31,
+    "name": "PRINGSEWU"
+  },
+  {
+    "id": 409,
+    "parent_id": 31,
+    "name": "PESISIR BARAT"
+  },
+  {
+    "id": 410,
+    "parent_id": 31,
+    "name": "LAMPUNG BARAT"
+  },
+  {
+    "id": 411,
+    "parent_id": 25,
+    "name": "MAKASSAR"
+  },
+  {
+    "id": 412,
+    "parent_id": 32,
+    "name": "KEPULAUAN SULA"
+  },
+  {
+    "id": 413,
+    "parent_id": 32,
+    "name": "PULAU TALIABU "
+  },
+  {
+    "id": 414,
+    "parent_id": 32,
+    "name": "PULAU TALIABU"
+  },
+  {
+    "id": 415,
+    "parent_id": 31,
+    "name": "LAMPUNG TENGAH"
+  },
+  {
+    "id": 416,
+    "parent_id": 31,
+    "name": "TULANG BAWANG BARAT"
+  },
+  {
+    "id": 417,
+    "parent_id": 1,
+    "name": "MIMIKA"
+  },
+  {
+    "id": 418,
+    "parent_id": 34,
+    "name": "BELITUNG"
+  },
+  {
+    "id": 419,
+    "parent_id": 9,
+    "name": "PANGANDARAN"
+  },
+  {
+    "id": 420,
+    "parent_id": 13,
+    "name": "PURWOREJO"
+  },
+  {
+    "id": 421,
+    "parent_id": 24,
+    "name": "TANJUNG PINANG "
+  },
+  {
+    "id": 422,
+    "parent_id": 24,
+    "name": "TANJUNG PINANG"
+  },
+  {
+    "id": 423,
+    "parent_id": 32,
+    "name": "HALMAHERA TIMUR"
+  },
+  {
+    "id": 424,
+    "parent_id": 34,
+    "name": "BELITUNG TIMUR"
+  },
+  {
+    "id": 425,
+    "parent_id": 33,
+    "name": "BULUNGAN"
+  },
+  {
+    "id": 426,
+    "parent_id": 32,
+    "name": "HALMAHERA UTARA"
+  },
+  {
+    "id": 427,
+    "parent_id": 35,
+    "name": "TANGERANG"
+  },
+  {
+    "id": 428,
+    "parent_id": 31,
+    "name": "METRO"
+  },
+  {
+    "id": 429,
+    "parent_id": 31,
+    "name": "KAB.LAMPUNG UTARA "
+  },
+  {
+    "id": 430,
+    "parent_id": 24,
+    "name": "BINTAN "
+  },
+  {
+    "id": 431,
+    "parent_id": 24,
+    "name": "BINTAN"
+  },
+  {
+    "id": 432,
+    "parent_id": 35,
+    "name": "TANGERANG SELATAN"
+  },
+  {
+    "id": 433,
+    "parent_id": 31,
+    "name": "LAMPUNG TIMUR"
+  },
+  {
+    "id": 434,
+    "parent_id": 25,
+    "name": "BANTAENG"
+  },
+  {
+    "id": 435,
+    "parent_id": 25,
+    "name": "BARRU"
+  },
+  {
+    "id": 436,
+    "parent_id": 25,
+    "name": "BULUKUMBA"
+  },
+  {
+    "id": 437,
+    "parent_id": 33,
+    "name": "MALINAU"
+  },
+  {
+    "id": 438,
+    "parent_id": 31,
+    "name": "BANDAR LAMPUNG"
+  },
+  {
+    "id": 439,
+    "parent_id": 32,
+    "name": "TERNATE"
+  },
+  {
+    "id": 440,
+    "parent_id": 33,
+    "name": "TARAKAN"
+  },
+  {
+    "id": 441,
+    "parent_id": 32,
+    "name": "KAB.HALMAHERA SELATAN "
+  },
+  {
+    "id": 442,
+    "parent_id": 31,
+    "name": "PESAWARAN"
+  },
+  {
+    "id": 443,
+    "parent_id": 32,
+    "name": "HALMAHERA BARAT"
+  },
+  {
+    "id": 444,
+    "parent_id": 9,
+    "name": "BANJAR"
+  },
+  {
+    "id": 445,
+    "parent_id": 32,
+    "name": "KAB.HALMAHERA UTARA "
+  },
+  {
+    "id": 446,
+    "parent_id": 35,
+    "name": "KAB.TANGERANG"
+  },
+  {
+    "id": 447,
+    "parent_id": 25,
+    "name": "KOTAMAKASSAR"
+  },
+  {
+    "id": 448,
+    "parent_id": 32,
+    "name": "KAB.HALMAHERA BARAT "
+  },
+  {
+    "id": 449,
+    "parent_id": 32,
+    "name": "HALMAHERA SELATAN "
+  },
+  {
+    "id": 450,
+    "parent_id": 12,
+    "name": "ACEH UTARA"
+  },
+  {
+    "id": 451,
+    "parent_id": 9,
+    "name": "KUNINGAN"
+  },
+  {
+    "id": 452,
+    "parent_id": 1,
+    "name": "KAB.JAYAPURA "
+  },
+  {
+    "id": 453,
+    "parent_id": 12,
+    "name": "NAGAN RAYA"
+  },
+  {
+    "id": 454,
+    "parent_id": 12,
+    "name": "PIDIE JAYA"
+  },
+  {
+    "id": 455,
+    "parent_id": 9,
+    "name": "CIREBON"
+  },
+  {
+    "id": 456,
+    "parent_id": 35,
+    "name": "PANDEGLANG"
+  },
+  {
+    "id": 457,
+    "parent_id": 36,
+    "name": "KERINCI"
+  },
+  {
+    "id": 458,
+    "parent_id": 37,
+    "name": "DKI JAKARTA"
+  },
+  {
+    "id": 459,
+    "parent_id": 37,
+    "name": "JAKARTA BARAT"
+  },
+  {
+    "id": 460,
+    "parent_id": 37,
+    "name": "JAKARTA SELATAN"
+  },
+  {
+    "id": 461,
+    "parent_id": 36,
+    "name": "MERANGIN"
+  },
+  {
+    "id": 462,
+    "parent_id": 9,
+    "name": "MAJALENGKA"
+  },
+  {
+    "id": 463,
+    "parent_id": 13,
+    "name": "CILACAP"
+  },
+  {
+    "id": 464,
+    "parent_id": 32,
+    "name": "HALMAHERA TENGAH"
+  },
+  {
+    "id": 465,
+    "parent_id": 36,
+    "name": "SUNGAIPENUH"
+  },
+  {
+    "id": 466,
+    "parent_id": 12,
+    "name": "SIMPANG TIGA REDELON"
+  },
+  {
+    "id": 467,
+    "parent_id": 12,
+    "name": "BENER MERIAH"
+  },
+  {
+    "id": 468,
+    "parent_id": 12,
+    "name": "GAYO LUES"
+  },
+  {
+    "id": 469,
+    "parent_id": 9,
+    "name": "INDRAMAYU"
+  },
+  {
+    "id": 470,
+    "parent_id": 35,
+    "name": "LEBAK"
+  },
+  {
+    "id": 471,
+    "parent_id": 35,
+    "name": "SERANG"
+  },
+  {
+    "id": 472,
+    "parent_id": 36,
+    "name": "BUNGO"
+  },
+  {
+    "id": 473,
+    "parent_id": 36,
+    "name": "JAMBI"
+  },
+  {
+    "id": 474,
+    "parent_id": 36,
+    "name": "KOTAJAMBI"
+  },
+  {
+    "id": 475,
+    "parent_id": 12,
+    "name": "ACEH TIMUR"
+  },
+  {
+    "id": 476,
+    "parent_id": 36,
+    "name": "MUARO JAMBI"
+  },
+  {
+    "id": 477,
+    "parent_id": 36,
+    "name": "SAROLANGUN"
+  },
+  {
+    "id": 478,
+    "parent_id": 12,
+    "name": "KAB.ACEH TIMUR "
+  },
+  {
+    "id": 479,
+    "parent_id": 12,
+    "name": "PANTAN JAYA"
+  },
+  {
+    "id": 480,
+    "parent_id": 12,
+    "name": "SYIAH KUALA"
+  },
+  {
+    "id": 481,
+    "parent_id": 12,
+    "name": "SUBULUSSALAM"
+  },
+  {
+    "id": 482,
+    "parent_id": 36,
+    "name": "KUALATUNGKAL"
+  },
+  {
+    "id": 483,
+    "parent_id": 36,
+    "name": "TANJUNG JABUNG BARAT"
+  },
+  {
+    "id": 484,
+    "parent_id": 36,
+    "name": "TANJUNG JABUNG TIMUR"
+  },
+  {
+    "id": 485,
+    "parent_id": 36,
+    "name": "TEBO"
+  },
+  {
+    "id": 486,
+    "parent_id": 36,
+    "name": "MUARA SABAK"
+  },
+  {
+    "id": 487,
+    "parent_id": 12,
+    "name": "KAB.ACEH UTARA "
+  },
+  {
+    "id": 488,
+    "parent_id": 3,
+    "name": "MALANG"
+  },
+  {
+    "id": 489,
+    "parent_id": 4,
+    "name": "SAWAH LUNTO"
+  },
+  {
+    "id": 490,
+    "parent_id": 4,
+    "name": "KOTA SOLOK"
+  },
+  {
+    "id": 491,
+    "parent_id": 4,
+    "name": "SOLOK"
+  },
+  {
+    "id": 492,
+    "parent_id": 4,
+    "name": "PADANG PANJANG"
+  },
+  {
+    "id": 493,
+    "parent_id": 4,
+    "name": "DHARMASRAYA"
+  },
+  {
+    "id": 494,
+    "parent_id": 5,
+    "name": "ROKAN HULU"
+  },
+  {
+    "id": 495,
+    "parent_id": 5,
+    "name": "SIAK INDRAPURA"
+  },
+  {
+    "id": 496,
+    "parent_id": 5,
+    "name": "SIAK"
+  },
+  {
+    "id": 497,
+    "parent_id": 4,
+    "name": "KEPULAUAN MENTAWAI"
+  },
+  {
+    "id": 498,
+    "parent_id": 4,
+    "name": "KAB.KEPULAUAN MENTAWAI"
+  },
+  {
+    "id": 499,
+    "parent_id": 5,
+    "name": "ROKAN HILIR"
+  },
+  {
+    "id": 500,
+    "parent_id": 5,
+    "name": "TELUK KUANTAN"
+  },
+  {
+    "id": 501,
+    "parent_id": 5,
+    "name": "KUANTAN SINGINGI"
+  },
+  {
+    "id": 502,
+    "parent_id": 4,
+    "name": "PADANG PARIAMAN"
+  },
+  {
+    "id": 503,
+    "parent_id": 5,
+    "name": "INDRAGIRI HULU"
+  },
+  {
+    "id": 504,
+    "parent_id": 5,
+    "name": "INDRAGIRI HILIR"
+  },
+  {
+    "id": 505,
+    "parent_id": 13,
+    "name": "TEMANGGUNG"
+  },
+  {
+    "id": 506,
+    "parent_id": 3,
+    "name": "PROBOLINGGO"
+  },
+  {
+    "id": 507,
+    "parent_id": 2,
+    "name": "KOTAWARINGIN BARAT"
+  },
+  {
+    "id": 508,
+    "parent_id": 4,
+    "name": "KAB. PASAMAN BARAT "
+  },
+  {
+    "id": 509,
+    "parent_id": 4,
+    "name": "PASAMAN BARAT"
+  },
+  {
+    "id": 510,
+    "parent_id": 34,
+    "name": "BANGKA BARAT"
+  },
+  {
+    "id": 511,
+    "parent_id": 34,
+    "name": "BANGKA TENGAH"
+  },
+  {
+    "id": 512,
+    "parent_id": 2,
+    "name": "SAMPIT"
+  },
+  {
+    "id": 513,
+    "parent_id": 2,
+    "name": "KOTAWARINGIN TIMUR"
+  },
+  {
+    "id": 514,
+    "parent_id": 3,
+    "name": "NGANJUK"
+  },
+  {
+    "id": 515,
+    "parent_id": 4,
+    "name": "KAB. SOLOK SELATAN"
+  },
+  {
+    "id": 516,
+    "parent_id": 4,
+    "name": "SOLOK SELATAN"
+  },
+  {
+    "id": 517,
+    "parent_id": 34,
+    "name": "BANGKA SELATAN"
+  },
+  {
+    "id": 518,
+    "parent_id": 2,
+    "name": "KUALA KURUN"
+  },
+  {
+    "id": 519,
+    "parent_id": 2,
+    "name": "GUNUNG MAS"
+  },
+  {
+    "id": 520,
+    "parent_id": 3,
+    "name": "BLITAR"
+  },
+  {
+    "id": 521,
+    "parent_id": 5,
+    "name": "KEPULAUAN MERANTI"
+  },
+  {
+    "id": 522,
+    "parent_id": 2,
+    "name": "PALANGKARAYA"
+  },
+  {
+    "id": 523,
+    "parent_id": 25,
+    "name": "PALOPO"
+  },
+  {
+    "id": 524,
+    "parent_id": 25,
+    "name": "KOTAPALOPO"
+  },
+  {
+    "id": 525,
+    "parent_id": 4,
+    "name": "PARIAMAN"
+  },
+  {
+    "id": 526,
+    "parent_id": 4,
+    "name": "KOTAPARIAMAN"
+  },
+  {
+    "id": 527,
+    "parent_id": 4,
+    "name": "KOTA BUKITTINGGI"
+  },
+  {
+    "id": 528,
+    "parent_id": 4,
+    "name": "BUKITTINGGI"
+  },
+  {
+    "id": 529,
+    "parent_id": 4,
+    "name": "PASAMAN"
+  },
+  {
+    "id": 530,
+    "parent_id": 4,
+    "name": "LIMA PULUH KOTA"
+  },
+  {
+    "id": 531,
+    "parent_id": 4,
+    "name": "PAYAKUMBUH"
+  },
+  {
+    "id": 532,
+    "parent_id": 4,
+    "name": "KAB. SIJUNJUNG"
+  },
+  {
+    "id": 533,
+    "parent_id": 4,
+    "name": "SIJUNJUNG"
+  },
+  {
+    "id": 534,
+    "parent_id": 5,
+    "name": "PEKANBARU"
+  },
+  {
+    "id": 535,
+    "parent_id": 5,
+    "name": "DUMAI"
+  },
+  {
+    "id": 536,
+    "parent_id": 4,
+    "name": "KAB. PESISIR SELATAN"
+  },
+  {
+    "id": 537,
+    "parent_id": 4,
+    "name": "PESISIR SELATAN"
+  },
+  {
+    "id": 538,
+    "parent_id": 4,
+    "name": "KAB.PESISIR SELATAN"
+  },
+  {
+    "id": 539,
+    "parent_id": 5,
+    "name": "DURI MANDAU"
+  },
+  {
+    "id": 540,
+    "parent_id": 4,
+    "name": "AGAM"
+  },
+  {
+    "id": 541,
+    "parent_id": 5,
+    "name": "PELALAWAN"
+  },
+  {
+    "id": 542,
+    "parent_id": 5,
+    "name": "MERANTI"
+  },
+  {
+    "id": 543,
+    "parent_id": 5,
+    "name": "SELAT PANJANG"
+  },
+  {
+    "id": 544,
+    "parent_id": 2,
+    "name": "NANGA BULIK"
+  },
+  {
+    "id": 545,
+    "parent_id": 4,
+    "name": "KOTAPAYAKUMBUH"
+  },
+  {
+    "id": 546,
+    "parent_id": 34,
+    "name": "PANGKAL PINANG"
+  },
+  {
+    "id": 547,
+    "parent_id": 4,
+    "name": "SAWAHLUNTO"
+  },
+  {
+    "id": 548,
+    "parent_id": 4,
+    "name": "KOTASAWAH LUNTO"
+  },
+  {
+    "id": 549,
+    "parent_id": 34,
+    "name": "BANGKA"
+  },
+  {
+    "id": 550,
+    "parent_id": 5,
+    "name": "SOREK"
+  },
+  {
+    "id": 551,
+    "parent_id": 5,
+    "name": "PASIR PANGARAIAN"
+  },
+  {
+    "id": 552,
+    "parent_id": 4,
+    "name": "KAB. LIMA PULUH KOTA"
+  },
+  {
+    "id": 553,
+    "parent_id": 5,
+    "name": "BAGAN SIAPI-API"
+  },
+  {
+    "id": 554,
+    "parent_id": 5,
+    "name": "KAB.ROKAN HILIR"
+  },
+  {
+    "id": 555,
+    "parent_id": 2,
+    "name": "KUALA PEMBUANG"
+  },
+  {
+    "id": 556,
+    "parent_id": 2,
+    "name": "SERUYAN"
+  },
+  {
+    "id": 557,
+    "parent_id": 2,
+    "name": "PANGKALAN BUN"
+  },
+  {
+    "id": 558,
+    "parent_id": 4,
+    "name": "KOTA PARIAMAN"
+  },
+  {
+    "id": 559,
+    "parent_id": 3,
+    "name": "BATU"
+  },
+  {
+    "id": 560,
+    "parent_id": 5,
+    "name": "TEMBUSAI"
+  },
+  {
+    "id": 561,
+    "parent_id": 5,
+    "name": "TEMBUSAI UTARA"
+  },
+  {
+    "id": 562,
+    "parent_id": 4,
+    "name": "KAB.LIMA PULUH KOTA"
+  },
+  {
+    "id": 563,
+    "parent_id": 4,
+    "name": "KAB. KEPULAUAN MENTAWAI"
+  },
+  {
+    "id": 564,
+    "parent_id": 15,
+    "name": "OGAN KOMERING ULU SELATAN"
+  },
+  {
+    "id": 565,
+    "parent_id": 15,
+    "name": "KAB.OGAN KOMERING ULU SELATAN"
+  },
+  {
+    "id": 566,
+    "parent_id": 16,
+    "name": "PARIGI MOUTONG"
+  },
+  {
+    "id": 567,
+    "parent_id": 16,
+    "name": "KAB.PARIGI MOUTONG"
+  },
+  {
+    "id": 568,
+    "parent_id": 15,
+    "name": "BANYUASIN"
+  },
+  {
+    "id": 569,
+    "parent_id": 29,
+    "name": "MEMPAWAH"
+  },
+  {
+    "id": 570,
+    "parent_id": 29,
+    "name": "KAB.MEMPAWAH "
+  },
+  {
+    "id": 571,
+    "parent_id": 29,
+    "name": "SAMBAS"
+  },
+  {
+    "id": 572,
+    "parent_id": 16,
+    "name": "MOROWALI"
+  },
+  {
+    "id": 573,
+    "parent_id": 16,
+    "name": "KAB.MOROWALI"
+  },
+  {
+    "id": 574,
+    "parent_id": 29,
+    "name": "KAPUAS HULU"
+  },
+  {
+    "id": 575,
+    "parent_id": 29,
+    "name": "KAB.KAPUAS HULU "
+  },
+  {
+    "id": 576,
+    "parent_id": 29,
+    "name": "BENGKAYANG"
+  },
+  {
+    "id": 577,
+    "parent_id": 29,
+    "name": "KAB.BENGKAYANG "
+  },
+  {
+    "id": 578,
+    "parent_id": 15,
+    "name": "LUBUK LINGGAU"
+  },
+  {
+    "id": 579,
+    "parent_id": 16,
+    "name": "TOJO UNA-UNA"
+  },
+  {
+    "id": 580,
+    "parent_id": 16,
+    "name": "BANGGAI"
+  },
+  {
+    "id": 581,
+    "parent_id": 16,
+    "name": "POSO"
+  },
+  {
+    "id": 582,
+    "parent_id": 16,
+    "name": "KAB.POSO"
+  },
+  {
+    "id": 583,
+    "parent_id": 15,
+    "name": "PAGAR ALAM"
+  },
+  {
+    "id": 584,
+    "parent_id": 15,
+    "name": "PRABUMULIH"
+  },
+  {
+    "id": 585,
+    "parent_id": 9,
+    "name": "SUKABUMI"
+  },
+  {
+    "id": 586,
+    "parent_id": 13,
+    "name": "SURAKARTA"
+  },
+  {
+    "id": 587,
+    "parent_id": 16,
+    "name": "BANGGAI LAUT"
+  },
+  {
+    "id": 588,
+    "parent_id": 29,
+    "name": "KETAPANG"
+  },
+  {
+    "id": 589,
+    "parent_id": 29,
+    "name": "SANGGAU"
+  },
+  {
+    "id": 590,
+    "parent_id": 16,
+    "name": "BUOL"
+  },
+  {
+    "id": 591,
+    "parent_id": 15,
+    "name": "OGAN KOMERING ULU TIMUR"
+  },
+  {
+    "id": 592,
+    "parent_id": 16,
+    "name": "MOROWALI UTARA"
+  },
+  {
+    "id": 593,
+    "parent_id": 15,
+    "name": "MUSI BANYUASIN"
+  },
+  {
+    "id": 594,
+    "parent_id": 14,
+    "name": "SENDAWAR"
+  },
+  {
+    "id": 595,
+    "parent_id": 14,
+    "name": "KUTAI BARAT"
+  },
+  {
+    "id": 596,
+    "parent_id": 29,
+    "name": "LANDAK"
+  },
+  {
+    "id": 597,
+    "parent_id": 16,
+    "name": "PALU"
+  },
+  {
+    "id": 598,
+    "parent_id": 16,
+    "name": "KAB.BANGGAI"
+  },
+  {
+    "id": 599,
+    "parent_id": 16,
+    "name": "SIGI"
+  },
+  {
+    "id": 600,
+    "parent_id": 16,
+    "name": "TOLI-TOLI"
+  },
+  {
+    "id": 601,
+    "parent_id": 29,
+    "name": "KAB.LANDAK "
+  },
+  {
+    "id": 602,
+    "parent_id": 16,
+    "name": "KAB.SIGI"
+  },
+  {
+    "id": 603,
+    "parent_id": 29,
+    "name": "PONTIANAK"
+  },
+  {
+    "id": 604,
+    "parent_id": 16,
+    "name": "DONGGALA"
+  },
+  {
+    "id": 605,
+    "parent_id": 29,
+    "name": "SEKADAU"
+  },
+  {
+    "id": 606,
+    "parent_id": 29,
+    "name": "KUBU RAYA"
+  },
+  {
+    "id": 607,
+    "parent_id": 29,
+    "name": "EMBAU "
+  },
+  {
+    "id": 608,
+    "parent_id": 29,
+    "name": "SINGKAWANG"
+  },
+  {
+    "id": 609,
+    "parent_id": 14,
+    "name": "KAB.KUTAI BARAT "
+  },
+  {
+    "id": 610,
+    "parent_id": 14,
+    "name": "MAHAKAM ULU"
+  },
+  {
+    "id": 611,
+    "parent_id": 16,
+    "name": "KAB.MOROWALI UTARA"
+  },
+  {
+    "id": 612,
+    "parent_id": 29,
+    "name": "MELAWI"
+  },
+  {
+    "id": 613,
+    "parent_id": 15,
+    "name": "KAB.BANYUASIN"
+  },
+  {
+    "id": 614,
+    "parent_id": 29,
+    "name": "KAYONG UTARA"
+  },
+  {
+    "id": 615,
+    "parent_id": 29,
+    "name": "KEDAMIN "
+  },
+  {
+    "id": 616,
+    "parent_id": 15,
+    "name": "PANGKALAN BALAI"
+  },
+  {
+    "id": 617,
+    "parent_id": 29,
+    "name": "KAB.MELAWI "
+  },
+  {
+    "id": 618,
+    "parent_id": 16,
+    "name": "KAB.DONGGALA"
+  },
+  {
+    "id": 619,
+    "parent_id": 16,
+    "name": "KAB.TOJO UNA-UNA"
+  },
+  {
+    "id": 620,
+    "parent_id": 13,
+    "name": "BLORA"
+  },
+  {
+    "id": 621,
+    "parent_id": 13,
+    "name": "PEMALANG"
+  },
+  {
+    "id": 622,
+    "parent_id": 3,
+    "name": "SUMENEP"
+  },
+  {
+    "id": 623,
+    "parent_id": 3,
+    "name": "BOJONEGORO"
+  },
+  {
+    "id": 624,
+    "parent_id": 13,
+    "name": "PATI"
+  },
+  {
+    "id": 625,
+    "parent_id": 13,
+    "name": "BANJARNEGARA"
+  },
+  {
+    "id": 626,
+    "parent_id": 3,
+    "name": "PAMEKASAN"
+  },
+  {
+    "id": 627,
+    "parent_id": 3,
+    "name": "KAB.PAMEKASAN"
+  },
+  {
+    "id": 628,
+    "parent_id": 13,
+    "name": "REMBANG"
+  },
+  {
+    "id": 629,
+    "parent_id": 3,
+    "name": "SAMPANG"
+  },
+  {
+    "id": 630,
+    "parent_id": 13,
+    "name": "GROBOGAN"
+  },
+  {
+    "id": 631,
+    "parent_id": 3,
+    "name": "GRESIK"
+  },
+  {
+    "id": 632,
+    "parent_id": 12,
+    "name": "KAB.PIDIE JAYA "
+  },
+  {
+    "id": 633,
+    "parent_id": 37,
+    "name": "JAKARTA PUSAT"
+  },
+  {
+    "id": 634,
+    "parent_id": 3,
+    "name": "SURABAYA"
+  },
+  {
+    "id": 635,
+    "parent_id": 3,
+    "name": "KOTASURABAYA "
+  },
+  {
+    "id": 636,
+    "parent_id": 37,
+    "name": "JAKARTA UTARA"
+  },
+  {
+    "id": 637,
+    "parent_id": 36,
+    "name": "BATANG HARI"
+  },
+  {
+    "id": 638,
+    "parent_id": 3,
+    "name": "KAB.SUMENEP "
+  },
+  {
+    "id": 639,
+    "parent_id": 12,
+    "name": "SINABANG"
+  },
+  {
+    "id": 640,
+    "parent_id": 12,
+    "name": "SIMEULUE"
+  },
+  {
+    "id": 641,
+    "parent_id": 13,
+    "name": "SALATIGA"
+  },
+  {
+    "id": 642,
+    "parent_id": 37,
+    "name": "JAKARTA TIMUR"
+  },
+  {
+    "id": 643,
+    "parent_id": 13,
+    "name": "BANYUMAS"
+  },
+  {
+    "id": 644,
+    "parent_id": 13,
+    "name": "BATANG"
+  },
+  {
+    "id": 645,
+    "parent_id": 38,
+    "name": "PULAU PRAMUKA"
+  },
+  {
+    "id": 646,
+    "parent_id": 37,
+    "name": "KEPULAUAN SERIBU"
+  },
+  {
+    "id": 647,
+    "parent_id": 35,
+    "name": "CILEGON"
+  },
+  {
+    "id": 648,
+    "parent_id": 3,
+    "name": "SIDOARJO"
+  },
+  {
+    "id": 649,
+    "parent_id": 36,
+    "name": "MUARA BUNGO"
+  },
+  {
+    "id": 650,
+    "parent_id": 13,
+    "name": "TEGAL"
+  },
+  {
+    "id": 651,
+    "parent_id": 36,
+    "name": "KAB.BUNGO"
+  },
+  {
+    "id": 652,
+    "parent_id": 18,
+    "name": "PAKPAK BHARAT"
+  },
+  {
+    "id": 653,
+    "parent_id": 18,
+    "name": "KAB.PAKPAK BHARAT"
+  },
+  {
+    "id": 654,
+    "parent_id": 18,
+    "name": "SIMALUNGUN"
+  },
+  {
+    "id": 655,
+    "parent_id": 18,
+    "name": "KAB.SIMALUNGUN"
+  },
+  {
+    "id": 656,
+    "parent_id": 18,
+    "name": "DELI SERDANG"
+  },
+  {
+    "id": 657,
+    "parent_id": 18,
+    "name": "KARO"
+  },
+  {
+    "id": 658,
+    "parent_id": 18,
+    "name": "RANTAU PRAPAT"
+  },
+  {
+    "id": 659,
+    "parent_id": 13,
+    "name": "KEBUMEN"
+  },
+  {
+    "id": 660,
+    "parent_id": 18,
+    "name": "KAB.DELI SERDANG"
+  },
+  {
+    "id": 661,
+    "parent_id": 13,
+    "name": "WONOSOBO"
+  },
+  {
+    "id": 662,
+    "parent_id": 18,
+    "name": "LANGKAT"
+  },
+  {
+    "id": 663,
+    "parent_id": 18,
+    "name": "LABUHANBATU"
+  },
+  {
+    "id": 664,
+    "parent_id": 18,
+    "name": "LABUHANBATU SELATAN"
+  },
+  {
+    "id": 665,
+    "parent_id": 18,
+    "name": "BINJAI"
+  },
+  {
+    "id": 666,
+    "parent_id": 18,
+    "name": "BINJAI "
+  },
+  {
+    "id": 667,
+    "parent_id": 18,
+    "name": "BATU BARA"
+  },
+  {
+    "id": 668,
+    "parent_id": 18,
+    "name": "KAB.BATU BARA"
+  },
+  {
+    "id": 669,
+    "parent_id": 18,
+    "name": "KAB.LANGKAT"
+  },
+  {
+    "id": 670,
+    "parent_id": 18,
+    "name": "SERDANG BEDAGAI"
+  },
+  {
+    "id": 671,
+    "parent_id": 18,
+    "name": "TEBING TINGGI"
+  },
+  {
+    "id": 672,
+    "parent_id": 18,
+    "name": "ASAHAN"
+  },
+  {
+    "id": 673,
+    "parent_id": 18,
+    "name": "KAB.ASAHAN"
+  },
+  {
+    "id": 674,
+    "parent_id": 18,
+    "name": "DAIRI"
+  },
+  {
+    "id": 675,
+    "parent_id": 18,
+    "name": "KAB.LABUHANBATU SELATAN"
+  },
+  {
+    "id": 676,
+    "parent_id": 18,
+    "name": "KAB.LABUHANBATU"
+  },
+  {
+    "id": 677,
+    "parent_id": 18,
+    "name": "KAB.SERDANG BEDAGAI"
+  },
+  {
+    "id": 678,
+    "parent_id": 18,
+    "name": "KUALUH SELATAN"
+  },
+  {
+    "id": 679,
+    "parent_id": 18,
+    "name": "SAMOSIR"
+  },
+  {
+    "id": 680,
+    "parent_id": 18,
+    "name": "TANJUNG BALAI"
+  },
+  {
+    "id": 681,
+    "parent_id": 18,
+    "name": "PEMATANG SIANTAR"
+  },
+  {
+    "id": 682,
+    "parent_id": 18,
+    "name": "KOTAPEMATANG SIANTAR"
+  },
+  {
+    "id": 683,
+    "parent_id": 18,
+    "name": "KISARAN"
+  },
+  {
+    "id": 684,
+    "parent_id": 18,
+    "name": "PEMATANG RAYA"
+  },
+  {
+    "id": 685,
+    "parent_id": 13,
+    "name": "KAB.BANYUMAS"
+  },
+  {
+    "id": 686,
+    "parent_id": 13,
+    "name": "BANYUMAS/ PURWOKERTO"
+  },
+  {
+    "id": 687,
+    "parent_id": 39,
+    "name": "TANAH MERAH/ BOVEN DIGOEL"
+  },
+  {
+    "id": 688,
+    "parent_id": 1,
+    "name": "KAB.MAPPI"
+  },
+  {
+    "id": 689,
+    "parent_id": 1,
+    "name": "KAB.MERAUKE"
+  },
+  {
+    "id": 690,
+    "parent_id": 40,
+    "name": "KEPI"
+  },
+  {
+    "id": 691,
+    "parent_id": 13,
+    "name": "TEGAL/ SLAWI"
+  },
+  {
+    "id": 692,
+    "parent_id": 1,
+    "name": "KEPI"
+  },
+  {
+    "id": 693,
+    "parent_id": 1,
+    "name": "KAB.BOVEN DIGOEL "
+  },
+  {
+    "id": 694,
+    "parent_id": 1,
+    "name": "TANAH MERAH/ BOVEN DIGOEL"
+  },
+  {
+    "id": 695,
+    "parent_id": 1,
+    "name": "KAB.ASMAT "
+  },
+  {
+    "id": 696,
+    "parent_id": 12,
+    "name": "ACEH"
+  },
+  {
+    "id": 697,
+    "parent_id": 18,
+    "name": "KAB.PADANG LAWAS UTARA"
+  },
+  {
+    "id": 698,
+    "parent_id": 13,
+    "name": "BREBES"
+  },
+  {
+    "id": 699,
+    "parent_id": 18,
+    "name": "KAB.MANDAILING NATAL"
+  },
+  {
+    "id": 700,
+    "parent_id": 18,
+    "name": "KOTASIBUHUAN"
+  },
+  {
+    "id": 701,
+    "parent_id": 18,
+    "name": "KAB.PADANG LAWAS"
+  },
+  {
+    "id": 702,
+    "parent_id": 18,
+    "name": "KAB.TAPANULI SELATAN"
+  },
+  {
+    "id": 703,
+    "parent_id": 18,
+    "name": "KAB.HUMBANG HASUNDUTAN"
+  },
+  {
+    "id": 704,
+    "parent_id": 20,
+    "name": "MALUKU"
+  },
+  {
+    "id": 705,
+    "parent_id": 20,
+    "name": "DOBO"
+  },
+  {
+    "id": 706,
+    "parent_id": 20,
+    "name": "PIRU"
+  },
+  {
+    "id": 707,
+    "parent_id": 20,
+    "name": "DATARAN HUNIMOA"
+  },
+  {
+    "id": 708,
+    "parent_id": 20,
+    "name": "LUSER"
+  },
+  {
+    "id": 709,
+    "parent_id": 20,
+    "name": "MOLA"
+  },
+  {
+    "id": 710,
+    "parent_id": 20,
+    "name": "SERWARU"
+  },
+  {
+    "id": 711,
+    "parent_id": 41,
+    "name": "BANJARMASIN"
+  },
+  {
+    "id": 712,
+    "parent_id": 19,
+    "name": "BATANG ALAI TENGAH"
+  },
+  {
+    "id": 713,
+    "parent_id": 19,
+    "name": "KOTA BARU"
+  },
+  {
+    "id": 714,
+    "parent_id": 19,
+    "name": "TAMIANG LAYANG"
+  },
+  {
+    "id": 715,
+    "parent_id": 9,
+    "name": "CIMAREME"
+  },
+  {
+    "id": 716,
+    "parent_id": 9,
+    "name": "CIKARANG"
+  },
+  {
+    "id": 717,
+    "parent_id": 14,
+    "name": "TUBAAN"
+  },
+  {
+    "id": 718,
+    "parent_id": 16,
+    "name": "LO BANGKURUNG"
+  },
+  {
+    "id": 719,
+    "parent_id": 16,
+    "name": "DOLO"
+  },
+  {
+    "id": 720,
+    "parent_id": 16,
+    "name": "BUNGKU"
+  },
+  {
+    "id": 721,
+    "parent_id": 29,
+    "name": "PUTUSSIBAU"
+  },
+  {
+    "id": 722,
+    "parent_id": 29,
+    "name": "EMBAU"
+  },
+  {
+    "id": 723,
+    "parent_id": 29,
+    "name": "KEDAMIN"
+  },
+  {
+    "id": 724,
+    "parent_id": 29,
+    "name": "AMBALAU"
+  },
+  {
+    "id": 725,
+    "parent_id": 42,
+    "name": "PASURUAN"
+  },
+  {
+    "id": 726,
+    "parent_id": 13,
+    "name": "PURWOKERTO"
+  },
+  {
+    "id": 727,
+    "parent_id": 13,
+    "name": "UNGARAN"
+  },
+  {
+    "id": 728,
+    "parent_id": 13,
+    "name": "KALIWUNGU"
+  },
+  {
+    "id": 729,
+    "parent_id": 35,
+    "name": "KARANGTENGAH"
+  },
+  {
+    "id": 730,
+    "parent_id": 31,
+    "name": "LIWA"
+  },
+  {
+    "id": 731,
+    "parent_id": 31,
+    "name": "BANDAR JAYA"
+  },
+  {
+    "id": 732,
+    "parent_id": 31,
+    "name": "GUNUNG TERANG"
+  },
+  {
+    "id": 733,
+    "parent_id": 31,
+    "name": "LAMBU KIBANG"
+  },
+  {
+    "id": 734,
+    "parent_id": 31,
+    "name": "KOTA AGUNG"
+  },
+  {
+    "id": 735,
+    "parent_id": 31,
+    "name": "SUKOHARJO"
+  },
+  {
+    "id": 736,
+    "parent_id": 24,
+    "name": "SENGGARANG"
+  },
+  {
+    "id": 737,
+    "parent_id": 24,
+    "name": "DOMPAK"
+  },
+  {
+    "id": 738,
+    "parent_id": 24,
+    "name": "PULAU PENYENGAT"
+  },
+  {
+    "id": 739,
+    "parent_id": 24,
+    "name": "BANDAR SRI BINTAN"
+  },
+  {
+    "id": 740,
+    "parent_id": 24,
+    "name": "LAGOI"
+  },
+  {
+    "id": 741,
+    "parent_id": 32,
+    "name": "LABUHA"
+  },
+  {
+    "id": 742,
+    "parent_id": 32,
+    "name": "NGGELE"
+  },
+  {
+    "id": 743,
+    "parent_id": 25,
+    "name": "CENRANA"
+  },
+  {
+    "id": 744,
+    "parent_id": 25,
+    "name": "SIDRAP"
+  },
+  {
+    "id": 745,
+    "parent_id": 25,
+    "name": "SUNGGUMINASA"
+  },
+  {
+    "id": 746,
+    "parent_id": 25,
+    "name": "KALUKUANG MASALIMA"
+  },
+  {
+    "id": 747,
+    "parent_id": 8,
+    "name": "OELAMASI"
+  },
+  {
+    "id": 748,
+    "parent_id": 3,
+    "name": "KARTOHARJO"
+  },
+  {
+    "id": 749,
+    "parent_id": 4,
+    "name": "BATU SANGKAR"
+  },
+  {
+    "id": 750,
+    "parent_id": 4,
+    "name": "BUKIT TINGGI"
+  },
+  {
+    "id": 751,
+    "parent_id": 4,
+    "name": "PAINAN"
+  },
+  {
+    "id": 752,
+    "parent_id": 4,
+    "name": "SARILAMAK"
+  },
+  {
+    "id": 753,
+    "parent_id": 4,
+    "name": "TUAPEJAT"
+  },
+  {
+    "id": 754,
+    "parent_id": 4,
+    "name": "SIPORA"
+  },
+  {
+    "id": 755,
+    "parent_id": 4,
+    "name": "SIMPANG EMPAT"
+  },
+  {
+    "id": 756,
+    "parent_id": 4,
+    "name": "RANAH BALINGKA"
+  },
+  {
+    "id": 757,
+    "parent_id": 4,
+    "name": "RANAH PESISIR"
+  },
+  {
+    "id": 758,
+    "parent_id": 4,
+    "name": "AROSUKA"
+  },
+  {
+    "id": 759,
+    "parent_id": 4,
+    "name": "PADANG ARO"
+  },
+  {
+    "id": 760,
+    "parent_id": 4,
+    "name": "MUARO SIJUNJUNG"
+  },
+  {
+    "id": 761,
+    "parent_id": 9,
+    "name": "CIREBON BARAT"
+  },
+  {
+    "id": 762,
+    "parent_id": 37,
+    "name": "PULAU PRAMUKA"
+  },
+  {
+    "id": 763,
+    "parent_id": 35,
+    "name": "CADAS SARI"
+  },
+  {
+    "id": 764,
+    "parent_id": 35,
+    "name": "KARANGTANJUNG"
+  },
+  {
+    "id": 765,
+    "parent_id": 36,
+    "name": "SENGETI"
+  },
+  {
+    "id": 766,
+    "parent_id": 9,
+    "name": "CIBUBUR"
+  },
+  {
+    "id": 767,
+    "parent_id": 30,
+    "name": "AMLAPURA"
+  },
+  {
+    "id": 768,
+    "parent_id": 30,
+    "name": "SEMARAPURA"
+  },
+  {
+    "id": 769,
+    "parent_id": 30,
+    "name": "SINGARAJA"
+  },
+  {
+    "id": 770,
+    "parent_id": 8,
+    "name": "WAIBAKUL"
+  },
+  {
+    "id": 771,
+    "parent_id": 8,
+    "name": "KALABAHI"
+  },
+  {
+    "id": 772,
+    "parent_id": 8,
+    "name": "SOE"
+  },
+  {
+    "id": 773,
+    "parent_id": 8,
+    "name": "TAMBOLAKA"
+  },
+  {
+    "id": 774,
+    "parent_id": 18,
+    "name": "PADANG LAWAS"
+  },
+  {
+    "id": 775,
+    "parent_id": 18,
+    "name": "KAB.TAPANULI UTARA"
+  },
+  {
+    "id": 776,
+    "parent_id": 18,
+    "name": "KAB.GUNUNG TUA"
+  },
+  {
+    "id": 777,
+    "parent_id": 18,
+    "name": "KOTAPANYABUNGAN KOTA"
+  },
+  {
+    "id": 778,
+    "parent_id": 18,
+    "name": "KAB.TOBA SAMOSIR"
+  },
+  {
+    "id": 779,
+    "parent_id": 18,
+    "name": "KOTAGUNUNGSITOLI"
+  },
+  {
+    "id": 780,
+    "parent_id": 18,
+    "name": "KAB.NIAS"
+  },
+  {
+    "id": 781,
+    "parent_id": 18,
+    "name": "KAB.NIAS SELATAN"
+  },
+  {
+    "id": 782,
+    "parent_id": 18,
+    "name": "KOTASIBOLGA"
+  },
+  {
+    "id": 783,
+    "parent_id": 18,
+    "name": "KAB.TAPANULI TENGAH"
+  },
+  {
+    "id": 784,
+    "parent_id": 18,
+    "name": "KAB.PADANG SIDEMPUAN"
+  },
+  {
+    "id": 785,
+    "parent_id": 18,
+    "name": "KOTAPADANG SIDEMPUAN"
+  },
+  {
+    "id": 786,
+    "parent_id": 18,
+    "name": "KAB.NIAS UTARA"
+  },
+  {
+    "id": 787,
+    "parent_id": 18,
+    "name": "KAB.SIBOLGA"
+  },
+  {
+    "id": 788,
+    "parent_id": 18,
+    "name": "KAB.NIAS BARAT"
+  },
+  {
+    "id": 789,
+    "parent_id": 8,
+    "name": "MANGGARAI"
+  },
+  {
+    "id": 790,
+    "parent_id": 8,
+    "name": "ENDE"
+  },
+  {
+    "id": 791,
+    "parent_id": 3,
+    "name": "TULUNGAGUNG"
+  },
+  {
+    "id": 792,
+    "parent_id": 8,
+    "name": "NGADA"
+  },
+  {
+    "id": 793,
+    "parent_id": 3,
+    "name": "TRENGGALEK"
+  },
+  {
+    "id": 794,
+    "parent_id": 8,
+    "name": "LABUAN BAJO"
+  },
+  {
+    "id": 795,
+    "parent_id": 8,
+    "name": "MANGGARAI BARAT"
+  },
+  {
+    "id": 796,
+    "parent_id": 18,
+    "name": "NIAS SELATAN"
+  },
+  {
+    "id": 797,
+    "parent_id": 8,
+    "name": "MANGGARAI TIMUR"
+  },
+  {
+    "id": 798,
+    "parent_id": 8,
+    "name": "FLORES TIMUR"
+  },
+  {
+    "id": 799,
+    "parent_id": 8,
+    "name": "NAGEKEO"
+  },
+  {
+    "id": 800,
+    "parent_id": 8,
+    "name": "MAUMERE"
+  },
+  {
+    "id": 801,
+    "parent_id": 8,
+    "name": "SIKKA"
+  },
+  {
+    "id": 802,
+    "parent_id": 8,
+    "name": "LEMBATA"
+  },
+  {
+    "id": 803,
+    "parent_id": 17,
+    "name": "MANOKWARI SELATAN"
+  },
+  {
+    "id": 804,
+    "parent_id": 17,
+    "name": "MANOKWARI"
+  },
+  {
+    "id": 805,
+    "parent_id": 17,
+    "name": "PEGUNUNGAN ARFAK"
+  },
+  {
+    "id": 806,
+    "parent_id": 17,
+    "name": "TELUK WONDAMA"
+  },
+  {
+    "id": 807,
+    "parent_id": 17,
+    "name": "TELUK BINTUNI"
+  }
+]
