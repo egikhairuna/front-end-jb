@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { wooCommerceClient } from '@/lib/woocommerce/client';
+import { getWooCommerceClient } from '@/lib/woocommerce/client';
 import { buildOrderPayload, validateOrderPayload } from '@/lib/woocommerce/transformers';
 import { handleWooCommerceError, logOrderError } from '@/lib/woocommerce/errors';
 import { calculateJNEPrice } from '@/lib/jne';
 
 export async function POST(request: NextRequest) {
   try {
+    const wooCommerceClient = getWooCommerceClient();
     // Parse request body
     const body = await request.json();
     const { cartItems, formData, shippingOption, paymentMethod } = body;

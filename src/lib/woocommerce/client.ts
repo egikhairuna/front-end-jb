@@ -127,5 +127,23 @@ class WooCommerceClient {
   }
 }
 
-// Export singleton instance
-export const wooCommerceClient = new WooCommerceClient();
+let instance: WooCommerceClient | null = null;
+
+/**
+ * Factory function to get or create the WooCommerce client instance.
+ * Performs environment variable validation at runtime.
+ */
+export function getWooCommerceClient(): WooCommerceClient {
+  const url = process.env.WOOCOMMERCE_API_URL;
+  const key = process.env.WOOCOMMERCE_CONSUMER_KEY;
+  const secret = process.env.WOOCOMMERCE_CONSUMER_SECRET;
+
+  if (!url || !key || !secret) {
+    throw new Error('WooCommerce API credentials are not configured');
+  }
+
+  if (!instance) {
+    instance = new WooCommerceClient();
+  }
+  return instance;
+}

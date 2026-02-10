@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 import { CheckCircle2, AlertTriangle } from "lucide-react";
 import Link from "next/link";
-import { wooCommerceClient } from "@/lib/woocommerce/client";
+import { getWooCommerceClient } from "@/lib/woocommerce/client";
 import { formatPrice } from "@/lib/utils";
 import { CopyableText } from "@/components/ui/copyable-text";
 import { BankTransferInstructions } from "@/components/checkout/BankTransferInstructions";
@@ -35,6 +35,7 @@ export default async function OrderSuccessPage({ params, searchParams }: Props) 
 
   let order;
   try {
+    const wooCommerceClient = getWooCommerceClient();
     // Fetch order from WooCommerce REST API
     order = await wooCommerceClient.getOrder(parseInt(orderId));
     
