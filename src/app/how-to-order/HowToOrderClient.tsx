@@ -1,19 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
 import { 
   UserCircle, 
   Search, 
   Info, 
-  ShoppingBag, 
   CheckCircle2, 
   Truck, 
   ArrowRight,
   MessageCircle,
   HelpCircle
 } from "lucide-react";
+import { PiShoppingBag } from "react-icons/pi";
 import Link from "next/link";
 
 const CONTENT = {
@@ -144,9 +143,7 @@ export function HowToOrderClient() {
   const t = CONTENT[lang];
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen pt-32 pb-24 bg-white text-black">
+    <div className="flex-1 min-h-screen pt-32 pb-24 bg-white text-black">
         <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
           
           {/* Header & Language Toggle */}
@@ -257,7 +254,7 @@ export function HowToOrderClient() {
                   className="flex items-center justify-between group w-full bg-black text-white p-8 hover:bg-neutral-800 transition-colors"
                 >
                   <span className="text-xl font-bold uppercase tracking-tight">{t.cta.shop}</span>
-                  <ShoppingBag className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  <PiShoppingBag className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
                 </Link>
 
                 <a 
@@ -291,7 +288,6 @@ export function HowToOrderClient() {
             </div>
           </div>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { client } from "@/lib/graphql/client";
 import { GET_POST_BY_SLUG } from "@/lib/graphql/queries";
@@ -78,9 +77,7 @@ export default async function JournalPostPage({ params }: Props) {
     }
 
     return (
-        <>
-            <Navbar />
-            <main className="min-h-screen pb-20">
+        <div className="flex-1 min-h-screen pb-20">
                 {/* Hero Section */}
                 <div className="w-full h-[60vh] md:h-[80vh] relative bg-neutral-100">
                     {post.featuredImage?.node?.sourceUrl ? (
@@ -127,7 +124,6 @@ export default async function JournalPostPage({ params }: Props) {
                         />
                     </div>
                 </div>
-            </main>
-        </>
+        </div>
     );
 }

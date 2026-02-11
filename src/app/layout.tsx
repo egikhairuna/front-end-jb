@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 import { Footer } from "@/components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
+import { ClientOnly } from "@/components/shared/ClientOnly";
 
 const dinPro = localFont({
   src: [
@@ -98,6 +100,9 @@ export default function RootLayout({
       <body
         className={`${dinPro.variable} antialiased bg-background text-foreground font-sans`}
       >
+        <ClientOnly>
+          <Navbar />
+        </ClientOnly>
         <main className="min-h-screen flex flex-col">
           {children}
         </main>

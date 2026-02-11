@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { AlertTriangle, RefreshCcw } from "lucide-react";
 import Link from "next/link";
@@ -25,8 +24,7 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <Navbar />
-        <main className="min-h-screen flex flex-col items-center justify-center p-6 text-center space-y-8 bg-[#FDFCF8]">
+        <div className="flex-1 min-h-screen flex flex-col items-center justify-center p-6 text-center space-y-8 bg-[#FDFCF8]">
           <div className="w-20 h-20 bg-red-50 text-red-600 rounded-full flex items-center justify-center">
             <AlertTriangle className="w-10 h-10" />
           </div>
@@ -60,7 +58,7 @@ export default function GlobalError({
           <div className="pt-8 text-[10px] text-neutral-400 uppercase tracking-widest font-bold">
             James Boogie Support
           </div>
-        </main>
+        </div>
       </body>
     </html>
   );

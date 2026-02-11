@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 // Category interface
@@ -18,7 +17,7 @@ interface Category {
 }
 
 export function ProductCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Category data with images and links
   const categories: Category[] = [
@@ -47,50 +46,44 @@ export function ProductCarousel() {
       href: "/shop?category=seasoning",
       image: "/categories/acc-cover.png", 
     },
-
   ];
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % categories.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + categories.length) % categories.length);
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const { scrollLeft, clientWidth } = scrollRef.current;
+      const scrollAmount = window.innerWidth < 768 ? clientWidth : clientWidth / 4;
+      scrollRef.current.scrollTo({
+        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
-    <section className="w-full py-12 border-b border-black/5">
-      <div className="flex items-center justify-between px-4 md:px-8 lg:px-12 mb-8">
+    <section className="w-full py-12 border-b border-black/5 overflow-hidden">
+      <div className="flex items-center justify-between md:px-8 lg:px-12 mb-8">
         <h2 className="text-base font-bold tracking-widest uppercase border border-black px-3 py-1 inline-block">
           SHOP BY CATEGORY
         </h2>
         <div className="flex gap-2">
-           <Button variant="outline" size="icon" onClick={prevSlide} className="rounded-none border-black hover:bg-black hover:text-white transition-colors">
+           <Button variant="outline" size="icon" onClick={() => scroll('left')} className="rounded-none border-black hover:bg-black hover:text-white transition-colors">
               <ChevronLeft className="h-4 w-4" />
            </Button>
-           <Button variant="outline" size="icon" onClick={nextSlide} className="rounded-none border-black hover:bg-black hover:text-white transition-colors">
+           <Button variant="outline" size="icon" onClick={() => scroll('right')} className="rounded-none border-black hover:bg-black hover:text-white transition-colors">
               <ChevronRight className="h-4 w-4" />
            </Button>
         </div>
       </div>
 
-      <div className="overflow-hidden w-full">
+      <div className="w-full">
           <div 
-            className="flex transition-transform duration-500 ease-in-out will-change-transform"
-            style={{
-                transform: `translateX(-${currentIndex * 100}%)`, // Mobile: slide by 100% per item
-            }}
+            ref={scrollRef}
+            className="flex overflow-x-auto md:overflow-x-hidden snap-x snap-mandatory scrollbar-hide will-change-transform"
           >
-             <style jsx>{`
-                @media (min-width: 768px) {
-                    .flex { transform: translateX(-${currentIndex * 25}%) !important; }
-                }
-             `}</style>
-             
              {categories.map((category) => (
                  <div 
                     key={category.id} 
-                    className="min-w-full md:min-w-[25%] px-0.5 border-r border-transparent md:border-black/5 last:border-none"
+                    className="min-w-full md:min-w-[25%] snap-center border-r border-transparent md:border-black/5 last:border-none select-none"
                  >
                     <Link href={category.href} className="block group">
                         <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100">
@@ -106,7 +99,8 @@ export function ProductCarousel() {
                                 src={category.image}
                                 alt={category.name}
                                 fill
-                                className="object-cover transition-transform duration-700"
+                                className="object-cover transition-transform duration-700 font-bold"
+                                draggable={false}
                             />
                             
                             {/* Hover Overlay */}

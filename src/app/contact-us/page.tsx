@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/layout/Navbar";
 import { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
@@ -10,9 +9,7 @@ export const metadata: Metadata = {
 
 export default function ContactUsPage() {
     return (
-        <>
-            <Navbar />
-            <main className="min-h-screen pt-24 md:pt-32 pb-20">
+        <div className="flex-1 min-h-screen pt-24 md:pt-32 pb-20">
                 <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
                     {/* Header Section */}
                     <div className="mb-16 md:mb-24 max-w-4xl">
@@ -111,7 +108,6 @@ export default function ContactUsPage() {
 
                     </div>
                 </div>
-            </main>
-        </>
+        </div>
     );
 }

@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
@@ -10,9 +9,7 @@ const lastUpdated = "February 2026";
 
 export default function PrivacyPolicyPage() {
   return (
-    <>
-      <Navbar />
-      <main className="pt-32 pb-24 w-full">
+    <div className="flex-1 pt-32 pb-24 w-full">
         <div className="px-6 md:px-12 lg:px-12 space-y-24">
           {/* Header */}
           <header className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
@@ -177,7 +174,6 @@ export default function PrivacyPolicyPage() {
             </div>
           </section>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { client } from "@/lib/graphql/client";
 import { GET_POSTS } from "@/lib/graphql/queries";
@@ -47,10 +46,8 @@ async function getPosts() {
 export default async function JournalPage() {
     const { nodes: posts, pageInfo } = await getPosts();
 
-    return (
-        <>
-            <Navbar />
-            <main className="min-h-screen pt-24 md:pt-32 pb-20 md:px-8 lg:px-0">
+  return (
+    <div className="flex-1 min-h-screen pt-24 md:pt-32 pb-20 md:px-8 lg:px-0">
                 <div className="max-w-[1920px] mx-auto">
                     <h1 className="text-4xl px-10 md:text-4xl font-heading font-bold uppercase mb-12 md:mb-20 tracking-tight">
                         Journal
@@ -63,7 +60,6 @@ export default async function JournalPage() {
                         />
                     </div>
                 </div>
-            </main>
-        </>
-    );
+    </div>
+  );
 }

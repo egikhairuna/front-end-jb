@@ -4,7 +4,8 @@
 import { useCartStore } from "@/lib/store/cart";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Minus, Plus, Trash2, Handbag } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { PiShoppingBag } from "react-icons/pi";
 import Image from "next/image";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
@@ -24,7 +25,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
     <Sheet open={isOpen} onOpenChange={toggleCart}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon" className={cn("relative", triggerClassName)}>
-          <Handbag className="h-10 w-10" />
+          <PiShoppingBag className="h-20 w-20" />
           {items.length > 0 && (
             <span className="absolute -top-1 -right-1 h-4 w-4 bg-black text-white text-[10px] flex items-center justify-center rounded-full">
               {items.reduce((acc, item) => acc + item.quantity, 0)}
@@ -39,7 +40,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
         <div className="flex-1 overflow-y-auto py-4">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full space-y-4">
-               <Handbag className="h-16 w-16 text-muted-foreground" />
+               <PiShoppingBag className="h-17 w-17 text-muted-foreground" />
                <p className="text-muted-foreground">Your cart is empty</p>
                <Button variant="outline" onClick={toggleCart}>Continue Shopping</Button>
             </div>

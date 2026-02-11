@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -110,32 +111,34 @@ export function Navbar() {
                     <Menu className="h-6 w-6" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="left" className="w-full h-full p-0 bg-white border-none flex flex-col animate-in fade-in slide-in-from-left duration-500 z-[200]">
+                <SheetContent side={"fade" as any} className="w-full h-full p-0 bg-white border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                   
-                  {/* Header with Logo and Close Button */}
-                  <div className="flex items-center justify-between px-4 h-20 border-b border-neutral-200">
-                    {/* Empty space for symmetry */}
+                  {/* Header with Centered Logo and Close Button */}
+                  <div className="relative flex items-center justify-between px-6 h-20 border-b border-neutral-200">
+                    {/* Left spacer to keep symmetry if needed, or just rely on absolute positioning */}
                     <div className="w-10"></div>
+
+                    {/* Centered Logo (Matches main navbar positioning) */}
+                    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                      <Link href="/" onClick={() => setIsOpen(false)}>
+                        <Image 
+                          src="/logo-text.svg" 
+                          alt="JamesBoogie" 
+                          width={140} 
+                          height={35} 
+                          className="h-6 w-auto"
+                        />
+                      </Link>
+                    </div>
                     
-                    {/* Centered Logo */}
-                    <Link href="/" onClick={() => setIsOpen(false)}>
-                      <Image 
-                        src="/logo-text.svg" 
-                        alt="JamesBoogie" 
-                        width={140} 
-                        height={35} 
-                        className="h-5 w-auto"
-                      />
-                    </Link>
-                    
-                    {/* Close Button */}
+                    {/* Close Button (Right aligned to match Cart icon position) */}
                     <Button 
                       variant="ghost" 
                       onClick={() => setIsOpen(false)} 
-                      className="p-2 hover:bg-neutral-100 rounded-full"
+                      className="p-0 h-10 w-10 hover:bg-neutral-100 rounded-full flex items-center justify-center transition-colors"
                     >
-                      <X className="h-5 w-5 text-black" />
+                      <X className="h-6 w-6 text-black" />
                     </Button>
                   </div>
                   
@@ -148,9 +151,11 @@ export function Navbar() {
                         className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-black uppercase"
                       >
                         SHOP
-                        <span className={cn("text-xs transition-transform duration-300", activeMenu === "SHOP" ? "rotate-180" : "")}>
-                          ▼
-                        </span>
+                        {activeMenu === "SHOP" ? (
+                          <IoIosArrowUp className="text-lg" />
+                        ) : (
+                          <IoIosArrowDown className="text-lg" />
+                        )}
                       </button>
                       <div className={cn(
                         "overflow-hidden transition-all duration-300 ease-in-out",
@@ -205,9 +210,11 @@ export function Navbar() {
                         className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-black uppercase"
                       >
                         THE BRAND
-                        <span className={cn("text-xs transition-transform duration-300", activeMenu === "THE BRAND" ? "rotate-180" : "")}>
-                          ▼
-                        </span>
+                        {activeMenu === "THE BRAND" ? (
+                          <IoIosArrowUp className="text-lg" />
+                        ) : (
+                          <IoIosArrowDown className="text-lg" />
+                        )}
                       </button>
                       <div className={cn(
                         "overflow-hidden transition-all duration-300 ease-in-out",
@@ -219,21 +226,21 @@ export function Navbar() {
                             onClick={() => setIsOpen(false)}
                             className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors"
                           >
-                            Our Story
+                            OUR STORY
                           </Link>
                           <Link
                             href="/our-people"
                             onClick={() => setIsOpen(false)}
                             className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors"
                           >
-                            Our People
+                            OUR PEOPLE
                           </Link>
                           <Link
                             href="/ventile"
                             onClick={() => setIsOpen(false)}
                             className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors"
                           >
-                            Ventile
+                            VENTILE®
                           </Link>
                         </div>
                       </div>

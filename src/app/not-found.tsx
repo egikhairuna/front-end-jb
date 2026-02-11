@@ -1,12 +1,10 @@
 import Link from "next/link";
-import { Navbar } from "@/components/layout/Navbar";
-import { ArrowLeft, ShoppingBag } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { PiShoppingBagLight } from "react-icons/pi";
 
 export default function NotFound() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-[80vh] flex items-center justify-center pt-24 pb-12 bg-white px-6">
+    <div className="flex-1 min-h-[80vh] flex items-center justify-center pt-24 pb-12 bg-white px-6">
         <div className="max-w-xl w-full text-center space-y-12">
           {/* Brand/Error Indicator */}
           <div className="space-y-4">
@@ -36,7 +34,7 @@ export default function NotFound() {
               href="/shop"
               className="w-full sm:w-auto flex items-center justify-center gap-3 border border-neutral-200 text-black px-8 py-4 text-[10px] font-bold tracking-widest uppercase hover:bg-neutral-50 transition-colors"
             >
-              <ShoppingBag className="h-4 w-4" />
+              <PiShoppingBagLight className="h-4 w-4" />
               Explore Shop
             </Link>
           </div>
@@ -53,7 +51,6 @@ export default function NotFound() {
             </div>
           </div>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

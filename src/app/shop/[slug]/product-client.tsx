@@ -121,10 +121,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
                 {/* Product Title */}
                 <div>
-                  <h1 className="text-2xl md:text-2xl font-eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeemedium tracking-wide mb-3 leading-tight uppercase tracking-wide">
+                  <h1 className="text-xl md:text-xl font-bold tracking-wide mb-3 leading-tight uppercase tracking-wide">
                     {product.name}
                   </h1>
-                  <div className="text-lg tracking-wide font-bold">
+                  <div className="text-lg tracking-wide font-regular">
                     {displayPrice}
                   </div>
                 </div>
@@ -133,9 +133,9 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 {isVariableProduct && (
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-base font-bold uppercase tracking-wide">SIZE</span>
+                      <span className="text-sm font-regular text-black/50 uppercase tracking-wide">SIZES</span>
                     </div>
-                    <div className="grid grid-cols-7 gap-2">
+                    <div className="grid grid-cols-5 gap-2">
                        {variations
                         .map((variant) => {
                           // Extract size from attributes
@@ -174,7 +174,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                              key={variant.id}
                              onClick={() => !isUnavailable && setSelectedVariation(variant)}
                              className={cn(
-                               "py-3 border text-xs font-medium transition-all uppercase",
+                               "h-11 border text-[13px] font-bold transition-all uppercase",
                                isSelected && "bg-black text-white border-black",
                                !isSelected && !isUnavailable && "border-neutral-300 hover:border-black",
                                isUnavailable && "opacity-30 cursor-not-allowed line-through"
@@ -223,7 +223,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 </AccordionItem>
 
                 {/* Style & Fit */}
-                {/* Style & Fit - Render only if sizeChart exists */}
                 {product.sizeChart?.sizeChart && (
                   <AccordionItem 
                     title="Style & Fit" 
@@ -238,7 +237,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 )}
 
                 {/* Features */}
-                {/* Features - Render only if features exists */}
                 {product.features?.features && (
                   <AccordionItem 
                     title="Features" 

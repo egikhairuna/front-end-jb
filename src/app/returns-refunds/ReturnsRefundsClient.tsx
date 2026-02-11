@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
 
 const CONTENT = {
@@ -56,9 +55,7 @@ export function ReturnsRefundsClient() {
   const t = CONTENT[lang];
 
   return (
-    <>
-      <Navbar />
-      <main className="pt-32 pb-24 w-full bg-white text-black min-h-screen">
+    <div className="flex-1 pt-32 pb-24 w-full bg-white text-black min-h-screen">
         <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
           {/* Header & Language Toggle */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
@@ -138,7 +135,6 @@ export function ReturnsRefundsClient() {
             </div>
           </div>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

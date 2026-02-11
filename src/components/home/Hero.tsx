@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export function Hero() {
   return (
-    <section className="relative h-[100vh] w-full bg-neutral-900 text-white flex items-end justify-start overflow-hidden p-8 md:p-12 ">
+    <section className="relative h-[100vh] w-full bg-neutral-900 text-white flex items-end justify-start overflow-hidden p-8 pb-35 md:p-20 ">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image 
@@ -28,7 +28,7 @@ export function Hero() {
           An exploration of form, colours, and craft
         </p>
         <div className="flex items-center justify-start gap-4 ">
-          <Button size="lg" className="text-base px-10 h-14 bg-transparent uppercase text-white border border-white hover:bg-white hover:text-black" asChild>
+          <Button size="lg" className="text-base px-10 h-14 backdrop-blur-sm uppercase text-white border border-white hover:bg-white hover:text-black" asChild>
             <Link href="/shop">Discover More</Link>
           </Button>
         </div>

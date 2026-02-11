@@ -1,4 +1,3 @@
-import { Navbar } from "@/components/layout/Navbar";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,9 +7,7 @@ export const metadata: Metadata = {
 
 export default function OurStorePage() {
     return (
-        <>
-            <Navbar />
-            <main className="min-h-screen pt-24 md:pt-32 pb-20">
+        <div className="flex-1 min-h-screen pt-24 md:pt-32 pb-20">
                 <div className="max-w-[1920px] mx-auto">
                     {/* Page Header */}
                     <section className="px-6 md:px-10 mb-12 md:mb-16">
@@ -96,7 +93,6 @@ export default function OurStorePage() {
                         </section>
                     </div>
                 </div>
-            </main>
-        </>
+        </div>
     );
 }

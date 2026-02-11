@@ -1,6 +1,5 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -116,9 +115,7 @@ const TEAM = [
 
 export function OurPeopleClient() {
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen pt-24 bg-white text-black">
+    <div className="flex-1 min-h-screen pt-24 bg-white text-black">
         {/* Page Hero */}
         <section className="px-6 md:px-12 lg:px-10 py-24 md:py-32 border-b border-neutral-100">
           <div className="max-w-4xl">
@@ -200,7 +197,6 @@ export function OurPeopleClient() {
             </div>
           </div>
         </section>
-      </main>
-    </>
+    </div>
   );
 }

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Navbar } from "@/components/layout/Navbar";
 import { cn } from "@/lib/utils";
 import { Plus, Minus, MessageCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
@@ -124,9 +123,7 @@ export function FAQClient() {
   const t = FAQ_DATA[lang];
 
   return (
-    <>
-      <Navbar />
-      <main className="min-h-screen pt-32 pb-24 bg-white text-black">
+    <div className="flex-1 min-h-screen pt-32 pb-24 bg-white text-black">
         <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
           
           {/* Header & Language Switcher */}
@@ -230,7 +227,6 @@ export function FAQClient() {
             </div>
           </div>
         </div>
-      </main>
-    </>
+    </div>
   );
 }

@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { 
   Instagram, 
   Youtube,
-  ShoppingBag, 
   MessageCircle, 
   Info, 
   BookOpen, 
@@ -14,18 +13,19 @@ import {
   ArrowLeft,
   ArrowUpRight
 } from "lucide-react";
+import { PiShoppingBag } from "react-icons/pi";
 import { cn } from "@/lib/utils";
 
 const links = [
   {
     title: "FANCY",
     href: "/shop?category=fancy",
-    icon: <ShoppingBag className="w-5 h-5" />
+    icon: <PiShoppingBag className="w-5 h-5" />
   },
   {
     title: "JACKETS",
     href: "/shop?category=jackets",
-    icon: <ShoppingBag className="w-5 h-5" />
+    icon: <PiShoppingBag className="w-5 h-5" />
   },
   {
     title: "ACCESSORIES",
@@ -94,7 +94,7 @@ export default function LinksPage() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] border border-white rounded-full" />
       </div>
 
-      <main className="relative z-10 max-w-xl mx-auto px-6 py-16 flex flex-col items-center">
+      <div className="relative z-10 max-w-xl mx-auto px-6 py-16 flex flex-col items-center flex-1">
         {/* Navigation - Minimal Home Link */}
         <motion.div 
           initial={{ opacity: 0, x: -10 }}
@@ -205,7 +205,7 @@ export default function LinksPage() {
             JAMES BOOGIE © 2026
           </div>
         </motion.div>
-      </main>
+      </div>
     </div>
   );
 }
