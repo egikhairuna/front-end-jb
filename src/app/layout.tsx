@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ClientOnly } from "@/components/shared/ClientOnly";
+import { ConditionalNavbar } from "@/components/layout/ConditionalNavbar";
 
 const dinPro = localFont({
   src: [
@@ -101,7 +102,9 @@ export default function RootLayout({
         className={`${dinPro.variable} antialiased bg-background text-foreground font-sans`}
       >
         <ClientOnly>
-          <Navbar />
+          <ConditionalNavbar>
+            <Navbar />
+          </ConditionalNavbar>
         </ClientOnly>
         <main className="min-h-screen flex flex-col">
           {children}

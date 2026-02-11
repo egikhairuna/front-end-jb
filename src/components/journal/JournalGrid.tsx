@@ -56,7 +56,7 @@ export function JournalGrid({ initialPosts, initialPageInfo }: Props) {
 
     return (
         <div className="space-y-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16">
                 {posts.map((post) => (
                     <Link key={post.id} href={`/journal/${post.slug}`} className="group block">
                         <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-neutral-100 mb-6">
