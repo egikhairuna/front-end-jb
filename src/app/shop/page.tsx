@@ -5,6 +5,7 @@ import { GET_PRODUCTS, GET_CATEGORIES } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 import { ProductGrid } from "@/components/shop/ProductGrid";
 import { sortProductsByStock } from "@/lib/utils";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -87,28 +88,51 @@ export default async function ShopPage({ searchParams }: Props) {
   }
   
   const categories = await getCategories();
+  
+  // Find active category name
+  const activeCategory = category 
+    ? categories.find((c: any) => c.slug === category) 
+    : null;
+  
+  const displayTitle = activeCategory ? activeCategory.name : "SHOP";
+
+  // Breadcrumbs
+  const breadcrumbItems = [
+    { label: "Home", href: "/" },
+    { label: "Shop", href: "/shop", active: !activeCategory },
+  ];
+
+  if (activeCategory) {
+    breadcrumbItems.push({ 
+      label: activeCategory.name, 
+      href: `/shop?category=${category}`,
+      active: true 
+    });
+  }
 
 
   return (
     <>
       <Navbar />
-      <div className="w-full px-0 md:px-8 py-10">
-        <div className="w-full">
-          {/* Header */}
+      <div className="w-full px-6 md:px-8 lg:px-12 py-10">
+        <div className="w-full pt-20">
           <div className="mb-8">
-            <h1 className="text-3xl font-bold font-heading mb-2">Shop</h1>
+            <Breadcrumbs items={breadcrumbItems} className="px-0" />
+            <h1 className="text-3xl font-bold font-heading mb-2 uppercase">{displayTitle}</h1>
             {search && <p className="text-muted-foreground">Showing results for &quot;{search}&quot;</p>}
           </div>
 
           {/* Product Grid */}
-          <ProductGrid 
-            key={`${category || 'all'}-${search || 'none'}`}
-            initialProducts={products} 
-            initialPageInfo={pageInfo}
-            category={category}
-            search={search}
-            initialStockStatus={currentStockStatus}
-          />
+          <div className="-mx-6 md:mx-0">
+            <ProductGrid 
+              key={`${category || 'all'}-${search || 'none'}`}
+              initialProducts={products} 
+              initialPageInfo={pageInfo}
+              category={category}
+              search={search}
+              initialStockStatus={currentStockStatus}
+            />
+          </div>
         </div>
       </div>
     </>

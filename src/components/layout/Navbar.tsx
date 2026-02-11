@@ -96,7 +96,7 @@ export function Navbar() {
           : "bg-white border-b border-black/5 shadow-sm"
       )}
     >
-      <div className="mx-auto px-4 md:px-8 lg:px-12 flex h-20 items-center">
+      <div className="mx-auto px-6 md:px-8 lg:px-12 flex h-20 items-center">
         {/* MOBILE LAYOUT */}
         <div className="flex w-full items-center md:hidden h-full">
           <div className="flex-1">

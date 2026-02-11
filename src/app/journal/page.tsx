@@ -47,9 +47,9 @@ export default async function JournalPage() {
     const { nodes: posts, pageInfo } = await getPosts();
 
   return (
-    <div className="flex-1 min-h-screen pt-24 md:pt-32 pb-20 md:px-8 lg:px-0">
+    <div className="flex-1 min-h-screen pt-[120px] pb-20 px-6 md:px-10">
                 <div className="max-w-[1920px] mx-auto">
-                    <h1 className="text-4xl px-4 md:px-10 md:text-4xl font-heading font-bold uppercase mb-12 md:mb-20 tracking-tight">
+                    <h1 className="text-4xl px-0 md:text-4xl font-heading font-bold uppercase mb-12 md:mb-20 tracking-tight">
                         Journal
                     </h1>
                     

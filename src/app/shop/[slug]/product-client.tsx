@@ -10,6 +10,7 @@ import { formatPrice, cleanPrice, cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Minus, Plus, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
+import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -49,14 +50,30 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const displayPrice = selectedVariation ? cleanPrice(selectedVariation.price) : (product.price ? cleanPrice(product.price) : formatPrice(0));
   const isOutOfStock = selectedVariation ? selectedVariation.stockStatus === 'OUT_OF_STOCK' : product.stockStatus === 'OUT_OF_STOCK';
 
+  // Breadcrumbs
+  const categories = (product.productCategories?.nodes || []).filter(
+    (cat) => cat.slug !== "all-products"
+  );
+  const breadcrumbItems: { label: string; href: string; active?: boolean }[] = [
+    { label: "Shop", href: "/shop" },
+  ];
+
+  categories.forEach((cat, idx) => {
+    breadcrumbItems.push({ 
+      label: cat.name, 
+      href: `/shop?category=${cat.slug}`,
+      active: idx === categories.length - 1
+    });
+  });
+
   return (
-    <div className="w-full pt-20">
-      <div className="mx-auto px-4 md:px-8 lg:px-12">
+    <div className="w-full pt-[120px]">
+      <div className="mx-auto px-6 md:px-8 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-8 lg:gap-12">
           {/* Left Side - Scrollable Image Gallery */}
           <div className="w-full md:py-10 md:bg-white md:-mx-8 lg:-mx-12">
             {/* Mobile: Swipeable Carousel */}
-            <div className="md:hidden -mx-4">
+            <div className="md:hidden -mx-6">
               <div className="relative">
                 <div className="overflow-x-auto snap-x snap-mandatory scrollbar-hide flex">
                   {galleryImages.map((img, idx) => (
@@ -115,16 +132,25 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
           {/* Right Side - Sticky Product Information */}
           <div className="lg:sticky lg:top-20 lg:self-start py-8 md:py-10">
-            <div className="space-y-0 border border-neutral-300">
-              {/* Product Info Section */}
-              <div className="px-6 py-6 space-y-6">
-
-                {/* Product Title */}
-                <div>
-                  <h1 className="text-xl md:text-xl font-bold tracking-wide mb-3 leading-tight uppercase tracking-wide">
+            <div className="border border-black/20">
+              {/* Boxed Breadcrumbs Header */}
+              <div className="flex border-b border-black/20 bg-white">
+                <div className="border-r border-black/20">
+                  <Breadcrumbs 
+                    items={breadcrumbItems} 
+                    variant="boxed"
+                  />
+                </div>
+                <div className="flex-1"></div>
+              </div>
+              
+              <div className="px-6 py-8 space-y-8">
+                {/* Product Title & Price */}
+                <div className="space-y-4">
+                  <h1 className="text-xl md:text-2xl font-semibold tracking-tight uppercase leading-none">
                     {product.name}
                   </h1>
-                  <div className="text-lg tracking-wide font-regular">
+                  <div className="text-xl tracking-tight font-regular text-black">
                     {displayPrice}
                   </div>
                 </div>
@@ -138,7 +164,6 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     <div className="grid grid-cols-5 gap-2">
                        {variations
                         .map((variant) => {
-                          // Extract size from attributes
                           const sizeAttr = variant.attributes?.nodes?.find(
                             attr => attr.name.toLowerCase().includes('size')
                           );
@@ -150,19 +175,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                           };
                         })
                         .sort((a, b) => {
-                          // Define size order
                           const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
                           const indexA = sizeOrder.indexOf(a.displayName);
                           const indexB = sizeOrder.indexOf(b.displayName);
-                          
-                          // If both sizes are in the order array, sort by their position
-                          if (indexA !== -1 && indexB !== -1) {
-                            return indexA - indexB;
-                          }
-                          // If only one is in the array, prioritize it
+                          if (indexA !== -1 && indexB !== -1) return indexA - indexB;
                           if (indexA !== -1) return -1;
                           if (indexB !== -1) return 1;
-                          // Otherwise, sort alphabetically
                           return a.displayName.localeCompare(b.displayName);
                         })
                         .map(({ variant, displayName }) => {
@@ -202,8 +220,8 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 </div>
               </div>
 
-              {/* Accordion Sections */}
-              <div className="border-t border-neutral-300">
+              {/* Accordion Sections - Now following the industrial style */}
+              <div className="border-t border-black/20">
                 {/* Description */}
                 <AccordionItem 
                   title="Description" 

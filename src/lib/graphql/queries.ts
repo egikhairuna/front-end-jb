@@ -12,6 +12,13 @@ export const PRODUCT_FRAGMENT = graphql(`
       sourceUrl
       altText
     }
+    productCategories {
+      nodes {
+        id
+        name
+        slug
+      }
+    }
     ... on SimpleProduct {
       price
       rawPrice: price(format: RAW)
