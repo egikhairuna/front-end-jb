@@ -186,17 +186,11 @@ export default function LinksPage() {
                 rel={link.external ? "noopener noreferrer" : undefined}
                 className={cn(
                   "group relative flex items-center justify-center w-full p-4 rounded-xl border border-white/70 transition-all duration-300",
-                  "bg-transparent backdrop-blur-md hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:-translate-y-1",
-                  link.highlight && "border-white/20 bg-white/10"
+                  "bg-transparent backdrop-blur-md hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:-translate-y-1"
                 )}
               >
                 <div className="text-center">
                   <span className="block text-sm font-bold tracking-[0.1em] uppercase">{link.title}</span>
-                  {link.description && (
-                    <span className="block text-[10px] text-white/40 group-hover:text-black/40 font-medium uppercase mt-0.5 tracking-wider">
-                      {link.description}
-                    </span>
-                  )}
                 </div>
               </Link>
             </motion.div>
