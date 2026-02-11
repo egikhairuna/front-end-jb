@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, ArrowUpRight, Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 // Types for navigation items
 type FooterItem = {
@@ -45,7 +46,11 @@ const footerSections: FooterSection[] = [
 ];
 
 export function Footer() {
+  const pathname = usePathname();
   const [openSection, setOpenSection] = useState<string | null>(null);
+
+  // Hide footer on specific pages
+  if (pathname === "/links") return null;
 
   const toggleSection = (title: string) => {
     setOpenSection(openSection === title ? null : title);
