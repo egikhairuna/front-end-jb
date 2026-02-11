@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 const links = [
   {
     title: "FANCY",
-    href: "/shop",
+    href: "/shop?category=fancy",
     icon: <ShoppingBag className="w-5 h-5" />
   },
   {
@@ -39,9 +39,8 @@ const links = [
   },
   {
     title: "Ventile®",
-    href: "/shop?category=ventile",
-    icon: <MessageCircle className="w-5 h-5" />,
-    external: true
+    href: "/ventile",
+    icon: <MessageCircle className="w-5 h-5" />
   }
 ];
 
@@ -151,7 +150,7 @@ export default function LinksPage() {
              <h2 className="text-sm font-medium text-white uppercase">OUT NOW !</h2>
           </div>
           
-          <Link href="/shop?category=new-lofty" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+          <Link href="/shop?category=lofty" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
               src="/hero/Hero.jpg" 
               alt="SS026 Campaign" 
@@ -182,8 +181,6 @@ export default function LinksPage() {
             <motion.div key={link.href} variants={itemVariants}>
               <Link 
                 href={link.href}
-                target={link.external ? "_blank" : undefined}
-                rel={link.external ? "noopener noreferrer" : undefined}
                 className={cn(
                   "group relative flex items-center justify-center w-full p-4 rounded-xl border border-white/70 transition-all duration-300",
                   "bg-transparent backdrop-blur-md hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:-translate-y-1"
