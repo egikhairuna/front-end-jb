@@ -19,17 +19,17 @@ export function Breadcrumbs({ items, className, variant = "default" }: Breadcrum
     return (
       <nav 
         aria-label="Breadcrumb" 
-        className={cn("inline-flex items-center px-4 py-2 text-sm font-bold tracking-wider uppercase bg-white", className)}
+        className={cn("inline-flex items-center px-4 py-2 text-[11px] font-bold tracking-wider uppercase bg-white", className)}
       >
         {items.map((item, index) => (
           <div key={index} className="flex items-center">
             {index > 0 && (
-              <span className="mx-2 text-black/30 font-light">/</span>
+              <span className="mx-2 text-black font-light">/</span>
             )}
             {item.href && !item.active ? (
               <Link 
                 href={item.href}
-                className="hover:text-black/60 transition-colors text-black"
+                className="transition-colors text-black/50"
               >
                 {item.label}
               </Link>

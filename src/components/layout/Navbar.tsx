@@ -86,8 +86,16 @@ export function Navbar() {
 
   return (
     <header 
-      onMouseEnter={() => setIsHeaderHovered(true)}
-      onMouseLeave={() => setIsHeaderHovered(false)}
+      onMouseEnter={() => {
+        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+          setIsHeaderHovered(true);
+        }
+      }}
+      onMouseLeave={() => {
+        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+          setIsHeaderHovered(false);
+        }
+      }}
       className={cn(
         "fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 ease-in-out transform-gpu",
         isVisible ? "translate-y-0" : "-translate-y-full",
@@ -96,7 +104,7 @@ export function Navbar() {
           : "bg-white border-b border-black/5 shadow-sm"
       )}
     >
-      <div className="mx-auto px-6 md:px-8 lg:px-12 flex h-20 items-center">
+      <div className="mx-auto px-4 md:px-8 lg:px-12 flex h-20 items-center">
         {/* MOBILE LAYOUT */}
         <div className="flex w-full items-center md:hidden h-full">
           <div className="flex-1">
@@ -105,19 +113,28 @@ export function Navbar() {
                 <Menu className="h-6 w-6" />
               </Button>
             ) : (
-              <Sheet open={isOpen} onOpenChange={setIsOpen}>
+              <Sheet open={isOpen} onOpenChange={(open) => {
+                setIsOpen(open);
+                if (!open) setActiveMenu(null);
+              }}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
-                    <Menu className="h-6 w-6" />
+                    <Menu className="h-8 w-8" />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side={"fade" as any} className="w-full h-full p-0 bg-white border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
+                <SheetContent side={"fade" as any} className="w-full h-full p-0 bg-gradient-to-b from-[#0a1128] via-[#020617] to-black border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                   
                   {/* Header with Centered Logo and Close Button */}
-                  <div className="relative flex items-center justify-between px-6 h-20 border-b border-neutral-200">
-                    {/* Left spacer to keep symmetry if needed, or just rely on absolute positioning */}
-                    <div className="w-10"></div>
+                  <div className="relative flex items-center justify-between px-6 h-20 border-b border-white/10">
+                    {/* Close Button (Left aligned to match Hamburger icon position) */}
+                    <Button 
+                      variant="ghost" 
+                      onClick={() => setIsOpen(false)} 
+                      className="p-0 h-10 w-10 hover:bg-white/10 rounded-full flex items-center justify-center transition-colors"
+                    >
+                      <X className="h-8 w-8 text-white" />
+                    </Button>
 
                     {/* Centered Logo (Matches main navbar positioning) */}
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -127,34 +144,28 @@ export function Navbar() {
                           alt="JamesBoogie" 
                           width={140} 
                           height={35} 
-                          className="h-6 w-auto"
+                          className="h-6 w-auto brightness-0 invert"
                         />
                       </Link>
                     </div>
                     
-                    {/* Close Button (Right aligned to match Cart icon position) */}
-                    <Button 
-                      variant="ghost" 
-                      onClick={() => setIsOpen(false)} 
-                      className="p-0 h-10 w-10 hover:bg-neutral-100 rounded-full flex items-center justify-center transition-colors"
-                    >
-                      <X className="h-6 w-6 text-black" />
-                    </Button>
+                    {/* Right spacer to keep symmetry */}
+                    <div className="w-10"></div>
                   </div>
                   
                   {/* Navigation Menu */}
                   <nav className="flex-1 flex flex-col w-full px-6 py-4 overflow-y-auto">
                     {/* SHOP - with submenu */}
-                    <div className="border-b border-neutral-200">
+                    <div className="border-b border-white/10">
                       <button
                         onClick={() => setActiveMenu(activeMenu === "SHOP" ? null : "SHOP")}
-                        className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-black uppercase"
+                        className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-white uppercase"
                       >
                         SHOP
                         {activeMenu === "SHOP" ? (
-                          <IoIosArrowUp className="text-lg" />
+                          <IoIosArrowUp className="text-lg text-white" />
                         ) : (
-                          <IoIosArrowDown className="text-lg" />
+                          <IoIosArrowDown className="text-lg text-white" />
                         )}
                       </button>
                       <div className={cn(
@@ -169,7 +180,7 @@ export function Navbar() {
                                 key={item.label}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors uppercase"
+                                className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors uppercase"
                               >
                                 {item.label}
                               </Link>
@@ -182,7 +193,7 @@ export function Navbar() {
                                 key={item.label}
                                 href={item.href}
                                 onClick={() => setIsOpen(false)}
-                                className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors uppercase"
+                                className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors uppercase"
                               >
                                 {item.label}
                               </Link>
@@ -193,27 +204,27 @@ export function Navbar() {
                     </div>
 
                     {/* JOURNAL - direct link */}
-                    <div className="border-b border-neutral-200">
+                    <div className="border-b border-white/10">
                       <Link
                         href="/journal"
                         onClick={() => setIsOpen(false)}
-                        className="block py-4 text-sm font-bold tracking-wider text-black uppercase hover:opacity-50 transition-opacity"
+                        className="block py-4 text-sm font-bold tracking-wider text-white uppercase hover:opacity-50 transition-opacity"
                       >
                         JOURNAL
                       </Link>
                     </div>
 
                     {/* THE BRAND - with submenu */}
-                    <div className="border-b border-neutral-200">
+                    <div className="border-b border-white/10">
                       <button
                         onClick={() => setActiveMenu(activeMenu === "THE BRAND" ? null : "THE BRAND")}
-                        className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-black uppercase"
+                        className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-white uppercase"
                       >
                         THE BRAND
                         {activeMenu === "THE BRAND" ? (
-                          <IoIosArrowUp className="text-lg" />
+                          <IoIosArrowUp className="text-lg text-white" />
                         ) : (
-                          <IoIosArrowDown className="text-lg" />
+                          <IoIosArrowDown className="text-lg text-white" />
                         )}
                       </button>
                       <div className={cn(
@@ -224,21 +235,21 @@ export function Navbar() {
                           <Link
                             href="/our-story"
                             onClick={() => setIsOpen(false)}
-                            className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors"
+                            className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors"
                           >
                             OUR STORY
                           </Link>
                           <Link
                             href="/our-people"
                             onClick={() => setIsOpen(false)}
-                            className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors"
+                            className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors"
                           >
                             OUR PEOPLE
                           </Link>
                           <Link
                             href="/ventile"
                             onClick={() => setIsOpen(false)}
-                            className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors"
+                            className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors"
                           >
                             VENTILE®
                           </Link>
@@ -248,12 +259,12 @@ export function Navbar() {
                   </nav>
 
                   {/* Search Bar at Bottom */}
-                  <div className="p-6 border-t border-neutral-200 bg-neutral-50">
+                  <div className="p-6 border-t border-white/10 bg-black/20">
                     <div className="relative">
                       <input
                         type="text"
                         placeholder="Search products..."
-                        className="w-full px-4 py-3 pr-10 text-sm border border-neutral-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent"
+                        className="w-full px-4 py-3 pr-10 text-sm border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent bg-white/5 text-white placeholder:text-neutral-500"
                         onKeyDown={(e) => {
                           if (e.key === 'Enter') {
                             const searchValue = (e.target as HTMLInputElement).value;

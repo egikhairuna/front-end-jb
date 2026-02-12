@@ -61,7 +61,7 @@ export function ProductCarousel() {
 
   return (
     <section className="w-full py-12 border-b border-black/5 overflow-hidden">
-      <div className="flex items-center justify-between md:px-8 lg:px-12 mb-8">
+      <div className="flex items-center justify-between px-4 md:px-8 lg:px-12 mb-8">
         <h2 className="text-base font-bold tracking-widest uppercase border border-black px-3 py-1 inline-block">
           SHOP BY CATEGORY
         </h2>

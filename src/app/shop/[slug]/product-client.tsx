@@ -1,7 +1,8 @@
 
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
+import useEmblaCarousel from 'embla-carousel-react';
 import Image from "next/image";
 import { Product, ProductVariation } from "@/types/woocommerce";
 import { useCartStore } from "@/lib/store/cart";
@@ -25,6 +26,23 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const galleryImages = [product.image, ...(product.galleryImages?.nodes || [])].filter(Boolean);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [openSections, setOpenSections] = useState<string[]>(["description", "style-fit"]);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+
+  const onScroll = useCallback(() => {
+    if (!emblaApi) return;
+    const progress = Math.max(0, Math.min(1, emblaApi.scrollProgress()));
+    const index = emblaApi.selectedScrollSnap();
+    setActiveImageIndex(index);
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onScroll();
+    emblaApi.on('scroll', onScroll);
+    emblaApi.on('select', onScroll);
+    emblaApi.on('reInit', onScroll);
+  }, [emblaApi, onScroll]);
 
   const toggleSection = (section: string) => {
     setOpenSections(prev => 
@@ -67,19 +85,19 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   });
 
   return (
-    <div className="w-full pt-[120px]">
+    <div className="w-full pt-20 md:pt-[120px]">
       <div className="mx-auto px-6 md:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-0 lg:gap-12">
           {/* Left Side - Scrollable Image Gallery */}
           <div className="w-full md:py-10 md:bg-white md:-mx-8 lg:-mx-12">
-            {/* Mobile: Swipeable Carousel */}
+            {/* Mobile: Swipeable Loop Carousel */}
             <div className="md:hidden -mx-6">
-              <div className="relative">
-                <div className="overflow-x-auto snap-x snap-mandatory scrollbar-hide flex">
+              <div className="relative overflow-hidden" ref={emblaRef}>
+                <div className="flex">
                   {galleryImages.map((img, idx) => (
                     <div 
                       key={idx}
-                      className="min-w-full snap-center"
+                      className="relative flex-[0_0_100%] min-w-0"
                     >
                       <div 
                         className="relative aspect-[3/4] w-full bg-white active:scale-95 transition-transform"
@@ -96,15 +114,16 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     </div>
                   ))}
                 </div>
-                {/* Dots Indicator */}
+                {/* Progress Bar Indicator */}
                 {galleryImages.length > 1 && (
-                  <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2">
-                    {galleryImages.map((_, idx) => (
-                      <div 
-                        key={idx}
-                        className="w-2 h-2 rounded-full bg-white/50 backdrop-blur-sm"
-                      />
-                    ))}
+                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-black/10">
+                    <div 
+                      className="h-full bg-black transition-all duration-300 ease-out"
+                      style={{ 
+                        width: `${100 / galleryImages.length}%`,
+                        transform: `translateX(${activeImageIndex * 100}%)`
+                      }}
+                    />
                   </div>
                 )}
               </div>
@@ -131,10 +150,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
 
           {/* Right Side - Sticky Product Information */}
-          <div className="lg:sticky lg:top-20 lg:self-start py-8 md:py-10">
-            <div className="border border-black/20">
+          <div className="lg:sticky lg:top-20 lg:self-start pt-4 pb-8 md:py-10 ">
+            <div className="border-b md:border border-black/20 -mx-6 md:mx-0">
               {/* Boxed Breadcrumbs Header */}
-              <div className="flex border-b border-black/20 bg-white">
+              <div className="hidden md:flex border-b border-black/20 bg-white">
                 <div className="border-r border-black/20">
                   <Breadcrumbs 
                     items={breadcrumbItems} 
@@ -144,13 +163,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <div className="flex-1"></div>
               </div>
               
-              <div className="px-6 py-8 space-y-8">
+              <div className="px-6 pt-0 md:pt-6 pb-8 space-y-8">
                 {/* Product Title & Price */}
                 <div className="space-y-4">
                   <h1 className="text-xl md:text-2xl font-semibold tracking-tight uppercase leading-none">
                     {product.name}
                   </h1>
-                  <div className="text-xl tracking-tight font-regular text-black">
+                  <div className="text-lg tracking-wider font-regular text-black">
                     {displayPrice}
                   </div>
                 </div>
@@ -159,7 +178,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 {isVariableProduct && (
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-sm font-regular text-black/50 uppercase tracking-wide">SIZES</span>
+                      <span className="text-[11px] font-regular text-black/50 uppercase tracking-wide">SIZES</span>
                     </div>
                     <div className="grid grid-cols-5 gap-2">
                        {variations
