@@ -6,8 +6,15 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
-export function SearchDrawer({ triggerClassName }: { triggerClassName?: string }) {
-  const [open, setOpen] = useState(false);
+export function SearchDrawer({ triggerClassName, open: externalOpen, onOpenChange: externalOnOpenChange }: { 
+  triggerClassName?: string,
+  open?: boolean,
+  onOpenChange?: (open: boolean) => void 
+}) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = externalOpen !== undefined ? externalOpen : internalOpen;
+  const onOpenChange = externalOnOpenChange !== undefined ? externalOnOpenChange : setInternalOpen;
+  
   const [query, setQuery] = useState("");
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
@@ -26,49 +33,53 @@ export function SearchDrawer({ triggerClassName }: { triggerClassName?: string }
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && query.trim()) {
-        setOpen(false);
+        onOpenChange(false);
         router.push(`/shop?search=${encodeURIComponent(query)}`);
     }
   };
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
         <button className={cn("p-2 hover:opacity-50 transition-opacity", triggerClassName)}>
           <Search className="h-4 w-4" />
         </button>
       </SheetTrigger>
-      {/* Side="right" for side drawer. Adjusted classes for full height and proper width. */}
-      {/* sm:max-w-md provides a nice medium width for the sidebar */}
-      <SheetContent side="right" className="w-[400px] sm:max-w-md h-full flex flex-col pt-10 pb-0 bg-white [&>button]:hidden">
+      {/* Side="fade" for full-screen appearance. Adjusted classes for full height and width. */}
+      {/* Increased z-index to z-[150] to stay above the navbar (z-[100]) */}
+      <SheetContent side={"fade" as any} className="w-full h-full flex flex-col pt-4 md:pt-10 pb-0 bg-white border-none [&>button]:hidden shadow-none rounded-none animate-in animate-out fade-in fade-out duration-300 z-[150]">
         <SheetTitle className="sr-only">Search</SheetTitle>
-        <div className="w-full h-full flex flex-col relative px-6">
+        <div className="w-full h-full flex flex-col relative px-4 md:px-8 lg:px-12">
             {/* Header */}
-            <div className="flex justify-between items-center mb-8 pb-4 border-b border-neutral-100">
-                <span className="text-sm font-bold tracking-widest uppercase">Search</span>
+            <div className="flex justify-between items-center mb-16 md:mb-24">
+                <span className="text-sm font-bold tracking-[0.2em] uppercase">Search</span>
                 <SheetClose asChild>
-                    <button className="flex items-center gap-2 text-sm font-medium tracking-widest uppercase hover:opacity-50 transition-opacity">
-                        Close <X className="h-4 w-4" />
+                    <button className="flex items-center justify-center p-2 hover:opacity-50 transition-opacity">
+                        <X className="h-8 w-8 text-black" />
                     </button>
                 </SheetClose>
             </div>
 
-            {/* Input */}
-            <div className="w-full">
-                <input
-                    type="text"
-                    placeholder="Product name..."
-                    className="w-full text-xl md:text-2xl font-light border-b border-gray-200 py-4 focus:outline-none placeholder:text-gray-300 font-dinpro bg-transparent"
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    onKeyDown={handleSearch}
-                    autoFocus
-                />
+            {/* Input Section */}
+            <div className="max-w-4xl w-full mx-auto">
+                <div className="w-full relative">
+                    <input
+                        type="text"
+                        placeholder="Type to search"
+                        className="w-full text-3xl md:text-5xl lg:text-7xl font-bold border-b border-black/10 py-6 md:py-10 focus:outline-none placeholder:text-neutral-200 font-heading uppercase tracking-tighter bg-transparent"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleSearch}
+                        autoFocus
+                    />
+                </div>
+                
+                <p className="mt-6 md:mt-10 text-[10px] md:text-sm text-neutral-400 uppercase tracking-[0.2em] font-bold">
+                    Press Enter to search
+                </p>
             </div>
             
-            <p className="mt-4 text-xs text-muted-foreground uppercase tracking-wider">
-                Press Enter to search
-            </p>
+            {/* Future Placeholder for Featured/Recent: Could be added here */}
         </div>
       </SheetContent>
     </Sheet>

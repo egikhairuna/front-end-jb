@@ -25,6 +25,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const variations = product.variations?.nodes || [];
   const galleryImages = [product.image, ...(product.galleryImages?.nodes || [])].filter(Boolean);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
   const [openSections, setOpenSections] = useState<string[]>(["description", "style-fit"]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
@@ -100,7 +101,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                       className="relative flex-[0_0_100%] min-w-0"
                     >
                       <div 
-                        className="relative aspect-[3/4] w-full bg-white active:scale-95 transition-transform"
+                        className="relative aspect-[3/4] w-full bg-white transition-transform"
                         onClick={() => setPreviewImage(img.sourceUrl)}
                       >
                         <Image 
@@ -309,26 +310,63 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
         </div>
       </div>
-      <Dialog open={!!previewImage} onOpenChange={(open) => !open && setPreviewImage(null)}>
-        <DialogContent className="max-w-[90vw] max-h-[90vh] p-0 border-none bg-transparent shadow-none">
+      <Dialog 
+        open={!!previewImage} 
+        onOpenChange={(open) => {
+          if (!open) {
+            setPreviewImage(null);
+            setIsZoomed(false);
+          }
+        }}
+      >
+        <DialogContent 
+          showCloseButton={false}
+          className="max-w-[100vw] w-full h-[100vh] p-0 border-none bg-black/95 shadow-none rounded-none"
+        >
           <DialogTitle className="sr-only">Product Image Preview</DialogTitle>
-          <div className="relative w-full h-full min-h-[50vh] flex items-center justify-center">
+          <div className={cn(
+            "relative w-full h-full flex items-center justify-center transition-all duration-300",
+            isZoomed ? "overflow-auto cursor-zoom-out" : "overflow-hidden cursor-zoom-in"
+          )}>
             {previewImage && (
-              <Image
-                src={previewImage}
-                alt="Product Preview"
-                width={1200}
-                height={1600}
-                className="object-contain max-h-[90vh] w-auto h-auto rounded-md"
-                priority
-              />
+              <div 
+                className={cn(
+                  "relative transition-all duration-300 ease-in-out",
+                  isZoomed ? "min-w-[150%] md:min-w-[110%] py-10" : "w-full h-full flex items-center justify-center p-4"
+                )}
+                onClick={() => setIsZoomed(!isZoomed)}
+              >
+                <Image
+                  src={previewImage}
+                  alt="Product Preview"
+                  width={1600}
+                  height={2000}
+                  className={cn(
+                    "rounded-sm transition-all duration-300",
+                    isZoomed ? "w-full h-auto" : "object-contain max-h-[85vh] w-auto h-auto"
+                  )}
+                  priority
+                />
+              </div>
             )}
+            
+            {/* Custom Close Button */}
             <button 
-              onClick={() => setPreviewImage(null)}
-              className="absolute top-4 right-4 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-sm transition-colors"
+              onClick={() => {
+                setPreviewImage(null);
+                setIsZoomed(false);
+              }}
+              className="fixed top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-md transition-colors z-[60]"
             >
-              <X className="w-6 h-6" />
+              <X className="w-8 h-8" />
             </button>
+            
+            {/* Zoom Hint (Optional, only show when not zoomed) */}
+            {!isZoomed && (
+              <div className="fixed bottom-10 left-1/2 -translate-x-1/2 pointer-events-none text-white/40 text-[10px] uppercase tracking-widest font-bold">
+                Tap to Zoom
+              </div>
+            )}
           </div>
         </DialogContent>
       </Dialog>

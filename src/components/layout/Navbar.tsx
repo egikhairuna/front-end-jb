@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Menu, Search, X } from "lucide-react";
+import { Facebook, Instagram, Menu, Search, X } from "lucide-react";
 import { CartDrawer } from "@/components/cart/CartDrawer";
 import { SearchDrawer } from "@/components/layout/SearchDrawer";
 import { usePathname } from "next/navigation";
@@ -20,6 +20,7 @@ export function Navbar() {
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMounted, setIsMounted] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
   const lastScrollY = useRef(0);
@@ -104,6 +105,11 @@ export function Navbar() {
           : "bg-white border-b border-black/5 shadow-sm"
       )}
     >
+      <SearchDrawer 
+        open={isSearchOpen} 
+        onOpenChange={setIsSearchOpen} 
+        triggerClassName="hidden" // Hidden trigger because we use custom buttons
+      />
       <div className="mx-auto px-4 md:px-8 lg:px-12 flex h-20 items-center">
         {/* MOBILE LAYOUT */}
         <div className="flex w-full items-center md:hidden h-full">
@@ -159,7 +165,7 @@ export function Navbar() {
                     <div className="border-b border-white/10">
                       <button
                         onClick={() => setActiveMenu(activeMenu === "SHOP" ? null : "SHOP")}
-                        className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-white uppercase"
+                        className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-white uppercase"
                       >
                         SHOP
                         {activeMenu === "SHOP" ? (
@@ -208,7 +214,7 @@ export function Navbar() {
                       <Link
                         href="/journal"
                         onClick={() => setIsOpen(false)}
-                        className="block py-4 text-sm font-bold tracking-wider text-white uppercase hover:opacity-50 transition-opacity"
+                        className="block py-4 text-sm font-regular tracking-wider text-white uppercase hover:opacity-50 transition-opacity"
                       >
                         JOURNAL
                       </Link>
@@ -218,7 +224,7 @@ export function Navbar() {
                     <div className="border-b border-white/10">
                       <button
                         onClick={() => setActiveMenu(activeMenu === "THE BRAND" ? null : "THE BRAND")}
-                        className="w-full flex items-center justify-between py-4 text-sm font-bold tracking-wider text-white uppercase"
+                        className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-white uppercase"
                       >
                         THE BRAND
                         {activeMenu === "THE BRAND" ? (
@@ -258,25 +264,37 @@ export function Navbar() {
                     </div>
                   </nav>
 
-                  {/* Search Bar at Bottom */}
-                  <div className="p-6 border-t border-white/10 bg-black/20">
-                    <div className="relative">
-                      <input
-                        type="text"
-                        placeholder="Search products..."
-                        className="w-full px-4 py-3 pr-10 text-sm border border-white/20 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent bg-white/5 text-white placeholder:text-neutral-500"
-                        onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            const searchValue = (e.target as HTMLInputElement).value;
-                            if (searchValue.trim()) {
-                              window.location.href = `/shop?search=${encodeURIComponent(searchValue)}`;
-                            }
-                          }
-                        }}
-                      />
-                      <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
-                    </div>
-                  </div>
+                   {/* Bottom Section - Social Icons and Search Trigger */}
+                   <div className="p-6 border-t border-white/10 bg-black/20 flex items-center justify-between">
+                     <div className="flex items-center gap-6">
+                       <Link 
+                         href="https://www.instagram.com/james.boogie/" 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="text-white hover:text-neutral-400 transition-colors"
+                       >
+                         <Instagram className="h-5 w-5" />
+                       </Link>
+                       <Link 
+                         href="https://www.facebook.com/jamesboogieid" 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="text-white hover:text-neutral-400 transition-colors"
+                       >
+                         <Facebook className="h-5 w-5" />
+                       </Link>
+                     </div>
+ 
+                     <button 
+                       onClick={() => {
+                         setIsOpen(false);
+                         setIsSearchOpen(true);
+                       }}
+                       className="text-white p-0 hover:bg-transparent transition-opacity"
+                     >
+                       <Search className="h-5 w-5" />
+                     </button>
+                   </div>
                 </SheetContent>
               </Sheet>
             )}
@@ -338,7 +356,12 @@ export function Navbar() {
 
           {/* RIGHT: ICONS */}
           <div className="flex items-center justify-end gap-2">
-            <SearchDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
+            <button 
+              onClick={() => setIsSearchOpen(true)}
+              className={cn("p-2 hover:opacity-50 transition-opacity", isTransparent ? "text-white" : "text-black")}
+            >
+              <Search className="h-4 w-4" />
+            </button>
             <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
           </div>
         </div>
