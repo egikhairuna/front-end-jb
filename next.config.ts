@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      { protocol: "https", hostname: "jamesboogie.com" },
+      { protocol: "https", hostname: "vps.jamesboogie.com" },
       { protocol: "https", hostname: "secure.gravatar.com" },
       { protocol: "https", hostname: "images.unsplash.com" }
     ],
@@ -43,11 +43,11 @@ const nextConfig: NextConfig = {
             key: 'Content-Security-Policy',
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://jamesboogie.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vps.jamesboogie.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' blob: data: https://jamesboogie.com https://images.unsplash.com https://secure.gravatar.com https://www.google.com https://maps.gstatic.com",
+              "img-src 'self' blob: data: https://vps.jamesboogie.com https://images.unsplash.com https://secure.gravatar.com https://www.google.com https://maps.gstatic.com",
               "font-src 'self' data: https://fonts.gstatic.com",
-              "connect-src 'self' https://jamesboogie.com https://apiv2.jne.co.id:10205",
+              "connect-src 'self' https://vps.jamesboogie.com https://apiv2.jne.co.id:10205",
               "frame-src 'self' https://www.google.com",
               "frame-ancestors 'none'",
               "upgrade-insecure-requests"

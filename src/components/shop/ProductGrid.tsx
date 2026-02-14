@@ -137,7 +137,7 @@ export function ProductGrid({ initialProducts, initialPageInfo, category, search
                             <h3 className="font-medium lg:text-[15px] tracking-wider text-[12px] uppercase md:text-sm mb-2 line-clamp-2">
                                 {product.name}
                             </h3>
-                            <p className="text-[12px] font-medium tracking-[0.1em]">
+                            <p className="text-[14px] font-medium tracking-[0.1em]">
                                 {product.price ? cleanPrice(product.price) : formatPrice(0)} 
                             </p>
                         </div>

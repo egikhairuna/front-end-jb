@@ -21,10 +21,10 @@ export function Hero() {
       </div>
 
       <header className="relative z-10 max-w-2xl space-y-6">
-        <h1 className="text-5xl md:text-5xl font-bold font-heading tracking-tight leading-[0.9]">
+        <h1 className="text-3xl md:text-5xl font-bold font-heading tracking-tight leading-[0.9]">
           LOFTY '026
         </h1>
-        <p className="text-lg md:text-sm text-neutral-200 max-w-md tracking-wider">
+        <p className="text-sm md:text-sm text-neutral-200 max-w-md tracking-wider">
           An exploration of form, colours, and craft
         </p>
         <div className="flex items-center justify-start gap-4 ">
