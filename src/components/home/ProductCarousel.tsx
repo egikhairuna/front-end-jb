@@ -51,7 +51,7 @@ export function ProductCarousel() {
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = window.innerWidth < 768 ? clientWidth : clientWidth / 4;
+      const scrollAmount = window.innerWidth < 768 ? clientWidth * 0.8 : clientWidth / 4;
       scrollRef.current.scrollTo({
         left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
         behavior: 'smooth'
@@ -78,12 +78,12 @@ export function ProductCarousel() {
       <div className="w-full">
           <div 
             ref={scrollRef}
-            className="flex overflow-x-auto md:overflow-x-hidden snap-x snap-mandatory scrollbar-hide will-change-transform"
+            className="flex overflow-x-auto md:overflow-x-hidden snap-x snap-mandatory scrollbar-hide will-change-transform px-4 md:px-0"
           >
              {categories.map((category) => (
                  <div 
                     key={category.id} 
-                    className="min-w-full md:min-w-[25%] snap-center border-r border-transparent md:border-black/5 last:border-none select-none"
+                    className="min-w-[80%] md:min-w-[25%] snap-start border-r border-transparent md:border-black/5 last:border-none select-none pr-2 md:pr-0"
                  >
                     <Link href={category.href} className="block group">
                         <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100">
