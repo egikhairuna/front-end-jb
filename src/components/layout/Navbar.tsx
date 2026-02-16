@@ -443,9 +443,9 @@ export function Navbar() {
       >
         <div className="mx-auto px-4 md:px-8 lg:px-12 py-12 grid grid-cols-3">
           {[
-            { title: "OUR STORY", href: "/our-story", img: "/images/JV-lookbook.jpg" },
-            { title: "OUR PEOPLE", href: "/our-people", img: "/images/our-people.jpg" },
-            { title: "VENTILE®", href: "/ventile", img: "/images/ventile-poster.jpg" }
+            { title: "OUR STORY", href: "/our-story", img: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Wallpaper_Moxie_Potrait_FHD.jpg" },
+            { title: "OUR PEOPLE", href: "/our-people", img: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/our-people.jpg" },
+            { title: "VENTILE®", href: "/ventile", img: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/ventile-poster-scaled.jpg" }
           ].map((item, index) => (
             <Link 
               key={index} 
