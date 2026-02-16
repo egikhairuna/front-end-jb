@@ -300,6 +300,29 @@ export const GET_ORDER_DETAILS = graphql(`
           total
         }
       }
+  }
+`);
+
+// Sitemap Queries - Fetch all published content with minimal fields
+export const GET_ALL_POSTS_FOR_SITEMAP = graphql(`
+  query GetAllPostsForSitemap {
+    posts(first: 1000, where: { status: PUBLISH }) {
+      nodes {
+        slug
+        modified
+      }
     }
   }
 `);
+
+export const GET_ALL_PRODUCTS_FOR_SITEMAP = graphql(`
+  query GetAllProductsForSitemap {
+    products(first: 1000, where: { status: "publish" }) {
+      nodes {
+        slug
+        modified
+      }
+    }
+  }
+`);
+
