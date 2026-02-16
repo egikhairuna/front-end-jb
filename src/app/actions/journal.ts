@@ -1,6 +1,6 @@
 "use server";
 
-import { client } from "@/lib/graphql/client";
+import { serverClient } from "@/lib/graphql/server-client";
 import { GET_POSTS } from "@/lib/graphql/queries";
 
 interface Post {
@@ -19,7 +19,7 @@ interface Post {
 
 export async function fetchMorePosts({ after }: { after: string }) {
     try {
-        const data: any = await client.request(GET_POSTS, {
+        const data: any = await serverClient.request(GET_POSTS, {
             first: 6, // Consistent with initial load
             after
         });

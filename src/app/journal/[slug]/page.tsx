@@ -1,5 +1,5 @@
 import { Footer } from "@/components/layout/Footer";
-import { client } from "@/lib/graphql/client";
+import { serverClient } from "@/lib/graphql/server-client";
 import { GET_POST_BY_SLUG } from "@/lib/graphql/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
@@ -34,7 +34,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const data: any = await client.request(GET_POST_BY_SLUG, { slug });
+    const data: any = await serverClient.request(GET_POST_BY_SLUG, { slug });
     const post = data.post as Post;
     
     if (!post) return { title: "Post Not Found" };
@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getPost(slug: string) {
     try {
-        const data: any = await client.request(GET_POST_BY_SLUG, { slug });
+        const data: any = await serverClient.request(GET_POST_BY_SLUG, { slug });
         return data.post as Post;
     } catch (error) {
         console.error("Error fetching post:", error);

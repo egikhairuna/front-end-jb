@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { Footer } from "@/components/layout/Footer";
-import { client } from "@/lib/graphql/client";
+import { serverClient } from "@/lib/graphql/server-client";
 import { GET_POSTS } from "@/lib/graphql/queries";
 import { JournalGrid } from "@/components/journal/JournalGrid";
 
@@ -29,7 +29,7 @@ interface Post {
 
 async function getPosts() {
     try {
-        const data: any = await client.request(GET_POSTS, { first: 6 });
+        const data: any = await serverClient.request(GET_POSTS, { first: 6 });
         return {
             nodes: data.posts.nodes as Post[],
             pageInfo: data.posts.pageInfo

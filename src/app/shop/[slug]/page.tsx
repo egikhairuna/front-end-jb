@@ -1,5 +1,5 @@
 import { Navbar } from "@/components/layout/Navbar";
-import { client } from "@/lib/graphql/client";
+import { serverClient } from "@/lib/graphql/server-client";
 import { GET_PRODUCT, GET_RELATED_PRODUCTS } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 import { ProductDetailClient } from "./product-client";
@@ -18,7 +18,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const data: any = await client.request(GET_PRODUCT, {
+    const data: any = await serverClient.request(GET_PRODUCT, {
       id: slug,
       idType: "SLUG"
     });
@@ -47,7 +47,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getProduct(slug: string) {
     try {
-        const data: any = await client.request(GET_PRODUCT, {
+        const data: any = await serverClient.request(GET_PRODUCT, {
             id: slug,
             idType: "SLUG"
         });

@@ -3,7 +3,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { MarketingGrid } from "@/components/home/MarketingGrid";
-import { client } from "@/lib/graphql/client";
+import { serverClient } from "@/lib/graphql/server-client";
 import { GET_PRODUCTS } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 // Helper function to fetch data
 async function getFeaturedProducts() {
   try {
-    const data: any = await client.request(GET_PRODUCTS, { first: 8 });
+    const data: any = await serverClient.request(GET_PRODUCTS, { first: 8 });
     return data.products.nodes as Product[];
   } catch (error) {
     console.error("Error fetching products:", error);

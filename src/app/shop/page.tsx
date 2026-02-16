@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
-import { client } from "@/lib/graphql/client";
+import { serverClient } from "@/lib/graphql/server-client";
 import { GET_PRODUCTS, GET_CATEGORIES } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 import { ProductGrid } from "@/components/shop/ProductGrid";
@@ -36,7 +36,7 @@ async function getProducts({
    try {
      const categoryFilter = (category === "all-products" || !category) ? null : category;
 
-     const data: any = await client.request(GET_PRODUCTS, {
+     const data: any = await serverClient.request(GET_PRODUCTS, {
        first,
        after,
        category: categoryFilter,
@@ -52,7 +52,7 @@ async function getProducts({
 
 async function getCategories() {
     try {
-        const data: any = await client.request(GET_CATEGORIES);
+        const data: any = await serverClient.request(GET_CATEGORIES);
         return data.productCategories.nodes;
     } catch (error) {
         return [];
