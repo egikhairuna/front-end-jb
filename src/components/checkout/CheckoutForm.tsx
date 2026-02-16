@@ -188,7 +188,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           {/* LEFT COLUMN: CONTACT & ADDRESS */}
-          <div className="space-y-10 border w-full border-black p-8">
+          <div className="space-y-10 border border-black/50 md:border-black p-8 -mx-4 md:mx-0">
             <section>
               <h2 className="text-sm font-bold uppercase tracking-wider mb-6 border-b border-black pb-2">
                 Contact Information
@@ -327,7 +327,7 @@ export default function CheckoutPage() {
 
           {/* RIGHT COLUMN: ORDER SUMMARY */}
           <div className="lg:pl-8">
-            <div className="sticky top-8 space-y-8 border border-black p-8">
+            <div className="sticky top-8 space-y-8 border border-black/50 md:border-black p-8 -mx-4 md:mx-0">
               <section>
                 <h2 className="text-sm font-bold uppercase tracking-wider mb-6 py-4 border-b border-black ">
                   ORDER SUMMARY
