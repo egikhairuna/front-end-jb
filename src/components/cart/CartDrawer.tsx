@@ -2,9 +2,9 @@
 "use client";
 
 import { useCartStore } from "@/lib/store/cart";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2, X } from "lucide-react";
 import { PiShoppingBag } from "react-icons/pi";
 import Image from "next/image";
 import Link from "next/link";
@@ -33,9 +33,14 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col w-full sm:max-w-md">
-        <SheetHeader>
-          <SheetTitle>SUMMARY</SheetTitle>
+      <SheetContent className="flex flex-col w-full sm:max-w-md z-[200] [&>button]:hidden">
+        <SheetHeader className="flex flex-row items-center justify-between border-b pb-4 px-6">
+          <SheetTitle className="text-sm font-bold tracking-[0.2em] uppercase">Order Summary</SheetTitle>
+          <SheetClose asChild>
+            <Button variant="ghost" size="icon" className="h-10 w-10 hover:bg-transparent -mr-2">
+               <X className="h-7 w-7" />
+            </Button>
+          </SheetClose>
         </SheetHeader>
         <div className="flex-1 overflow-y-auto py-4">
           {items.length === 0 ? (
@@ -48,7 +53,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
             <div className="space-y-4 px-2">
               {items.map((item) => (
                 <div key={`${item.product.id}-${item.variation?.id || 'base'}`} className="flex space-x-4">
-                  <div className="relative h-20 w-20 rounded-md overflow-hidden bg-secondary">
+                  <div className="relative w-20 aspect-[4/5] rounded-md overflow-hidden bg-secondary">
                      {item.product.image?.sourceUrl && (
                         <Image 
                             src={item.product.image.sourceUrl} 
@@ -106,7 +111,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
                           </div>
                           {isMaxReached && stockLimit !== null && (
                             <p className="text-[10px] text-destructive font-medium uppercase tracking-widest">
-                              Limit: {stockLimit} items in stock
+                              Maximum quantity reached
                             </p>
                           )}
                         </div>
