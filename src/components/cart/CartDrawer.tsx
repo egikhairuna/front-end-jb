@@ -68,33 +68,50 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
                     <p className="text-sm font-semibold">
                       {item.variation?.price ? cleanPrice(item.variation.price) : (item.product.price ? cleanPrice(item.product.price) : formatPrice(0))}
                     </p>
-                    <div className="flex items-center space-x-2">
-                        <Button 
-                            variant="outline" 
-                            size="icon" 
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.variation?.id)}
-                        >
-                            <Minus className="h-3 w-3" />
-                        </Button>
-                        <span className="text-sm w-4 text-center">{item.quantity}</span>
-                        <Button 
-                            variant="outline" 
-                            size="icon" 
-                            className="h-6 w-6"
-                            onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.variation?.id)}
-                        >
-                            <Plus className="h-3 w-3" />
-                        </Button>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6 text-destructive ml-auto"
-                            onClick={() => removeItem(item.product.id, item.variation?.id)}
-                        >
-                             <Trash2 className="h-3 w-3" />
-                        </Button>
-                    </div>
+                    
+                    {/* Quantity & Stock Validation */}
+                    {(() => {
+                      const stockLimit = item.variation ? item.variation.stockQuantity : item.product.stockQuantity;
+                      const isMaxReached = stockLimit !== null && stockLimit !== undefined && item.quantity >= stockLimit;
+                      
+                      return (
+                        <div className="space-y-1.5">
+                          <div className="flex items-center space-x-2">
+                              <Button 
+                                  variant="outline" 
+                                  size="icon" 
+                                  className="h-6 w-6"
+                                  onClick={() => updateQuantity(item.product.id, item.quantity - 1, item.variation?.id)}
+                              >
+                                  <Minus className="h-3 w-3" />
+                              </Button>
+                              <span className="text-sm w-4 text-center">{item.quantity}</span>
+                              <Button 
+                                  variant="outline" 
+                                  size="icon" 
+                                  className="h-6 w-6"
+                                  disabled={isMaxReached}
+                                  onClick={() => updateQuantity(item.product.id, item.quantity + 1, item.variation?.id)}
+                              >
+                                  <Plus className="h-3 w-3" />
+                              </Button>
+                              <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-6 w-6 text-destructive ml-auto"
+                                  onClick={() => removeItem(item.product.id, item.variation?.id)}
+                              >
+                                   <Trash2 className="h-3 w-3" />
+                              </Button>
+                          </div>
+                          {isMaxReached && stockLimit !== null && (
+                            <p className="text-[10px] text-destructive font-medium uppercase tracking-widest">
+                              Limit: {stockLimit} items in stock
+                            </p>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               ))}

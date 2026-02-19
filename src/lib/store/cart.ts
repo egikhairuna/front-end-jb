@@ -17,13 +17,28 @@ export const useCartStore = create<CartState>()(
             item.variation?.id === variation?.id
         );
 
+        // Stock quantity limit check
+        const stockLimit = variation ? variation.stockQuantity : product.stockQuantity;
+
         if (existingItemIndex > -1) {
           const newItems = [...currentItems];
-          newItems[existingItemIndex].quantity += quantity;
+          const currentQty = newItems[existingItemIndex].quantity;
+          const targetQty = currentQty + quantity;
+          
+          if (stockLimit !== null && stockLimit !== undefined && targetQty > stockLimit) {
+            newItems[existingItemIndex].quantity = stockLimit;
+          } else {
+            newItems[existingItemIndex].quantity = targetQty;
+          }
+          
           set({ items: newItems, isOpen: true });
         } else {
+          let finalQuantity = quantity;
+          if (stockLimit !== null && stockLimit !== undefined && quantity > stockLimit) {
+            finalQuantity = stockLimit;
+          }
           set({ 
-            items: [...currentItems, { product, quantity, variation }],
+            items: [...currentItems, { product, quantity: finalQuantity, variation }],
             isOpen: true 
           });
         }
@@ -43,10 +58,18 @@ export const useCartStore = create<CartState>()(
            get().removeItem(productId, variationId);
            return;
         }
+        
         set({
           items: get().items.map((item) => {
             if (item.product.id === productId && item.variation?.id === variationId) {
-              return { ...item, quantity };
+              const stockLimit = item.variation ? item.variation.stockQuantity : item.product.stockQuantity;
+              let finalQuantity = quantity;
+              
+              if (stockLimit !== null && stockLimit !== undefined && quantity > stockLimit) {
+                finalQuantity = stockLimit;
+              }
+              
+              return { ...item, quantity: finalQuantity };
             }
             return item;
           }),
