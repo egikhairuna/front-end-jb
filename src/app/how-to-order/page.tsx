@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { HowToOrderClient } from "./HowToOrderClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "How to Order",
   description: "Learn how to place an order at jamesboogie.com, from browsing products to payment and shipping confirmation.",

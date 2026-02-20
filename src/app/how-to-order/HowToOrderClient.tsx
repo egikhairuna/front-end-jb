@@ -144,7 +144,7 @@ export function HowToOrderClient() {
 
   return (
     <div className="flex-1 min-h-screen pt-32 pb-24 bg-white text-black">
-        <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
+        <div className="w-full px-6 md:px-8 lg:px-12">
           
           {/* Header & Language Toggle */}
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
