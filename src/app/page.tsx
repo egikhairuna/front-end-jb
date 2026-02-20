@@ -3,11 +3,10 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
 import { MarketingGrid } from "@/components/home/MarketingGrid";
-import { serverClient } from "@/lib/graphql/server-client";
+import { fetchGraphQL } from "@/lib/graphql/server-client";
 import { GET_PRODUCTS } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 
-// Enhanced SEO metadata for homepage
 export const metadata: Metadata = {
   title: "James Boogie",
   description: "Discover James Boogie's premium Pop Military streetwear collection. Explore our latest fashion pieces blending military with contemporary street style. Shop online or visit our flagship store.",
@@ -31,10 +30,15 @@ export const metadata: Metadata = {
   },
 };
 
-// Helper function to fetch data
+// ⚡ Global ISR: Homepage updates every 1h
+export const revalidate = 3600;
+
 async function getFeaturedProducts() {
   try {
-    const data: any = await serverClient.request(GET_PRODUCTS, { first: 8 });
+    const data: any = await fetchGraphQL(GET_PRODUCTS, { first: 8 }, {
+      revalidate: 3600,
+      tags: ['products', 'featured']
+    });
     return data.products.nodes as Product[];
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -42,7 +46,7 @@ async function getFeaturedProducts() {
   }
 }
 
-// JSON-LD Structured Data for Organization
+// JSON-LD Structured Data
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "ClothingStore",
@@ -67,13 +71,7 @@ const organizationSchema = {
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
+      "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
     ],
     "opens": "10:00",
     "closes": "21:00"
@@ -91,11 +89,12 @@ const organizationSchema = {
 };
 
 export default async function Home() {
-  const products = await getFeaturedProducts();
+  // Though currently unused in props, keeping it for data cache warming 
+  // and potential future use in ProductCarousel
+  await getFeaturedProducts();
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}

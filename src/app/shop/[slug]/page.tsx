@@ -1,10 +1,13 @@
 import { Navbar } from "@/components/layout/Navbar";
-import { serverClient } from "@/lib/graphql/server-client";
-import { GET_PRODUCT, GET_RELATED_PRODUCTS } from "@/lib/graphql/queries";
+import { fetchGraphQL } from "@/lib/graphql/server-client";
+import { GET_PRODUCT } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 import { ProductDetailClient } from "./product-client";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+
+// ⚡ Global ISR: Individual products revalidate every 1h
+export const revalidate = 3600;
 
 // Types
 type Props = {
@@ -13,20 +16,22 @@ type Props = {
 
 /**
  * 🔍 DYNAMIC SEO METADATA
- * Ensures each product has its own title and description for search engines
+ * Next.js dedupes this fetch automatically with the same params in the page component.
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   try {
-    const data: any = await serverClient.request(GET_PRODUCT, {
+    const data: any = await fetchGraphQL(GET_PRODUCT, {
       id: slug,
       idType: "SLUG"
+    }, {
+      revalidate: 3600,
+      tags: [`product-${slug}`]
     });
     const product = data.product as Product;
     
     if (!product) return { title: "Product Not Found" };
 
-    // Clean HTML tags from description
     const cleanDescription = (product.shortDescription || product.description || "")
       .replace(/<[^>]*>/g, "")
       .substring(0, 160);
@@ -47,9 +52,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 async function getProduct(slug: string) {
     try {
-        const data: any = await serverClient.request(GET_PRODUCT, {
+        const data: any = await fetchGraphQL(GET_PRODUCT, {
             id: slug,
             idType: "SLUG"
+        }, {
+            revalidate: 3600,
+            tags: [`product-${slug}`]
         });
         return data.product as Product;
     } catch (error) {
