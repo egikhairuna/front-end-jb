@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { ClientOnly } from "@/components/shared/ClientOnly";
 import { ConditionalNavbar } from "@/components/layout/ConditionalNavbar";
+import GTM, { GTMNoScript } from "@/components/analytics/GTM";
 
 const dinPro = localFont({
   src: [
@@ -101,6 +102,8 @@ export default function RootLayout({
       <body
         className={`${dinPro.variable} antialiased bg-background text-foreground font-sans`}
       >
+        <GTMNoScript />
+        <GTM />
         <ClientOnly>
           <ConditionalNavbar>
             <Navbar />
