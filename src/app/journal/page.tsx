@@ -4,6 +4,9 @@ import { serverClient } from "@/lib/graphql/server-client";
 import { GET_POSTS } from "@/lib/graphql/queries";
 import { JournalGrid } from "@/components/journal/JournalGrid";
 
+export const dynamic = "force-dynamic";
+
+
 export const metadata: Metadata = {
     title: "Journal",
     description: "Explore the James Boogie Journal for the latest stories, lookbooks, and insights into Pop Military fashion and culture.",

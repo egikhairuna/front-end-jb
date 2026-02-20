@@ -320,7 +320,7 @@ export function Navbar() {
         {/* DESKTOP LAYOUT (Three Columns) */}
         <div className="hidden md:grid md:grid-cols-3 w-full items-center h-full">
           {/* LEFT: LINKS */}
-          <nav className="flex items-center gap-8 text-sm font-bold tracking-[0.2em] h-full">
+          <nav className="flex items-center gap-8 text-[13px] font-bold tracking-[0.2em] h-full">
              {navLinks.map((link) => (
                 <div
                   key={link.href}
@@ -382,7 +382,7 @@ export function Navbar() {
             <div className="space-y-4">
               <h3 className="text-sm font-bold tracking-[0.2em] text-black uppercase pt-4">PRODUCTS</h3>
               <ul className="space-y-3 pt-2">
-                {shopMenu.products.filter(item => item.label !== "ALL PRODUCTS").map((item) => (
+                {shopMenu.products.map((item) => (
                   <li key={item.label} className="flex items-center gap-2">
                     <span className="text-[10px] text-neutral-400 font-bold tracking-tighter">&gt;</span>
                     <Link 
@@ -421,7 +421,7 @@ export function Navbar() {
           <div className="p-12 h-full flex flex-col justify-center items-center bg-neutral-50/50">
             <div className="aspect-[3/4] w-full max-w-[280px] bg-neutral-100 border border-black/5 relative group cursor-pointer transition-all hover:bg-neutral-200 flex flex-col items-center justify-center">
                 <Image
-                  src="/images/featured-lofty.jpg"
+                  src="https://vps.jamesboogie.com/wp-content/uploads/2026/02/Lofty-Thumb-Teaser-Potrait-1-of-1.jpg"
                   alt="Lofty"
                   width={280}
                   height={373}

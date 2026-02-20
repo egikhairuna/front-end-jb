@@ -151,7 +151,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
 
           {/* Right Side - Sticky Product Information */}
-          <div className="lg:sticky lg:top-20 lg:self-start pt-4 pb-8 md:py-10 ">
+          <div className="lg:sticky lg:top-20 lg:self-start pt-4 pb-0 md:pb-8 md:py-10 ">
             <div className="border-b md:border border-black/20 -mx-6 md:mx-0">
               {/* Boxed Breadcrumbs Header */}
               <div className="hidden md:flex border-b border-black/20 bg-white">
@@ -250,11 +250,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 >
                   {product.description ? (
                     <div 
-                      className="prose prose-sm max-w-none text-base leading-relaxed"
+                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: product.description }} 
                     />
                   ) : (
-                    <p className="text-sm leading-relaxed">
+                    <p className="text-[13px] leading-relaxed">
                       No description available.
                     </p>
                   )}
@@ -268,7 +268,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     onClick={() => toggleSection('style-fit')}
                   >
                     <div 
-                      className="prose prose-sm max-w-none text-base leading-relaxed"
+                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: product.sizeChart.sizeChart }} 
                     />
                   </AccordionItem>
@@ -282,7 +282,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     onClick={() => toggleSection('features')}
                   >
                      <div 
-                      className="prose prose-sm max-w-none text-base leading-relaxed"
+                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: product.features.features }} 
                     />
                   </AccordionItem>
@@ -296,11 +296,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 >
                   {product.shortDescription ? (
                      <div 
-                      className="prose prose-sm max-w-none text-base leading-relaxed"
+                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: product.shortDescription }} 
                     />
                   ) : (
-                    <p className="text-sm leading-relaxed">
+                    <p className="text-[13px] leading-relaxed">
                       Machine wash cold. Do not tumble dry.
                     </p>
                   )}

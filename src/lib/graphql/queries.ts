@@ -242,7 +242,7 @@ export const POST_FRAGMENT = graphql(`
 export const GET_POSTS = graphql(`
   ${POST_FRAGMENT}
   query GetPosts($first: Int!, $after: String) {
-    posts(first: $first, after: $after) {
+    posts(first: $first, after: $after, where: { status: PUBLISH }) {
       pageInfo {
         hasNextPage
         endCursor
