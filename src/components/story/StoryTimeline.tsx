@@ -74,7 +74,7 @@ export const StoryTimeline: React.FC = () => {
       {/* Sticky Tabs Navigation */}
       <nav className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border z-50 pt-20">
         <div className="w-full overflow-x-auto scrollbar-hide">
-          <div className="flex px-4 md:px-12 space-x-8 md:space-x-12 w-full justify-center">
+          <div className="flex px-6 md:px-8 lg:px-12 space-x-8 md:space-x-12 w-full justify-center">
             {STORY_DATA.map((item) => (
               <button
                 key={item.year}
@@ -111,7 +111,7 @@ export const StoryTimeline: React.FC = () => {
           >
             {/* Left Column: Text */}
             <div className={cn(
-              "space-y-8 px-6 md:px-12 lg:px-24 py-12 lg:py-24",
+              "space-y-8 px-6 md:px-8 lg:px-12 py-12 lg:py-24",
               index % 2 === 1 ? "lg:order-2" : "lg:order-1"
             )}>
               <div className="space-y-4">

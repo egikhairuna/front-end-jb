@@ -103,7 +103,7 @@ export function OurPeopleClient() {
   return (
     <div className="flex-1 min-h-screen pt-24 bg-white text-black">
         {/* Page Hero */}
-        <section className="px-6 md:px-12 lg:px-10 py-24 md:py-32 border-b border-neutral-100">
+        <section className="px-6 md:px-8 lg:px-12 py-24 md:py-32 border-b border-neutral-100">
           <div className="max-w-4xl">
             <h1 className="text-4xl md:text-4xl lg:text-5xl font-bold uppercase tracking-tighter leading-none mb-12">
               Our People
@@ -160,7 +160,7 @@ export function OurPeopleClient() {
         </div>
 
         {/* Footer Navigation */}
-        <section className="px-6 md:px-12 lg:px-24 py-24 bg-neutral-50 border-t border-neutral-100 text-center">
+        <section className="px-6 md:px-8 lg:px-12 py-24 bg-neutral-50 border-t border-neutral-100 text-center">
           <div className="max-w-2xl mx-auto space-y-12">
             <h3 className="text-3xl font-bold uppercase tracking-tight">
               Discover Our Journey

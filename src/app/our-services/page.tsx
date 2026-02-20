@@ -9,12 +9,14 @@ export const metadata: Metadata = {
     description: "Learn about the James Boogie product warranty. We stand behind our quality with comprehensive coverage for manufacturing defects and hardware issues.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function OurServicesPage() {
     return (
         <>
             <Navbar />
             <main className="min-h-screen pt-24 md:pt-32 pb-20">
-                <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
+                <div className="w-full px-6 md:px-8 lg:px-12">
                     
                     {/* 1. Hero Section */}
                     <div className="mb-20 md:mb-28 max-w-4xl">

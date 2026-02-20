@@ -13,12 +13,14 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic = "force-dynamic";
+
 export default function VentilePage() {
   return (
     <>
       <Navbar />
       <main className="pt-32 pb-24 w-full bg-white text-black min-h-screen">
-        <div className="w-full px-6 md:px-12 lg:px-12 space-y-16">
+        <div className="w-full px-6 md:px-8 lg:px-12 space-y-16">
           {/* Narrative Paragraph */}
           <section className="max-w-none">
             <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-tight mb-8">

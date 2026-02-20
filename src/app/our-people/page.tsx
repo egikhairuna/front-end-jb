@@ -1,6 +1,8 @@
 import { Metadata } from 'next';
 import { OurPeopleClient } from "./OurPeopleClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: 'Our People',
   description: 'Meet the visionaries, designers, and craftsmen behind James Boogie. Discover our commitment to quality, heritage, and the Pop Military aesthetic.',

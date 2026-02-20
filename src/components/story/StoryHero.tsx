@@ -2,7 +2,7 @@ import React from 'react';
 
 export const StoryHero: React.FC = () => {
   return (
-    <section className="pt-32 pb-16 md:pt-40 md:pb-24 px-4 sm:px-6 lg:px-12 w-full text-center">
+    <section className="pt-32 pb-16 md:pt-40 md:pb-24 px-6 md:px-8 lg:px-12 w-full text-center">
       <div className="space-y-6">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground uppercase">
           Our Story

@@ -7,10 +7,12 @@ export const metadata: Metadata = {
     description: "Get in touch with James Boogie. For inquiries, collaborations, or support, feel free to reach out to our team or visit our flagship store.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function ContactUsPage() {
     return (
         <div className="flex-1 min-h-screen pt-24 md:pt-32 pb-20">
-                <div className="max-w-[1920px] mx-auto px-6 md:px-10 lg:px-12">
+                <div className="w-full px-6 md:px-8 lg:px-12">
                     {/* Header Section */}
                     <div className="mb-16 md:mb-24 max-w-4xl">
                         <h1 className="text-4xl md:text-5xl lg:text-5xl font-heading font-bold uppercase mb-6 tracking-tight">

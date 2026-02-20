@@ -5,12 +5,14 @@ export const metadata: Metadata = {
     description: "Visit our physical store location. James Boogie - A Pop Military Brand with a premium retail presence.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function OurStorePage() {
     return (
         <div className="flex-1 min-h-screen pt-24 md:pt-32 pb-20">
-                <div className="max-w-[1920px] mx-auto">
+                <div className="w-full">
                     {/* Page Header */}
-                    <section className="px-6 md:px-10 mb-12 md:mb-16">
+                    <section className="px-6 md:px-8 lg:px-12 mb-12 md:mb-16">
                         <h1 className="text-4xl md:text-5xl font-heading font-bold uppercase mb-4 tracking-tight">
                             Our Store
                         </h1>
@@ -20,7 +22,7 @@ export default function OurStorePage() {
                     </section>
 
                     {/* Store Information & Map Grid */}
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 px-6 md:px-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 px-6 md:px-8 lg:px-12">
                         {/* Store Information */}
                         <section className="space-y-8">
                             <div>

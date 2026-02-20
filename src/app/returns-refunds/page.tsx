@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { ReturnsRefundsClient } from "./ReturnsRefundsClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Returns & Refunds",
   description: "Learn about James Boogie's return and refund policy. Bilingual (EN/ID) information on exchanges, defects, and return procedures.",

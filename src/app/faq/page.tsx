@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { FAQClient } from "./FAQClient";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "FAQ",
   description: "Find complete answers about ordering, payment, shipping, and return policies for James Boogie e-commerce.",
