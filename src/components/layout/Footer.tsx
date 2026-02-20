@@ -58,7 +58,7 @@ export function Footer() {
 
   return (
     <footer className="bg-black   text-white pt-16 pb-8 px-6 md:px-8 lg:px-12 w-full border-t border-white/10">
-      <div className="mx-auto max-w-[1920px]">
+      <div className="w-full">
         
         {/* TOP SECTION: Grid on Desktop, Stack on Mobile */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-16">

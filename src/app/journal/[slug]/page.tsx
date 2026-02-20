@@ -76,14 +76,28 @@ export default async function JournalPostPage({ params }: Props) {
         notFound();
     }
 
+    // Fix relative image URLs in WordPress content
+    // This handles both src and srcset, and matches variations in path
+    const baseUrl = "https://vps.jamesboogie.com";
+    const fixedContent = post.content ? post.content.replace(
+        /(src|srcset)="(\/)?wp-content\/uploads\//g,
+        (match, attr, slash) => `${attr}="${baseUrl}/wp-content/uploads/`
+    ) : "";
+
+    // Ensure featured image has an absolute URL
+    let featuredImageUrl = post.featuredImage?.node?.sourceUrl;
+    if (featuredImageUrl && featuredImageUrl.startsWith('/')) {
+        featuredImageUrl = `${baseUrl}${featuredImageUrl}`;
+    }
+
     return (
         <div className="flex-1 min-h-screen pb-20">
                 {/* Hero Section */}
                 <div className="w-full h-[60vh] md:h-[80vh] relative bg-neutral-100">
-                    {post.featuredImage?.node?.sourceUrl ? (
+                    {featuredImageUrl ? (
                          <Image
-                            src={post.featuredImage.node.sourceUrl}
-                            alt={post.featuredImage.node.altText || post.title}
+                            src={featuredImageUrl}
+                            alt={post.featuredImage?.node?.altText || post.title}
                             fill
                             className="object-cover"
                             priority
@@ -108,7 +122,7 @@ export default async function JournalPostPage({ params }: Props) {
                 </div>
 
                 {/* Content Section */}
-                <div className="max-w-[1920px] mx-auto px-4 md:px-8 lg:px-12 pt-12 md:pt-20">
+                <div className="w-full px-6 md:px-8 lg:px-12 pt-12 md:pt-20">
                     <div className="max-w-3xl mx-auto">
                         <Link 
                             href="/journal" 
@@ -120,7 +134,7 @@ export default async function JournalPostPage({ params }: Props) {
 
                          <article 
                             className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:uppercase prose-headings:font-bold prose-headings:tracking-tight prose-p:leading-relaxed prose-img:rounded-md prose-img:w-full prose-a:text-black prose-a:underline hover:prose-a:text-neutral-600 prose-blockquote:border-l-4 prose-blockquote:border-black prose-blockquote:pl-6 prose-blockquote:italic"
-                            dangerouslySetInnerHTML={{ __html: post.content }}
+                            dangerouslySetInnerHTML={{ __html: fixedContent }}
                         />
                     </div>
                 </div>

@@ -10,7 +10,7 @@ const lastUpdated = "February 2026";
 export default function PrivacyPolicyPage() {
   return (
     <div className="flex-1 pt-32 pb-24 w-full">
-        <div className="px-6 md:px-12 lg:px-12 space-y-24">
+        <div className="px-6 md:px-8 lg:px-12 space-y-24">
           {/* Header */}
           <header className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             <div className="md:col-span-4 lg:col-span-3">
