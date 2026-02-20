@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "vps.jamesboogie.com" },
+      { protocol: "https", hostname: "jamesboogie.com" },
+      { protocol: "https", hostname: "i0.wp.com" },
+      { protocol: "https", hostname: "i1.wp.com" },
+      { protocol: "https", hostname: "i2.wp.com" },
+      { protocol: "https", hostname: "i3.wp.com" },
       { protocol: "https", hostname: "secure.gravatar.com" },
       { protocol: "https", hostname: "images.unsplash.com" }
     ],
@@ -45,7 +50,7 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vps.jamesboogie.com https://www.googletagmanager.com https://www.google-analytics.com",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-              "img-src 'self' blob: data: https://vps.jamesboogie.com https://images.unsplash.com https://secure.gravatar.com https://www.google.com https://maps.gstatic.com https://www.googletagmanager.com",
+              "img-src 'self' blob: data: https://vps.jamesboogie.com https://jamesboogie.com https://*.wp.com https://images.unsplash.com https://secure.gravatar.com https://www.google.com https://maps.gstatic.com https://www.googletagmanager.com",
               "font-src 'self' data: https://fonts.gstatic.com",
               "connect-src 'self' https://vps.jamesboogie.com https://apiv2.jne.co.id:10205 https://www.googletagmanager.com",
               "frame-src 'self' https://www.google.com https://www.googletagmanager.com",
