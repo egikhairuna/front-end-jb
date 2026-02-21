@@ -1,5 +1,3 @@
-const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://jamesboogie.com/graphql";
-
 /**
  * Server-side GraphQL fetcher for use in Server Components and Server Actions
  * Leverages Next.js fetch cache, revalidation, and tags.
@@ -10,6 +8,10 @@ export async function fetchGraphQL<T>(
   options: { revalidate?: number; tags?: string[] } = {}
 ): Promise<T> {
   const { revalidate = 3600, tags = [] } = options;
+
+  // 🛡️ Evaluate endpoint at runtime to ensure environment variables are correctly picked up
+  // especially during ISR revalidation on the server.
+  const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://jamesboogie.com/graphql";
 
   try {
     const res = await fetch(endpoint, {
@@ -27,6 +29,12 @@ export async function fetchGraphQL<T>(
       },
     });
 
+    if (!res.ok) {
+        const text = await res.text();
+        console.error(`❌ GraphQL HTTP Error: ${res.status} ${res.statusText}`, text);
+        throw new Error(`HTTP Error: ${res.status}`);
+    }
+
     const json = await res.json();
 
     if (json.errors) {
@@ -36,7 +44,7 @@ export async function fetchGraphQL<T>(
 
     return json.data;
   } catch (error) {
-    console.error('🌐 GraphQL Fetch Error:', error);
+    console.error(`🌐 GraphQL Fetch Error [${endpoint}]:`, error);
     throw error;
   }
 }

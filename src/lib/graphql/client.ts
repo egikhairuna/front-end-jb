@@ -1,7 +1,7 @@
 import { GraphQLClient } from "graphql-request";
 import Cookies from 'js-cookie';
 
-const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://jamesboogie.com/graphql";
+const getEndpoint = () => process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://jamesboogie.com/graphql";
 
 // Custom fetch to handle woocommerce-session
 const customFetch = async (url: RequestInfo | URL, options: RequestInit = {}) => {
@@ -24,8 +24,6 @@ const customFetch = async (url: RequestInfo | URL, options: RequestInit = {}) =>
     const newSession = response.headers.get('woocommerce-session');
     if (newSession) {
       // Set cookie with security flags
-      // Note: For HttpOnly, we'd need to set it via an API route or middleware.
-      // But we can at least set Secure and SameSite here for now.
       Cookies.set('woo-session', newSession, { 
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
@@ -40,6 +38,8 @@ const customFetch = async (url: RequestInfo | URL, options: RequestInit = {}) =>
   }
 };
 
-export const client = new GraphQLClient(endpoint, {
+// Export a proxy or function to ensure endpoint is fresh
+// though for the browser it's set once, it's safer for server-side usage if this is ever imported there.
+export const client = new GraphQLClient(getEndpoint(), {
   fetch: customFetch,
 });

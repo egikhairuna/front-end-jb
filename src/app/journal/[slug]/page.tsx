@@ -78,7 +78,7 @@ export default async function JournalPostPage({ params }: Props) {
 
     // Fix relative image URLs in WordPress content
     // This handles both src and srcset, and matches variations in path
-    const baseUrl = "https://vps.jamesboogie.com";
+    const baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://vps.jamesboogie.com";
     const fixedContent = post.content ? post.content.replace(
         /(src|srcset)="(\/)?wp-content\/uploads\//g,
         (match, attr, slash) => `${attr}="${baseUrl}/wp-content/uploads/`

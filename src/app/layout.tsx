@@ -47,7 +47,7 @@ const dinPro = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://jamesboogie.com'),
   title: "James Boogie",
-  description: "Discover James Boogie's premium Pop Military streetwear collection. Explore our latest fashion pieces blending military aesthetics with contemporary street style. Shop online or visit our Bandung flagship store.",
+  description: "Discover James Boogie's premium Pop Military streetwear collection. Explore our latest fashion pieces blending military with contemporary style. Shop online or visit our flagship store.",
   keywords: ["James Boogie", "Pop Military", "streetwear", "fashion", "Bandung", "Indonesia", "military fashion", "premium streetwear", "contemporary fashion"],
   authors: [{ name: "James Boogie" }],
   creator: "James Boogie",
@@ -86,9 +86,8 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // Add your verification codes here when available
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
+    google: "CU6s5LaFk19P3awyVpyNe4dQfWK7f0SfpcXyohiCt4Y",
+    yandex: "ff8b56440be09ff0",
   },
 };
 
