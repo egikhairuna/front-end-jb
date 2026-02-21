@@ -10,7 +10,26 @@ export class WooCommerceError extends Error {
   }
 }
 
-export function handleWooCommerceError(error: unknown): string {
+export function handleWooCommerceError(error: unknown): string | { message: string, code: string, stock_available?: number } {
+  if (error instanceof Error && error.message.startsWith('STOCK_ERROR:')) {
+    const [, status, productName, stockAvailable] = error.message.split(':');
+    
+    if (status === 'OUT_OF_STOCK') {
+      return {
+        code: 'woocommerce_rest_out_of_stock',
+        message: `${productName} is currently out of stock.`,
+      };
+    }
+    
+    if (status === 'INSUFFICIENT_STOCK') {
+      return {
+        code: 'woocommerce_rest_insufficient_stock',
+        message: `Only ${stockAvailable} units of ${productName} are available.`,
+        stock_available: parseInt(stockAvailable),
+      };
+    }
+  }
+
   if (error instanceof WooCommerceError) {
     return getUserFriendlyMessage(error.code || '', error.message);
   }

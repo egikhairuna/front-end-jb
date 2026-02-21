@@ -14,25 +14,52 @@ export async function POST(request: NextRequest) {
     // 🔒 SECURITY: Server-side price & shipping validation
     // DO NOT trust prices or shipping totals sent from the client.
     
-    // 1. Validate Product Prices
+    // 1. Validate Product Prices & Stock
     const validatedCartItems = await Promise.all(cartItems.map(async (item: any) => {
       const productId = item.product.databaseId || parseInt(item.product.id);
       const variationId = item.variation?.databaseId;
+      const quantity = item.quantity;
       
       let officialPrice = 0;
+      let stockData: any = {};
+
       if (variationId) {
         const variation = await wooCommerceClient.getVariation(productId, variationId);
         officialPrice = parseFloat(variation.price);
+        stockData = {
+          manage_stock: variation.manage_stock,
+          stock_quantity: variation.stock_quantity,
+          stock_status: variation.stock_status,
+          backorders: variation.backorders
+        };
       } else {
         const product = await wooCommerceClient.getProduct(productId);
         officialPrice = parseFloat(product.price);
+        stockData = {
+          manage_stock: product.manage_stock,
+          stock_quantity: product.stock_quantity,
+          stock_status: product.stock_status,
+          backorders: product.backorders
+        };
       }
 
-      // Create a copy of the item with the "official" price for calculation
-      // We don't overwrite item.product.price directly to avoid side effects if types are strict
+      // 🛒 STOCK VALIDATION (Pre-flight)
+      const { manage_stock, stock_quantity, stock_status, backorders } = stockData;
+      const productName = item.product.name;
+
+      // Rejection logic: Only reject if backorders are 'no'
+      if (backorders === 'no') {
+        if (stock_status === 'outofstock') {
+          throw new Error(`STOCK_ERROR:OUT_OF_STOCK:${productName}`);
+        }
+        if (manage_stock && stock_quantity < quantity) {
+          throw new Error(`STOCK_ERROR:INSUFFICIENT_STOCK:${productName}:${stock_quantity}`);
+        }
+      }
+
       return {
         ...item,
-        officialPrice // Injected validated price
+        officialPrice
       };
     }));
 
@@ -120,11 +147,12 @@ export async function POST(request: NextRequest) {
       timestamp: new Date().toISOString(),
     });
 
-    const errorMessage = handleWooCommerceError(error);
+    const errorInfo = handleWooCommerceError(error);
+    const isStockError = typeof errorInfo === 'object' && errorInfo.code?.includes('stock');
 
     return NextResponse.json(
-      { error: errorMessage },
-      { status: 500 }
+      typeof errorInfo === 'object' ? errorInfo : { error: errorInfo },
+      { status: isStockError ? 400 : 500 }
     );
   }
 }
