@@ -7,6 +7,9 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 
+// 🚀 Ensure dynamic segments are always attemptable
+export const dynamicParams = true;
+
 // Types
 interface Post {
   id: string;
@@ -33,39 +36,31 @@ type Props = {
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  try {
-    const data: any = await serverClient.request(GET_POST_BY_SLUG, { slug });
-    const post = data.post as Post;
-    
-    if (!post) return { title: "Post Not Found" };
+  
+  const data: any = await serverClient.request(GET_POST_BY_SLUG, { slug });
+  const post = data.post as Post;
+  
+  if (!post) return { title: "Post Not Found" };
 
-    // Clean HTML tags from excerpt or content
-    const cleanDescription = (post.excerpt || post.content || "")
-      .replace(/<[^>]*>/g, "")
-      .substring(0, 160);
+  // Clean HTML tags from excerpt or content
+  const cleanDescription = (post.excerpt || post.content || "")
+    .replace(/<[^>]*>/g, "")
+    .substring(0, 160);
 
-    return {
+  return {
+    title: post.title,
+    description: cleanDescription,
+    openGraph: {
       title: post.title,
       description: cleanDescription,
-      openGraph: {
-        title: post.title,
-        description: cleanDescription,
-        images: post.featuredImage?.node?.sourceUrl ? [{ url: post.featuredImage.node.sourceUrl }] : [],
-      },
-    };
-  } catch (e) {
-    return { title: "James Boogie Journal" };
-  }
+      images: post.featuredImage?.node?.sourceUrl ? [{ url: post.featuredImage.node.sourceUrl }] : [],
+    },
+  };
 }
 
 async function getPost(slug: string) {
-    try {
-        const data: any = await serverClient.request(GET_POST_BY_SLUG, { slug });
-        return data.post as Post;
-    } catch (error) {
-        console.error("Error fetching post:", error);
-        return null;
-    }
+    const data: any = await serverClient.request(GET_POST_BY_SLUG, { slug });
+    return data.post as Post | null;
 }
 
 export default async function JournalPostPage({ params }: Props) {

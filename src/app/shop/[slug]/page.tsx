@@ -9,6 +9,9 @@ import { Metadata } from "next";
 // ⚡ Global ISR: Individual products revalidate every 1h
 export const revalidate = 3600;
 
+// 🚀 Ensure dynamic segments are always attemptable even if not pre-rendered
+export const dynamicParams = true;
+
 // Types
 type Props = {
   params: Promise<{ slug: string }>
@@ -20,50 +23,43 @@ type Props = {
  */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  try {
-    const data: any = await fetchGraphQL(GET_PRODUCT, {
-      id: slug,
-      idType: "SLUG"
-    }, {
-      revalidate: 3600,
-      tags: [`product-${slug}`]
-    });
-    const product = data.product as Product;
-    
-    if (!product) return { title: "Product Not Found" };
+  
+  const data: any = await fetchGraphQL(GET_PRODUCT, {
+    id: slug,
+    idType: "SLUG"
+  }, {
+    revalidate: 3600,
+    tags: [`product-${slug}`]
+  });
+  
+  const product = data.product as Product;
+  
+  if (!product) return { title: "Product Not Found" };
 
-    const cleanDescription = (product.shortDescription || product.description || "")
-      .replace(/<[^>]*>/g, "")
-      .substring(0, 160);
+  const cleanDescription = (product.shortDescription || product.description || "")
+    .replace(/<[^>]*>/g, "")
+    .substring(0, 160);
 
-    return {
+  return {
+    title: product.name,
+    description: cleanDescription,
+    openGraph: {
       title: product.name,
       description: cleanDescription,
-      openGraph: {
-        title: product.name,
-        description: cleanDescription,
-        images: product.image?.sourceUrl ? [{ url: product.image.sourceUrl }] : [],
-      },
-    };
-  } catch (e) {
-    return { title: "James Boogie Product" };
-  }
+      images: product.image?.sourceUrl ? [{ url: product.image.sourceUrl }] : [],
+    },
+  };
 }
 
 async function getProduct(slug: string) {
-    try {
-        const data: any = await fetchGraphQL(GET_PRODUCT, {
-            id: slug,
-            idType: "SLUG"
-        }, {
-            revalidate: 3600,
-            tags: [`product-${slug}`]
-        });
-        return data.product as Product;
-    } catch (error) {
-        console.error("Error fetching product:", error);
-        return null;
-    }
+    const data: any = await fetchGraphQL(GET_PRODUCT, {
+        id: slug,
+        idType: "SLUG"
+    }, {
+        revalidate: 3600,
+        tags: [`product-${slug}`]
+    });
+    return data.product as Product | null;
 }
 
 export default async function ProductPage({ params }: Props) {
