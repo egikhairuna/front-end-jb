@@ -250,11 +250,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 >
                   {product.description ? (
                     <div 
-                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
+                      className="text-[14px] leading-snug text-black/70 [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-4 [&_li]:mb-1"
                       dangerouslySetInnerHTML={{ __html: product.description }} 
                     />
                   ) : (
-                    <p className="text-[13px] leading-relaxed">
+                    <p className="text-[14px] leading-snug">
                       No description available.
                     </p>
                   )}
@@ -268,7 +268,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     onClick={() => toggleSection('style-fit')}
                   >
                     <div 
-                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
+                      className="text-[14px] leading-snug text-black/70 [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-4 [&_li]:mb-1"
                       dangerouslySetInnerHTML={{ __html: product.sizeChart.sizeChart }} 
                     />
                   </AccordionItem>
@@ -282,7 +282,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     onClick={() => toggleSection('features')}
                   >
                      <div 
-                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
+                      className="text-[14px] leading-snug text-black/70 [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-4 [&_li]:mb-1"
                       dangerouslySetInnerHTML={{ __html: product.features.features }} 
                     />
                   </AccordionItem>
@@ -296,11 +296,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 >
                   {product.shortDescription ? (
                      <div 
-                      className="prose prose-sm max-w-none text-[13px] leading-relaxed"
+                      className="text-[14px] leading-snug text-black/70 [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-4 [&_li]:mb-1"
                       dangerouslySetInnerHTML={{ __html: product.shortDescription }} 
                     />
                   ) : (
-                    <p className="text-[13px] leading-relaxed">
+                    <p className="text-[14px] leading-snug">
                       Machine wash cold. Do not tumble dry.
                     </p>
                   )}

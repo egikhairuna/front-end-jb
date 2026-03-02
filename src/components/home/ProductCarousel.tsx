@@ -1,125 +1,139 @@
 "use client";
 
-import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useRef } from "react";
 import { cn } from "@/lib/utils";
 
-// Category interface
 interface Category {
   id: number;
   name: string;
   href: string;
   image: string;
-  tag?: string;
+  comingSoon?: boolean;
 }
+
+const categories: Category[] = [
+  {
+    id: 1,
+    name: "JACKETS",
+    href: "/shop?category=jackets",
+    image: "/categories/jacket-cover.png",
+  },
+  {
+    id: 2,
+    name: "SWEATSHIRTS",
+    href: "#",
+    image: "/categories/ss-cover.png",
+    comingSoon: true,
+  },
+  {
+    id: 3,
+    name: "POLO SHIRTS",
+    href: "/shop?category=polo-shirt",
+    image: "/categories/polo-cover.png",
+  },
+  {
+    id: 4,
+    name: "ACCESSORIES",
+    href: "/shop?category=seasoning",
+    image: "/categories/acc-cover.png",
+  },
+];
 
 export function ProductCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Category data with images and links
-  const categories: Category[] = [
-    { 
-      id: 1, 
-      name: "JACKETS", 
-      href: "/shop?category=jackets",
-      image: "/categories/jacket-cover.png",
-      tag: "NEW IN", 
-    },
-    { 
-      id: 2, 
-      name: "JUMPERS", 
-      href: "#",
-      image: "/categories/ss-cover.png", 
-    },
-    { 
-      id: 3, 
-      name: "POLO SHIRTS", 
-      href: "/shop?category=polo-shirt",
-      image: "/categories/polo-cover.png", 
-    },
-    { 
-      id: 4, 
-      name: "ACCESSORIES", 
-      href: "/shop?category=seasoning",
-      image: "/categories/acc-cover.png", 
-    },
-  ];
-
-  const scroll = (direction: 'left' | 'right') => {
+  const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const { scrollLeft, clientWidth } = scrollRef.current;
-      const scrollAmount = window.innerWidth < 768 ? clientWidth * 0.8 : clientWidth / 4;
+      const amount = clientWidth * 0.5;
       scrollRef.current.scrollTo({
-        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
-        behavior: 'smooth'
+        left: direction === "left" ? scrollLeft - amount : scrollLeft + amount,
+        behavior: "smooth",
       });
     }
   };
 
   return (
-    <section className="w-full py-12 border-b border-black/5 overflow-hidden">
-      <div className="flex items-center justify-between px-4 md:px-8 lg:px-12 mb-8">
-        <h2 className="text-base font-bold tracking-widest uppercase border border-black px-3 py-1 inline-block">
-          SHOP BY CATEGORY
-        </h2>
-        <div className="flex gap-2">
-           <Button variant="outline" size="icon" onClick={() => scroll('left')} className="rounded-none border-black hover:bg-black hover:text-white transition-colors">
-              <ChevronLeft className="h-4 w-4" />
-           </Button>
-           <Button variant="outline" size="icon" onClick={() => scroll('right')} className="rounded-none border-black hover:bg-black hover:text-white transition-colors">
-              <ChevronRight className="h-4 w-4" />
-           </Button>
+    <section className="w-full overflow-hidden">
+      {/* Header — label + arrows (arrows hidden on desktop) */}
+      <div className="flex items-center justify-between px-4 md:px-12 py-6 border-b border-black/10">
+        <span className="text-sm font-semibold tracking-wider uppercase">
+          SHOP BY CATEGORIES
+        </span>
+        {/* Arrows — mobile only */}
+        <div className="flex gap-2 md:hidden">
+          <button
+            aria-label="Previous"
+            onClick={() => scroll("left")}
+            className="w-8 h-8 flex items-center justify-center border border-black/20 hover:border-black hover:bg-black hover:text-white transition-all text-xs font-bold"
+          >
+            ←
+          </button>
+          <button
+            aria-label="Next"
+            onClick={() => scroll("right")}
+            className="w-8 h-8 flex items-center justify-center border border-black/20 hover:border-black hover:bg-black hover:text-white transition-all text-xs font-bold"
+          >
+            →
+          </button>
         </div>
       </div>
 
-      <div className="w-full">
-          <div 
-            ref={scrollRef}
-            className="flex overflow-x-auto md:overflow-x-hidden snap-x snap-mandatory scrollbar-hide will-change-transform px-4 md:px-0"
+      {/* Scroll container */}
+      <div
+        ref={scrollRef}
+        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-16"
+        style={{ scrollSnapType: "x mandatory" }}
+      >
+        {categories.map((category) => (
+          <Link
+            key={category.id}
+            href={category.href}
+            className="relative flex-none w-[85vw] md:w-1/4 aspect-[3/4] md:aspect-auto md:h-[80vh] snap-start group overflow-hidden block"
+            style={{ scrollSnapAlign: "start" }}
           >
-             {categories.map((category) => (
-                 <div 
-                    key={category.id} 
-                    className="min-w-[80%] md:min-w-[25%] snap-start border-r border-transparent md:border-black/5 last:border-none select-none pr-2 md:pr-0"
-                 >
-                    <Link href={category.href} className="block group">
-                        <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100">
-                            {/* Tag */}
-                            {category.tag && (
-                                 <span className="absolute top-4 right-4 z-10 text-[10px] font-bold tracking-widest text-white mix-blend-difference uppercase">
-                                    {category.tag}
-                                 </span>
-                            )}
-                            
-                            {/* Category Image */}
-                            <Image 
-                                src={category.image}
-                                alt={category.name}
-                                fill
-                                className="object-cover transition-transform duration-700 font-bold"
-                                draggable={false}
-                            />
-                            
-                            {/* Hover Overlay */}
-                            <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-                        </div>
-                        
-                        <div className="pt-4 px-4 md:px-5 md:pt-6">
-                            <h3 className="text-lg font-bold tracking-wider uppercase text-black">
-                                {category.name}
-                            </h3>
-                            <button className="mt-2 text-xs font-bold uppercase tracking-widest border-b border-black pb-1 hover:opacity-50 transition-opacity">
-                                Shop Now
-                            </button>
-                        </div>
-                    </Link>
-                 </div>
-             ))}
-          </div>
+            {/* Background image */}
+            <Image
+              src={category.image}
+              alt={category.name}
+              fill
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              draggable={false}
+              priority={category.id <= 2}
+            />
+
+            {/* Dark overlay */}
+            <div className="absolute inset-0 bg-black/90 pointer-events-none" />
+
+            {/* Category label — center left */}
+            <div className="absolute inset-y-0 left-6 flex items-center z-10">
+              <span
+                className="text-white text-[11px] md:text-sm font-semibold tracking-[0.25em] uppercase"
+                style={{ fontFamily: "monospace, sans-serif", letterSpacing: "0.22em" }}
+              >
+                + {category.name}
+              </span>
+            </div>
+
+            {/* CTA — bottom left */}
+            <div className="absolute bottom-8 left-6 z-10">
+              <span
+                className="text-white text-[11px] md:text-[12px] font-semibold tracking-[0.2em] uppercase border-b border-white/70 pb-px group-hover:border-white transition-colors"
+                style={{ fontFamily: "monospace, sans-serif" }}
+              >
+                {category.comingSoon ? "COMING SOON" : "SHOP NOW"}
+              </span>
+            </div>
+
+            {/* Thin right divider (except last) */}
+            <div className="absolute top-0 right-0 h-full w-px bg-white/10 pointer-events-none last:hidden" />
+          </Link>
+        ))}
       </div>
+
+
     </section>
   );
 }
