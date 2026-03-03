@@ -116,7 +116,7 @@ export function Navbar() {
           <div className="flex-1">
             {!isMounted ? (
               <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
-                <Menu className="h-6 w-6" />
+                <Menu className="size-5" />
               </Button>
             ) : (
               <Sheet open={isOpen} onOpenChange={(open) => {
@@ -125,7 +125,7 @@ export function Navbar() {
               }}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
-                    <Menu className="h-8 w-8" />
+                    <Menu className="size-5" />
                   </Button>
                 </SheetTrigger>
                 <SheetContent side={"fade" as any} className="w-full h-full p-0 bg-gradient-to-b from-[#0a1128] via-[#020617] to-black border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
@@ -139,7 +139,7 @@ export function Navbar() {
                       onClick={() => setIsOpen(false)} 
                       className="p-0 h-10 w-10 hover:bg-white/10 rounded-full flex items-center justify-center transition-colors"
                     >
-                      <X className="h-8 w-8 text-white" />
+                      <X className="size-5 text-white" />
                     </Button>
 
                     {/* Centered Logo (Matches main navbar positioning) */}
@@ -292,7 +292,7 @@ export function Navbar() {
                        }}
                        className="text-white p-0 hover:bg-transparent transition-opacity"
                      >
-                       <Search className="h-5 w-5" />
+                       <Search className="size-5" />
                      </button>
                    </div>
                 </SheetContent>
@@ -360,7 +360,7 @@ export function Navbar() {
               onClick={() => setIsSearchOpen(true)}
               className={cn("p-2 hover:opacity-50 transition-opacity", isTransparent ? "text-white" : "text-black")}
             >
-              <Search className="h-4 w-4" />
+              <Search className="size-5" />
             </button>
             <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
           </div>

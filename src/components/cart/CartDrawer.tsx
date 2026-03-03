@@ -24,8 +24,8 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className={cn("relative", triggerClassName)}>
-          <PiShoppingBag className="h-8 w-8" />
+        <Button variant="ghost" size="icon-lg" className={cn("relative", triggerClassName)}>
+          <PiShoppingBag size={32} className="size-5" />
           {items.length > 0 && (
             <span className="absolute -top-1 -right-1 h-4 w-4 bg-black text-white text-[10px] flex items-center justify-center rounded-full">
               {items.reduce((acc, item) => acc + item.quantity, 0)}
