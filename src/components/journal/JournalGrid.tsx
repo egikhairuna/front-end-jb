@@ -59,7 +59,7 @@ export function JournalGrid({ initialPosts, initialPageInfo }: Props) {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-2 gap-y-16">
                 {posts.map((post) => (
                     <Link key={post.id} href={`/journal/${post.slug}`} className="group block">
-                        <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-neutral-100 mb-6 -mx-6 md:mx-0">
+                        <div className="relative aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-neutral-100 mb-6">
                                 {post.featuredImage?.node?.sourceUrl ? (
                                 <Image
                                     src={post.featuredImage.node.sourceUrl}
@@ -73,7 +73,7 @@ export function JournalGrid({ initialPosts, initialPageInfo }: Props) {
                                 </div>
                                 )}
                         </div>
-                        <div className="space-y-2 px-4">
+                        <div className="space-y-2 px-8 py-4">
                             <span className="text-xs font-bold tracking-widest uppercase text-neutral-500">
                                 {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                             </span>

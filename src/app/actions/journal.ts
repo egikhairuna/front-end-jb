@@ -20,7 +20,7 @@ interface Post {
 export async function fetchMorePosts({ after }: { after: string }) {
     try {
         const data: any = await serverClient.request(GET_POSTS, {
-            first: 6, // Consistent with initial load
+            first: 9, // Consistent with initial load (3 columns)
             after
         });
 

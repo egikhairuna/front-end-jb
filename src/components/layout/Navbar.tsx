@@ -371,7 +371,7 @@ export function Navbar() {
       <div 
         className={cn(
           "absolute top-full left-0 w-full bg-white border-b border-black/10 transition-all duration-500 ease-in-out overflow-hidden hidden md:block",
-          activeMenu === "SHOP" ? "max-h-[600px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
+          activeMenu === "SHOP" ? "max-h-[900px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
         )}
         onMouseEnter={() => setActiveMenu("SHOP")}
         onMouseLeave={() => setActiveMenu(null)}
@@ -436,7 +436,7 @@ export function Navbar() {
       <div 
         className={cn(
           "absolute top-full left-0 w-full bg-white border-b border-black/5 transition-all duration-500 ease-in-out overflow-hidden hidden md:block",
-          activeMenu === "THE BRAND" ? "max-h-[600px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
+          activeMenu === "THE BRAND" ? "max-h-[900px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
         )}
         onMouseEnter={() => setActiveMenu("THE BRAND")}
         onMouseLeave={() => setActiveMenu(null)}
