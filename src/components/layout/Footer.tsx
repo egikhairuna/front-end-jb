@@ -61,7 +61,7 @@ export function Footer() {
       <div className="w-full">
         
         {/* TOP SECTION: Grid on Desktop, Stack on Mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-white/10 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 border-b border-white/10 pb-16">
           
           {/* 1. Newsletter (Full width on mobile, Col 1 on desktop) */}
           <div className="space-y-6">
@@ -75,7 +75,7 @@ export function Footer() {
 
           {/* 2-4. Navigation Links */}
           {/* DESKTOP VIEW */}
-          <div className="hidden md:contents">
+          <div className="hidden lg:contents">
              {footerSections.map((section) => (
                 <div key={section.title} className="space-y-6">
                    <h3 className="text-sm font-bold tracking-widest uppercase text-neutral-400">
@@ -98,7 +98,7 @@ export function Footer() {
           </div>
 
           {/* MOBILE VIEW (Accordion) */}
-          <div className="md:hidden space-y-4 w-full">
+          <div className="lg:hidden space-y-4 w-full">
              {footerSections.map((section) => (
                 <div key={section.title} className="border-b border-white/10 last:border-none">
                    <button 

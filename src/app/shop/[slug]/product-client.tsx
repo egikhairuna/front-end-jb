@@ -86,13 +86,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   });
 
   return (
-    <div className="w-full pt-20 md:pt-[120px]">
-      <div className="mx-auto px-6 md:px-8 lg:px-12">
+    <div className="w-full pt-20 lg:pt-[120px]">
+      <div className="mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-[7fr_3fr] gap-0 lg:gap-12">
           {/* Left Side - Scrollable Image Gallery */}
-          <div className="w-full md:py-10 md:bg-white md:-mx-8 lg:-mx-12">
-            {/* Mobile: Swipeable Loop Carousel */}
-            <div className="md:hidden -mx-6">
+          <div className="w-full lg:py-10 lg:bg-white lg:-mx-12">
+            {/* Mobile/Tablet: Swipeable Loop Carousel */}
+            <div className="lg:hidden -mx-6">
               <div className="relative overflow-hidden" ref={emblaRef}>
                 <div className="flex">
                   {galleryImages.map((img, idx) => (
@@ -131,7 +131,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             </div>
 
             {/* Desktop: Two-Column Grid */}
-            <div className="hidden md:grid grid-cols-2 w-full pl-10 mx-auto bg-white">
+            <div className="hidden lg:grid grid-cols-2 w-full pl-10 mx-auto bg-white">
               {galleryImages.map((img, idx) => (
                 <div 
                   key={idx}
@@ -151,10 +151,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
 
           {/* Right Side - Sticky Product Information */}
-          <div className="lg:sticky lg:top-20 lg:self-start pt-4 pb-0 md:pb-8 md:py-10 ">
-            <div className="border-b md:border border-black/20 -mx-6 md:mx-0">
+          <div className="lg:sticky lg:top-20 lg:self-start pt-4 pb-0 lg:pb-8 lg:py-10 ">
+            <div className="border-b lg:border border-black/20 -mx-6 lg:mx-0">
               {/* Boxed Breadcrumbs Header */}
-              <div className="hidden md:flex border-b border-black/20 bg-white">
+              <div className="hidden lg:flex border-b border-black/20 bg-white">
                 <div className="border-r border-black/20">
                   <Breadcrumbs 
                     items={breadcrumbItems} 
@@ -164,10 +164,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <div className="flex-1"></div>
               </div>
               
-              <div className="px-6 pt-0 md:pt-6 pb-8 space-y-8">
+              <div className="px-6 pt-0 lg:pt-6 pb-8 space-y-8">
                 {/* Product Title & Price */}
                 <div className="space-y-4">
-                  <h1 className="text-xl md:text-2xl font-semibold tracking-tight uppercase leading-none">
+                  <h1 className="text-xl lg:text-2xl font-semibold tracking-tight uppercase leading-none">
                     {product.name}
                   </h1>
                   <div className="text-lg tracking-wider font-regular text-black">

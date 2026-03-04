@@ -134,7 +134,7 @@ export default async function ShopPage({ searchParams }: Props) {
           </div>
 
           {/* Product Grid */}
-          <div className="-mx-6 md:mx-0">
+          <div className="-mx-6 md:-mx-8 lg:mx-0">
             <ProductGrid 
               key={`${category || 'all'}-${search || 'none'}`}
               initialProducts={products} 

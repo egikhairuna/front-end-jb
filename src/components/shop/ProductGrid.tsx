@@ -106,12 +106,12 @@ export function ProductGrid({ initialProducts, initialPageInfo, category, search
 
     return (
         <div className="space-y-12">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full border-t border-black/10">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 w-full border-t border-black/10">
                 {products.map((product) => (
                     <Link 
                         href={`/shop/${product.slug}`} 
                         key={`${product.id}-${product.slug}`} 
-                        className="group block bg-card overflow-hidden hover:border-black hover:border transition-all border-b border-r border-black/10 last:border-r-0 md:last:border-r"
+                        className="group block bg-card overflow-hidden hover:border-black hover:border transition-all border-b border-r border-black/10 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(n)]:border-r lg:[&:nth-child(4n)]:border-r-0"
                     >
                         <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100">
                             {product.image?.sourceUrl ? (

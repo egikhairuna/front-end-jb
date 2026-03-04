@@ -88,12 +88,12 @@ export function Navbar() {
   return (
     <header 
       onMouseEnter={() => {
-        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+        if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
           setIsHeaderHovered(true);
         }
       }}
       onMouseLeave={() => {
-        if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+        if (typeof window !== 'undefined' && window.innerWidth >= 1024) {
           setIsHeaderHovered(false);
         }
       }}
@@ -112,7 +112,7 @@ export function Navbar() {
       />
       <div className="mx-auto px-4 md:px-8 lg:px-12 flex h-20 items-center">
         {/* MOBILE LAYOUT */}
-        <div className="flex w-full items-center md:hidden h-full">
+        <div className="flex w-full items-center lg:hidden h-full">
           <div className="flex-1">
             {!isMounted ? (
               <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
@@ -121,7 +121,10 @@ export function Navbar() {
             ) : (
               <Sheet open={isOpen} onOpenChange={(open) => {
                 setIsOpen(open);
-                if (!open) setActiveMenu(null);
+                if (!open) {
+                  setActiveMenu(null);
+                  setIsHeaderHovered(false);
+                }
               }}>
                 <SheetTrigger asChild>
                   <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
@@ -318,7 +321,7 @@ export function Navbar() {
         </div>
 
         {/* DESKTOP LAYOUT (Three Columns) */}
-        <div className="hidden md:grid md:grid-cols-3 w-full items-center h-full">
+        <div className="hidden lg:grid lg:grid-cols-3 w-full items-center h-full">
           {/* LEFT: LINKS */}
           <nav className="flex items-center gap-8 text-[13px] font-bold tracking-[0.2em] h-full">
              {navLinks.map((link) => (
@@ -370,7 +373,7 @@ export function Navbar() {
       {/* SHOP MEGAMENU */}
       <div 
         className={cn(
-          "absolute top-full left-0 w-full bg-white border-b border-black/10 transition-all duration-500 ease-in-out overflow-hidden hidden md:block",
+          "absolute top-full left-0 w-full bg-white border-b border-black/10 transition-all duration-500 ease-in-out overflow-hidden hidden lg:block",
           activeMenu === "SHOP" ? "max-h-[900px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
         )}
         onMouseEnter={() => setActiveMenu("SHOP")}
@@ -435,7 +438,7 @@ export function Navbar() {
       {/* THE BRAND MEGAMENU */}
       <div 
         className={cn(
-          "absolute top-full left-0 w-full bg-white border-b border-black/5 transition-all duration-500 ease-in-out overflow-hidden hidden md:block",
+          "absolute top-full left-0 w-full bg-white border-b border-black/5 transition-all duration-500 ease-in-out overflow-hidden hidden lg:block",
           activeMenu === "THE BRAND" ? "max-h-[900px] opacity-100 visible" : "max-h-0 opacity-0 invisible"
         )}
         onMouseEnter={() => setActiveMenu("THE BRAND")}

@@ -32,7 +32,7 @@ export function MarketingGrid() {
         Mobile: Horizontal Scroll Snap
         Desktop: Grid
       */}
-      <div className="flex md:grid md:grid-cols-3 w-full h-[500px] md:h-[600px] overflow-x-auto md:overflow-hidden snap-x snap-mandatory scrollbar-hide">
+      <div className="flex md:grid md:grid-cols-3 w-full h-[500px] md:h-[350px] lg:h-[600px] overflow-x-auto md:overflow-hidden snap-x snap-mandatory scrollbar-hide">
         {marketingItems.map((item, index) => (
           <div
             key={index}

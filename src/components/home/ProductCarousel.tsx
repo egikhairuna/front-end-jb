@@ -91,7 +91,7 @@ export function ProductCarousel() {
           <Link
             key={category.id}
             href={category.href}
-            className="relative flex-none w-[85vw] md:w-1/4 aspect-[3/4] md:aspect-auto md:h-[80vh] snap-start group overflow-hidden block"
+            className="relative flex-none w-[85vw] md:w-1/4 aspect-[3/4] md:aspect-auto md:h-[30vh] lg:h-[80vh] snap-start group overflow-hidden block"
             style={{ scrollSnapAlign: "start" }}
           >
             {/* Background image */}
