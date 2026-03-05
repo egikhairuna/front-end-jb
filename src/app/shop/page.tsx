@@ -8,7 +8,7 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Shop",
-  description: "Browse James Boogie's premium Pop Military streetwear collection. From iconic jackets to contemporary street fashion, find your next statement piece.",
+  description: "Browse Our Pop Military collection, find your next statement piece.",
   alternates: {
     canonical: "/shop",
   },
@@ -125,16 +125,16 @@ export default async function ShopPage({ searchParams }: Props) {
   return (
     <>
       <Navbar />
-      <div className="w-full px-6 md:px-8 lg:px-12 py-10">
+      <div className="w-full pb-10">
         <div className="w-full pt-20">
-          <div className="mb-8">
-            <Breadcrumbs items={breadcrumbItems} className="px-0" />
+          <div className="mb-8 px-6 md:px-8 lg:px-12">
+            <Breadcrumbs items={breadcrumbItems} className="px-0 pt-6" />
             <h1 className="text-3xl font-bold font-heading mb-2 uppercase">{displayTitle}</h1>
             {search && <p className="text-muted-foreground">Showing results for &quot;{search}&quot;</p>}
           </div>
 
           {/* Product Grid */}
-          <div className="-mx-6 md:-mx-8 lg:mx-0">
+          <div className="w-full">
             <ProductGrid 
               key={`${category || 'all'}-${search || 'none'}`}
               initialProducts={products} 

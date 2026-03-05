@@ -384,14 +384,14 @@ export function Navbar() {
           {/* Column 1: Products */}
           <div className="p-12 border-r border-black/10 space-y-8 h-full">
             <div className="space-y-4">
-              <h3 className="text-sm font-bold tracking-[0.2em] text-black uppercase pt-4">PRODUCTS</h3>
+              <h3 className="text-[12px] font-regular tracking-[0.2em] text-black uppercase">PRODUCTS</h3>
               <ul className="space-y-3 pt-2">
                 {shopMenu.products.map((item) => (
                   <li key={item.label} className="flex items-center gap-2">
-                    <span className="text-[10px] text-neutral-400 font-bold tracking-tighter">&gt;</span>
+                    <span className="text-[18px] text-neutral-400 font-regular tracking-tighter">&gt;</span>
                     <Link 
                       href={item.href} 
-                      className="text-sm font-bold tracking-[0.15em] text-neutral-600 hover:text-black transition-colors uppercase"
+                      className="text-[12px] font-regular tracking-[0.15em] mt-[0.2em] text-black hover:text-black transition-colors uppercase"
                     >
                       {item.label}
                     </Link>
@@ -404,14 +404,14 @@ export function Navbar() {
           {/* Column 2: Focus On */}
           <div className="p-12 border-r border-black/10 space-y-8 h-full">
             <div className="space-y-4">
-              <h3 className="text-sm font-bold tracking-[0.2em] text-black uppercase">FOCUS ON</h3>
+              <h3 className="text-[12px] font-regular tracking-[0.2em] text-black uppercase">FOCUS ON</h3>
               <ul className="space-y-3 pt-2">
                 {shopMenu.focusOn.map((item) => (
                   <li key={item.label} className="flex items-center gap-2">
-                    <span className="text-[10px] text-neutral-400 font-bold tracking-tighter">&gt;</span>
+                    <span className="text-[18px] text-neutral-400 font-regular tracking-tighter">&gt;</span>
                     <Link 
                       href={item.href} 
-                      className="text-sm font-bold tracking-[0.15em] text-neutral-600 hover:text-black transition-colors uppercase"
+                      className="text-[12px] font-regular tracking-[0.15em] mt-[0.2em] text-black hover:text-black transition-colors uppercase"
                     >
                       {item.label}
                     </Link>
@@ -465,7 +465,7 @@ export function Navbar() {
                 />
               </div>
               <div className="py-2">
-                <h3 className="px-4 text-[20px] font-medium text-black group-hover:underline">
+                <h3 className="px-4 text-sm font-medium text-black group-hover:underline">
                   {item.title}
                 </h3>
               </div>

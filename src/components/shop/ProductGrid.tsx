@@ -106,14 +106,14 @@ export function ProductGrid({ initialProducts, initialPageInfo, category, search
 
     return (
         <div className="space-y-12">
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 w-full border-t border-black/10">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 w-full gap-0 border-t border-black/10">
                 {products.map((product) => (
                     <Link 
                         href={`/shop/${product.slug}`} 
                         key={`${product.id}-${product.slug}`} 
-                        className="group block bg-card overflow-hidden hover:border-black hover:border transition-all border-b border-r border-black/10 [&:nth-child(2n)]:border-r-0 lg:[&:nth-child(n)]:border-r lg:[&:nth-child(4n)]:border-r-0"
+                        className="group block bg-card overflow-hidden hover:border-black hover:border transition-all"
                     >
-                        <div className="relative aspect-[3/4] overflow-hidden bg-neutral-100">
+                        <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100">
                             {product.image?.sourceUrl ? (
                                 <Image
                                     src={product.image.sourceUrl}
@@ -133,11 +133,11 @@ export function ProductGrid({ initialProducts, initialPageInfo, category, search
                                 </div>
                             )}
                         </div>
-                        <div className="p-4 md:p-6">
-                            <h3 className="font-medium lg:text-[15px] tracking-wider text-[12px] uppercase md:text-sm mb-2 line-clamp-2">
+                        <div className="px-3 py-2 md:px-6 md:py-3">
+                            <h3 className="font-regular lg:text-[15px] tracking-wider text-[11px] uppercase md:text-sm mb-1 md:mb-0 line-clamp-2">
                                 {product.name}
                             </h3>
-                            <p className="text-[14px] font-medium tracking-[0.1em]">
+                            <p className="text-[12px] lg:text-[15px] font-regular tracking-[0.1em]">
                                 {product.price ? cleanPrice(product.price) : formatPrice(0)} 
                             </p>
                         </div>
