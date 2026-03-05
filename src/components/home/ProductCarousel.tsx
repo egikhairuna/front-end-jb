@@ -23,9 +23,8 @@ const categories: Category[] = [
   {
     id: 2,
     name: "SWEATSHIRTS",
-    href: "#",
+    href: "/shop?category=sweats",
     image: "/categories/ss-cover.png",
-    comingSoon: true,
   },
   {
     id: 3,

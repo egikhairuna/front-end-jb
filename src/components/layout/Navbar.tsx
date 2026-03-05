@@ -70,6 +70,7 @@ export function Navbar() {
       { label: "ALL PRODUCTS", href: "/shop?category=all-products" },
       { label: "ACCESSORIES", href: "/shop?category=seasoning" },
       { label: "JACKETS", href: "/shop?category=jackets" },
+      { label: "SWEATSHIRTS", href: "/shop?category=sweats" },
       { label: "SHORTS & TROUSERS", href: "/shop?category=shorts-trousers" },
       { label: "POLO SHIRTS", href: "/shop?category=polo-shirt" },
       { label: "T-SHIRTS", href: "/shop?category=t-shirt" },
