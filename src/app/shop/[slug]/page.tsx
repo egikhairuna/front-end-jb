@@ -6,8 +6,8 @@ import { ProductDetailClient } from "./product-client";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
-// ⚡ Global ISR: Individual products revalidate every 1h
-export const revalidate = 3600;
+// ⚡ Global ISR: Individual products revalidate every 1h (Disabled for debugging)
+export const revalidate = 0; 
 
 // 🚀 Ensure dynamic segments are always attemptable even if not pre-rendered
 export const dynamicParams = true;
@@ -64,11 +64,15 @@ async function getProduct(slug: string) {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
+  console.log(`🔍 [ProductPage] Rendering for slug: "${slug}"`);
   const product = await getProduct(slug);
 
   if (!product) {
+    console.warn(`⚠️ [ProductPage] Product NOT FOUND in GraphQL for slug: "${slug}"`);
     notFound(); 
   }
+
+  console.log(`✅ [ProductPage] Product FOUND: ${product.name}`);
 
   return (
     <>

@@ -1,0 +1,3 @@
+{
+  "query": "query GetAllProductSlugs { products(first: 100) { nodes { slug } } }"
+}

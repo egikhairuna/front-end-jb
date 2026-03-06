@@ -11,7 +11,7 @@ export async function fetchGraphQL<T>(
 
   // 🛡️ Evaluate endpoint at runtime to ensure environment variables are correctly picked up
   // especially during ISR revalidation on the server.
-  const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://jamesboogie.com/graphql";
+  const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://vps.jamesboogie.com/graphql";
 
   try {
     const res = await fetch(endpoint, {
@@ -31,7 +31,7 @@ export async function fetchGraphQL<T>(
 
     if (!res.ok) {
         const text = await res.text();
-        console.error(`❌ GraphQL HTTP Error: ${res.status} ${res.statusText}`, text);
+        console.error(`❌ GraphQL HTTP Error: ${res.status} ${res.statusText} at [${endpoint}]`, text);
         throw new Error(`HTTP Error: ${res.status}`);
     }
 
@@ -39,7 +39,14 @@ export async function fetchGraphQL<T>(
 
     if (json.errors) {
       console.error('❌ GraphQL Errors:', JSON.stringify(json.errors, null, 2));
+      console.error('🔍 Variables used:', JSON.stringify(variables, null, 2));
       throw new Error(`GraphQL Error: ${json.errors[0]?.message || 'Unknown error'}`);
+    }
+
+    // Diagnostic log for null product
+    if (json.data && 'product' in json.data && json.data.product === null) {
+      console.warn(`⚠️ GraphQL returned NULL for product. Slug/ID used:`, variables.id || variables.slug);
+      console.warn(`🔗 Endpoint: ${endpoint}`);
     }
 
     return json.data;
