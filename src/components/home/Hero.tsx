@@ -11,7 +11,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         {/* Desktop Landscape Video */}
         <video 
-          src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Lofty_Teaser-Landscape.mp4" 
+          src="/videos/lofty_desktop.mp4" 
           autoPlay 
           loop 
           muted 
@@ -20,7 +20,7 @@ export function Hero() {
         />
         {/* Mobile Portrait Video */}
         <video 
-          src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/lofty_wax_teaser.mp4" 
+          src="/videos/lofty_mobile.mp4" 
           autoPlay 
           loop 
           muted 
