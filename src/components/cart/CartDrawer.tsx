@@ -7,17 +7,63 @@ import { Button } from "@/components/ui/button";
 import { Minus, Plus, Trash2, X } from "lucide-react";
 import { PiShoppingBag } from "react-icons/pi";
 import Image from "next/image";
-import Link from "next/link";
+
 import { Separator } from "@/components/ui/separator";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { formatPrice, cleanPrice, cn } from "@/lib/utils";
 
 export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) {
   const { items, isOpen, toggleCart, removeItem, updateQuantity, getCartTotal } = useCartStore();
-  
+  const router = useRouter();
+
   // Hydration fix
   const [isMounted, setIsMounted] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [isValidating, setIsValidating] = useState(false);
   useEffect(() => { setIsMounted(true) }, []);
+
+  // Clear error when cart changes (user removed the item)
+  useEffect(() => { setValidationError(null); }, [items]);
+
+  const handleCheckout = useCallback(async () => {
+    setIsValidating(true);
+    setValidationError(null);
+    try {
+      const payload = items.map((item) => ({
+        productId: item.product.databaseId || parseInt(item.product.id),
+        variationId: item.variation?.databaseId,
+        name: item.product.name,
+      }));
+
+      const res = await fetch('/api/products/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: payload }),
+      });
+
+      const data = await res.json();
+
+      if (data.unavailable && data.unavailable.length > 0) {
+        const first = data.unavailable[0];
+        const reason = first.reason === 'out_of_stock'
+          ? `"${first.name}" is currently out of stock. Please remove it from your cart.`
+          : `"${first.name}" is no longer available and cannot be ordered. Please remove it from your cart.`;
+        setValidationError(reason);
+        return;
+      }
+
+      // All items valid — navigate to checkout
+      toggleCart();
+      router.push('/checkout');
+    } catch {
+      // On network error, let checkout page handle it
+      toggleCart();
+      router.push('/checkout');
+    } finally {
+      setIsValidating(false);
+    }
+  }, [items, router, toggleCart]);
 
   if (!isMounted) return null;
 
@@ -129,10 +175,19 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
                     <span>Total</span>
                     <span>{formatPrice(getCartTotal())}</span>
                 </div>
+                {validationError && (
+                  <p className="px-4 text-[11px] text-red-600 font-medium leading-snug">
+                    {validationError}
+                  </p>
+                )}
                 <div className="grid gap-2 px-4">
-                    <Button asChild className="w-full" onClick={toggleCart}>
-                        <Link href="/checkout">CHECKOUT</Link>
-                    </Button>
+                    <button
+                      className="w-full bg-black text-white py-3 text-sm font-bold tracking-widest uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50"
+                      onClick={handleCheckout}
+                      disabled={isValidating}
+                    >
+                      {isValidating ? 'CHECKING...' : 'CHECKOUT'}
+                    </button>
                 </div>
             </div>
         )}

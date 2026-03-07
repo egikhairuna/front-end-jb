@@ -144,7 +144,7 @@ export default function CheckoutPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create order');
+        throw new Error(data.message || data.error || 'Failed to create order');
       }
 
       if (data.success) {

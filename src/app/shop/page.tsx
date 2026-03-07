@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   },
 };
 
-// ⚡ Global ISR config: 10 mins cache for the whole page
-export const revalidate = 600;
+// ⚡ Global ISR config: 5 mins cache for the whole page
+export const revalidate = 300;
 
 // Types
 type Props = {
