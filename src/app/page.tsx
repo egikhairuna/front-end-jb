@@ -36,7 +36,7 @@ export const revalidate = 3600;
 async function getFeaturedProducts() {
   try {
     const data: any = await fetchGraphQL(GET_PRODUCTS, { first: 8 }, {
-      revalidate: 3600,
+      revalidate: 300, // 5 minutes — so private/draft products disappear quickly
       tags: ['products', 'featured']
     });
     return data.products.nodes as Product[];
