@@ -24,7 +24,17 @@ export async function POST(request: NextRequest) {
       let stockData: any = {};
 
       if (variationId) {
-        const variation = await wooCommerceClient.getVariation(productId, variationId);
+        // 🔒 SECURITY: For variations, check the parent product's status.
+        // Variations inherit publish state from their parent and don't expose their own `status` field.
+        const [variation, parentProduct] = await Promise.all([
+          wooCommerceClient.getVariation(productId, variationId),
+          wooCommerceClient.getProduct(productId),
+        ]);
+
+        if (parentProduct.status !== 'publish') {
+          throw new Error(`PRODUCT_ERROR:NOT_AVAILABLE:${item.product.name}`);
+        }
+
         officialPrice = parseFloat(variation.price);
         stockData = {
           manage_stock: variation.manage_stock,
@@ -34,6 +44,12 @@ export async function POST(request: NextRequest) {
         };
       } else {
         const product = await wooCommerceClient.getProduct(productId);
+
+        // 🔒 SECURITY: Reject orders for non-published products (private, draft, trash).
+        if (product.status !== 'publish') {
+          throw new Error(`PRODUCT_ERROR:NOT_AVAILABLE:${item.product.name}`);
+        }
+
         officialPrice = parseFloat(product.price);
         stockData = {
           manage_stock: product.manage_stock,
@@ -148,11 +164,14 @@ export async function POST(request: NextRequest) {
     });
 
     const errorInfo = handleWooCommerceError(error);
-    const isStockError = typeof errorInfo === 'object' && errorInfo.code?.includes('stock');
+    const isClientError = typeof errorInfo === 'object' && (
+      errorInfo.code?.includes('stock') ||
+      errorInfo.code === 'woocommerce_rest_product_not_available'
+    );
 
     return NextResponse.json(
       typeof errorInfo === 'object' ? errorInfo : { error: errorInfo },
-      { status: isStockError ? 400 : 500 }
+      { status: isClientError ? 400 : 500 }
     );
   }
 }

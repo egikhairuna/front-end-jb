@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
             value: 'max-age=31536000; includeSubDomains; preload',
           },
           {
-            // 🛡️ Content Security Policy
+            // Content Security Policy
             // Optimized for Next.js + WooCommerce GraphQL
             key: 'Content-Security-Policy',
             value: [

@@ -18,15 +18,16 @@ export function Hero() {
           playsInline
           className="hidden md:block w-full h-full object-cover lg:scale-112 md:scale-132"
         />
-        {/* Mobile Portrait Video */}
-        <video 
-          src="/videos/lofty_mobile.mp4" 
-          autoPlay 
-          loop 
-          muted 
-          playsInline
-          className="block md:hidden w-full h-full object-cover"
-        />
+        {/* Mobile Portrait Image */}
+        <div className="block md:hidden relative w-full h-full">
+          <Image 
+            src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Thumbnail-Full-Vid-Lofty.jpg-scaled.jpeg"
+            alt="James Boogie Lofty Collection"
+            fill
+            className="object-cover"
+            priority
+          />
+        </div>
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-black/15 bg-gradient-to-t from-black/60 to-transparent" />
       </div>

@@ -364,7 +364,7 @@ export function Navbar() {
               onClick={() => setIsSearchOpen(true)}
               className={cn("p-2 hover:opacity-50 transition-opacity", isTransparent ? "text-white" : "text-black")}
             >
-              <Search className="size-5" />
+              <Search className="size-[1.2rem]" />
             </button>
             <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
           </div>

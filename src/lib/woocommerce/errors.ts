@@ -11,6 +11,17 @@ export class WooCommerceError extends Error {
 }
 
 export function handleWooCommerceError(error: unknown): string | { message: string, code: string, stock_available?: number } {
+  if (error instanceof Error && error.message.startsWith('PRODUCT_ERROR:')) {
+    const [, status, productName] = error.message.split(':');
+
+    if (status === 'NOT_AVAILABLE') {
+      return {
+        code: 'woocommerce_rest_product_not_available',
+        message: `"${productName}" is no longer available and cannot be ordered. Please remove it from your cart.`,
+      };
+    }
+  }
+
   if (error instanceof Error && error.message.startsWith('STOCK_ERROR:')) {
     const [, status, productName, stockAvailable] = error.message.split(':');
     
