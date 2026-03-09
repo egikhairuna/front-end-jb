@@ -70,6 +70,9 @@ export const GET_PRODUCT = graphql(`
           altText
         }
       }
+      productVideos {
+        productVideos
+      }
       ... on VariableProduct {
         variations {
           nodes {

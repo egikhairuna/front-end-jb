@@ -23,7 +23,28 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addItem } = useCartStore();
 
   const variations = product.variations?.nodes || [];
-  const galleryImages = [product.image, ...(product.galleryImages?.nodes || [])].filter(Boolean);
+  // Build gallery slides: [featured, first gallery, video?, ...rest gallery]
+  const videoUrl = product.productVideos?.productVideos || null;
+  const rawImages = [product.image, ...(product.galleryImages?.nodes || [])].filter(Boolean);
+  type ImageSlide = { type: "image" } & typeof rawImages[number];
+  type VideoSlide = { type: "video"; sourceUrl: string; altText: string };
+  type GallerySlide = ImageSlide | VideoSlide;
+
+  const gallerySlides: GallerySlide[] = (() => {
+    if (!videoUrl || rawImages.length < 2) {
+      return rawImages.map((img) => ({ ...img, type: "image" as const }));
+    }
+    const [first, second, ...rest] = rawImages;
+    return [
+      { ...first, type: "image" as const },
+      { ...second, type: "image" as const },
+      { type: "video" as const, sourceUrl: videoUrl, altText: "Product Video" },
+      ...rest.map((img) => ({ ...img, type: "image" as const })),
+    ];
+  })();
+
+  // Keep galleryImages for progress bar count (same length as gallerySlides)
+  const galleryImages = gallerySlides;
   const [previewImage, setPreviewImage] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
   const [openSections, setOpenSections] = useState<string[]>(["description", "style-fit"]);
@@ -95,22 +116,35 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <div className="lg:hidden -mx-6">
               <div className="relative overflow-hidden" ref={emblaRef}>
                 <div className="flex">
-                  {galleryImages.map((img, idx) => (
+                  {gallerySlides.map((slide, idx) => (
                     <div 
                       key={idx}
                       className="relative flex-[0_0_100%] min-w-0"
                     >
                       <div 
                         className="relative aspect-[3/4] w-full bg-white transition-transform"
-                        onClick={() => setPreviewImage(img.sourceUrl)}
+                        onClick={() => slide.type === "image" ? setPreviewImage(slide.sourceUrl) : undefined}
                       >
-                        <Image 
-                          src={img.sourceUrl} 
-                          alt={img.altText || `${product.name} - Image ${idx + 1}`}
-                          fill
-                          className="object-cover"
-                          priority={idx < 2}
-                        />
+                        {slide.type === "video" ? (
+                          <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                            className="absolute inset-0 w-full h-full object-cover"
+                          >
+                            <source src={slide.sourceUrl} />
+                          </video>
+                        ) : (
+                          <Image 
+                            src={slide.sourceUrl} 
+                            alt={slide.altText || `${product.name} - Image ${idx + 1}`}
+                            fill
+                            className="object-cover"
+                            priority={idx < 2}
+                          />
+                        )}
                       </div>
                     </div>
                   ))}
@@ -132,19 +166,33 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
             {/* Desktop: Two-Column Grid */}
             <div className="hidden lg:grid grid-cols-2 w-full pl-10 mx-auto bg-white">
-              {galleryImages.map((img, idx) => (
+              {gallerySlides.map((slide, idx) => (
                 <div 
                   key={idx}
-                  className="relative aspect-[3/4] w-full bg-white overflow-hidden border border-neutral-200 hover:border-primary/50 transition-all cursor-zoom-in"
-                  onClick={() => setPreviewImage(img.sourceUrl)}
+                  className="relative aspect-[3/4] w-full bg-white overflow-hidden border border-neutral-200 hover:border-primary/50 transition-all"
+                  onClick={() => slide.type === "image" ? setPreviewImage(slide.sourceUrl) : undefined}
+                  style={{ cursor: slide.type === "image" ? "zoom-in" : "default" }}
                 >
-                  <Image 
-                    src={img.sourceUrl} 
-                    alt={img.altText || `${product.name} - Image ${idx + 1}`}
-                    fill
-                    className="object-cover"
-                    priority={idx < 2}
-                  />
+                  {slide.type === "video" ? (
+                    <video
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    >
+                      <source src={slide.sourceUrl} />
+                    </video>
+                  ) : (
+                    <Image 
+                      src={slide.sourceUrl} 
+                      alt={slide.altText || `${product.name} - Image ${idx + 1}`}
+                      fill
+                      className="object-cover"
+                      priority={idx < 2}
+                    />
+                  )}
                 </div>
               ))}
             </div>

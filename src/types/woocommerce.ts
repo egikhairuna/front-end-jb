@@ -43,6 +43,7 @@ export interface Product {
   };
   features?: { features: string } | null;
   sizeChart?: { sizeChart: string } | null;
+  productVideos?: { productVideos?: string | null } | null;
   productCategories?: {
     nodes: Array<{
       id: string;
