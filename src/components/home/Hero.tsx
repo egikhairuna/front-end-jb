@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Image from "next/image";
 
 export function Hero() {
   return (
@@ -11,23 +10,24 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         {/* Desktop Landscape Video */}
         <video 
-          src="/videos/lofty_desktop.mp4" 
+          src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Cowax-Desktop.mp4" 
           autoPlay 
           loop 
           muted 
           playsInline
+          preload="metadata"
           className="hidden md:block w-full h-full object-cover lg:scale-112 md:scale-132"
         />
         {/* Mobile Portrait Image */}
-        <div className="block md:hidden relative w-full h-full">
-          <Image 
-            src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Thumbnail-Full-Vid-Lofty.jpg-scaled.jpeg"
-            alt="James Boogie Lofty Collection"
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        <video
+          src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Cowax-Mobile.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          className="block md:hidden w-full h-full object-cover"
+        />
         {/* Dark Overlay for Text Readability */}
         <div className="absolute inset-0 bg-black/15 bg-gradient-to-t from-black/60 to-transparent" />
       </div>
