@@ -10,7 +10,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         {/* Desktop Landscape Video */}
         <video 
-          src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Cowax-Desktop.mp4" 
+          src="/videos/desktop_hero.mp4" 
           autoPlay 
           loop 
           muted 
