@@ -8,8 +8,8 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Shop",
-  description: "Browse Our Pop Military collection, find your next statement piece.",
-  alternates: {
+  description: "Explore the latest collection, including outerwear, polo shirt, and other stuff in the statement of the season.",
+  alternates: { 
     canonical: "/shop",
   },
 };

@@ -50,7 +50,7 @@ const dinPro = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://jamesboogie.com'),
   title: "James Boogie",
-  description: "Discover James Boogie's a Pop Military Brands. Explore our latest fashion pieces.",
+  description: "Discover the pop military vibes jackets and clothing, a journey where every detail is refined, every process considered, and James Boogie arrives at its most deliberate point.",
   keywords: ["James Boogie", "Pop Military", "streetwear", "fashion", "Bandung", "Indonesia", "military fashion", "contemporary fashion"],
   authors: [{ name: "James Boogie" }],
   creator: "James Boogie",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     url: "https://jamesboogie.com",
     siteName: "James Boogie",
     title: "James Boogie - an Pop Military Brands",
-    description: "Discover James Boogie's a Pop Military Brands. Explore our latest fashion pieces.",
+    description: "Discover the pop military vibes jackets and clothing, a journey where every detail is refined, every process considered, and James Boogie arrives at its most deliberate point.",
     images: [
       {
         url: "/og-image.jpg",

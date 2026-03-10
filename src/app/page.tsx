@@ -9,10 +9,10 @@ import { Product } from "@/types/woocommerce";
 
 export const metadata: Metadata = {
   title: "James Boogie",
-  description: "Discover James Boogie's premium Pop Military streetwear collection. Explore our latest fashion pieces blending military with contemporary street style. Shop online or visit our flagship store.",
+  description: "Discover the pop military vibes jackets and clothing, a journey where every detail is refined, every process considered, and James Boogie arrives at its most deliberate point.",
   openGraph: {
     title: "James Boogie",
-    description: "Discover James Boogie's premium Pop Military streetwear collection. Explore our latest fashion pieces blending military aesthetics with contemporary street style.",
+    description: "Discover the pop military vibes jackets and clothing, a journey where every detail is refined, every process considered, and James Boogie arrives at its most deliberate point.",
     url: "https://jamesboogie.com",
     type: "website",
     images: [
