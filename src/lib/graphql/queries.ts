@@ -39,8 +39,9 @@ export const PRODUCT_FRAGMENT = graphql(`
 
 export const GET_PRODUCTS = graphql(`
   ${PRODUCT_FRAGMENT}
-  query GetProducts($first: Int!, $after: String, $category: String, $search: String, $stockStatus: [StockStatusEnum]) {
-    products(first: $first, after: $after, where: { category: $category, search: $search, stockStatus: $stockStatus }) {
+  query GetProducts($first: Int!, $after: String, $category: String, $search: String, $stockStatus: [StockStatusEnum], $orderby: [ProductsOrderbyInput]) {
+    products(first: $first, after: $after, where: { category: $category, search: $search, stockStatus: $stockStatus, orderby: $orderby }) {
+      found
       pageInfo {
         hasNextPage
         endCursor
@@ -48,6 +49,14 @@ export const GET_PRODUCTS = graphql(`
       nodes {
         ...ProductFragment
       }
+    }
+  }
+`);
+
+export const GET_PRODUCT_COUNT = graphql(`
+  query GetProductCount($category: String, $search: String, $stockStatus: [StockStatusEnum]) {
+    products(first: 1, where: { category: $category, search: $search, stockStatus: $stockStatus }) {
+      found
     }
   }
 `);

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { fetchGraphQL } from "@/lib/graphql/server-client";
-import { GET_PRODUCTS, GET_CATEGORIES } from "@/lib/graphql/queries";
+import { GET_PRODUCTS, GET_CATEGORIES, GET_PRODUCT_COUNT } from "@/lib/graphql/queries";
 import { Product } from "@/types/woocommerce";
 import { ProductGrid } from "@/components/shop/ProductGrid";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
@@ -22,17 +22,33 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
 
+// Map URL sort param → WooCommerce orderby input
+function buildOrderby(sort?: string) {
+  switch (sort) {
+    case 'price-asc':
+      return [{ field: 'PRICE', order: 'ASC' }];
+    case 'price-desc':
+      return [{ field: 'PRICE', order: 'DESC' }];
+    case 'new':
+      return [{ field: 'DATE', order: 'DESC' }];
+    default:
+      return null; // WooCommerce default (menu order)
+  }
+}
+
 async function getProducts({ 
   after, 
   category, 
   search, 
   stockStatus,
+  sort,
   first = 12 
 }: { 
   after?: string; 
   category?: string; 
   search?: string; 
   stockStatus?: string;
+  sort?: string;
   first?: number;
 }) {
    try {
@@ -43,23 +59,40 @@ async function getProducts({
        after,
        category: categoryFilter,
        search: search || null,
-       stockStatus: stockStatus ? [stockStatus] : null
+       stockStatus: stockStatus ? [stockStatus] : null,
+       orderby: buildOrderby(sort),
      }, {
-       // 💿 Fine-grained caching per request
        revalidate: 600,
        tags: ['products', stockStatus || 'all']
      });
      return data.products;
    } catch (error) {
      console.error("Error fetching products", error);
-     return { nodes: [], pageInfo: { hasNextPage: false, endCursor: null } };
+     return { nodes: [], pageInfo: { hasNextPage: false, endCursor: null }, found: 0 };
    }
+}
+
+async function getTotalInStockCount(category?: string, search?: string) {
+  try {
+    const categoryFilter = (category === "all-products" || !category) ? null : category;
+    const data: any = await fetchGraphQL(GET_PRODUCT_COUNT, {
+      category: categoryFilter,
+      search: search || null,
+      stockStatus: ['IN_STOCK'],
+    }, {
+      revalidate: 600,
+      tags: ['products', 'count']
+    });
+    return data.products?.found ?? 0;
+  } catch {
+    return 0;
+  }
 }
 
 async function getCategories() {
     try {
         const data: any = await fetchGraphQL(GET_CATEGORIES, {}, {
-          revalidate: 3600, // Categories change less often
+          revalidate: 3600,
           tags: ['categories']
         });
         return data.productCategories.nodes;
@@ -70,28 +103,30 @@ async function getCategories() {
 
 export default async function ShopPage({ searchParams }: Props) {
   const params = await searchParams;
-  const search = typeof params.search === 'string' ? params.search : undefined;
+  const search   = typeof params.search   === 'string' ? params.search   : undefined;
   const category = typeof params.category === 'string' ? params.category : undefined;
+  const sort     = typeof params.sort     === 'string' ? params.sort     : undefined;
   const BATCH_SIZE = 12;
 
-  // 🚀 Eliminate Waterfall: Fetch Products (IN_STOCK) and Categories in Parallel
-  const [productsData, categories] = await Promise.all([
-    getProducts({ search, category, stockStatus: 'IN_STOCK', first: BATCH_SIZE }),
-    getCategories()
+  // 🚀 Parallel fetch: products, categories, total count
+  const [productsData, categories, totalCount] = await Promise.all([
+    getProducts({ search, category, stockStatus: 'IN_STOCK', sort, first: BATCH_SIZE }),
+    getCategories(),
+    getTotalInStockCount(category, search),
   ]);
 
   let products: Product[] = productsData.nodes;
   let pageInfo = productsData.pageInfo;
   let currentStockStatus = 'IN_STOCK';
   
-  // 🔄 Automatic Transition: If IN_STOCK ends before the batch is full, 
-  // fetch OUT_OF_STOCK items. (This is still sequential but only occurs if needed)
+  // 🔄 If IN_STOCK exhausted before batch is full, top up with OUT_OF_STOCK
   if (!pageInfo.hasNextPage && products.length < BATCH_SIZE) {
     const remainingCount = BATCH_SIZE - products.length;
     const outOfStockData = await getProducts({ 
       search, 
       category, 
       stockStatus: 'OUT_OF_STOCK', 
+      sort,
       first: remainingCount 
     });
 
@@ -100,7 +135,7 @@ export default async function ShopPage({ searchParams }: Props) {
     currentStockStatus = 'OUT_OF_STOCK';
   }
   
-  // Find active category name
+  // Find active category
   const activeCategory = category 
     ? categories.find((c: any) => c.slug === category) 
     : null;
@@ -121,27 +156,29 @@ export default async function ShopPage({ searchParams }: Props) {
     });
   }
 
-
   return (
     <>
       <Navbar />
       <div className="w-full pb-10">
         <div className="w-full pt-20">
           <div className="mb-8 px-6 md:px-8 lg:px-12">
-            <Breadcrumbs items={breadcrumbItems} className="px-0 pt-6" />
-            <h1 className="text-3xl font-bold font-heading mb-2 uppercase">{displayTitle}</h1>
+            <Breadcrumbs items={breadcrumbItems} className="px-0 pt-4" />
+            <h1 className="text-4xl font-medium tracking-wider font-heading uppercase">{displayTitle}</h1>
             {search && <p className="text-muted-foreground">Showing results for &quot;{search}&quot;</p>}
           </div>
 
           {/* Product Grid */}
           <div className="w-full">
             <ProductGrid 
-              key={`${category || 'all'}-${search || 'none'}`}
+              key={`${category || 'all'}-${search || 'none'}-${sort || 'default'}`}
               initialProducts={products} 
               initialPageInfo={pageInfo}
               category={category}
               search={search}
+              sort={sort}
               initialStockStatus={currentStockStatus}
+              categories={categories}
+              totalCount={totalCount}
             />
           </div>
         </div>

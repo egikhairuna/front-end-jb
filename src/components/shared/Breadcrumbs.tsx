@@ -47,12 +47,12 @@ export function Breadcrumbs({ items, className, variant = "default" }: Breadcrum
   return (
     <nav 
       aria-label="Breadcrumb" 
-      className={cn("flex items-center space-x-2 text-[12px] font-bold tracking-wider uppercase text-neutral-400 mb-6", className)}
+      className={cn("flex items-center space-x-2 text-[10px] font-medium tracking-wider uppercase text-black mb-6", className)}
     >
       {items.map((item, index) => (
         <div key={index} className="flex items-center">
           {index > 0 && (
-            <ChevronRight className="h-3 w-3 mx-2 text-neutral-300 shrink-0" />
+            <ChevronRight className="h-3 w-3 mx-2 text-black shrink-0" />
           )}
           {item.href && !item.active ? (
             <Link 
