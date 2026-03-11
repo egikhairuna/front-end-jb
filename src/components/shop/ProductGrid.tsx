@@ -297,7 +297,7 @@ export function ProductGrid({
 
                     {/* Left: real total count */}
                     <span className="text-[12px] tracking-widest uppercase text-black font-medium">
-                        {totalCount} Product{totalCount !== 1 ? "s" : ""}
+                        {totalCount} Product{totalCount !== 1 ? "s Available" : ""}
                     </span>
 
                     {/* Right: filter button + grid toggle */}
