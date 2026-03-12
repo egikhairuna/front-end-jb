@@ -79,15 +79,21 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
           {/* Mobile Version: Icon */}
           <div className="lg:hidden relative p-2">
             {items.length > 0 ? (
-              <div className={cn(
-                "flex flex-col items-center justify-center transition-all",
-                triggerClassName?.includes("text-white") ? "brightness-0 invert" : ""
-              )}>
+              <div className="flex flex-col items-center justify-center -mt-[2px] transition-all">
                 {/* Bag Handle - Flat bar */}
-                <div className="h-[2.5px] w-3.5 bg-black rounded-t-[0.5px] mb-[1px]" />
+                <div className={cn(
+                  "h-[2.5px] w-2 rounded-t-[0.5px] mb-[0.5px]",
+                  triggerClassName?.includes("text-white") ? "bg-white" : "bg-black"
+                )} />
                 {/* Bag Body - Square */}
-                <div className="w-5 h-5 bg-black flex items-center justify-center">
-                  <span className="text-white text-[11px] font-bold font-mono tracking-tighter leading-none">
+                <div className={cn(
+                  "w-[16px] h-[16px] flex items-center justify-center",
+                  triggerClassName?.includes("text-white") ? "bg-white" : "bg-black"
+                )}>
+                  <span className={cn(
+                    "text-[11px] font-bold font-mono tracking-tighter leading-none",
+                    triggerClassName?.includes("text-white") ? "text-black" : "text-white"
+                  )}>
                     {items.reduce((acc, item) => acc + item.quantity, 0).toString().padStart(2, '0')}
                   </span>
                 </div>
