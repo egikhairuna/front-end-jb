@@ -78,17 +78,28 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
           
           {/* Mobile Version: Icon */}
           <div className="lg:hidden relative p-2">
-            <Image 
-                src="/cart.svg" 
-                alt="Cart" 
-                width={20} 
-                height={20} 
-                className={cn("size-5 transition-all", triggerClassName?.includes("text-white") ? "brightness-0 invert" : "")}
-            />
-            {items.length > 0 && (
-              <span className="absolute -top-1 -right-1 h-4 w-4 bg-black text-white text-[9px] flex items-center justify-center rounded-full font-bold">
-                {items.reduce((acc, item) => acc + item.quantity, 0)}
-              </span>
+            {items.length > 0 ? (
+              <div className={cn(
+                "flex flex-col items-center justify-center transition-all",
+                triggerClassName?.includes("text-white") ? "brightness-0 invert" : ""
+              )}>
+                {/* Bag Handle - Flat bar */}
+                <div className="h-[2.5px] w-3.5 bg-black rounded-t-[0.5px] mb-[1px]" />
+                {/* Bag Body - Square */}
+                <div className="w-5 h-5 bg-black flex items-center justify-center">
+                  <span className="text-white text-[11px] font-bold font-mono tracking-tighter leading-none">
+                    {items.reduce((acc, item) => acc + item.quantity, 0).toString().padStart(2, '0')}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <Image 
+                  src="/cart.svg" 
+                  alt="Cart" 
+                  width={20} 
+                  height={20} 
+                  className={cn("size-5 transition-all", triggerClassName?.includes("text-white") ? "brightness-0 invert" : "")}
+              />
             )}
           </div>
         </Button>
