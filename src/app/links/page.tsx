@@ -28,8 +28,8 @@ const links = [
     icon: <PiShoppingBag className="w-5 h-5" />
   },
   {
-    title: "ACCESSORIES",
-    href: "/shop?category=seasoning",
+    title: "SWEATSHIRTS",
+    href: "/shop?category=sweats",
     icon: <Info className="w-5 h-5" />
   },
   {
@@ -152,7 +152,7 @@ export default function LinksPage() {
           
           <Link href="/shop?category=lofty" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
-              src="/hero/Hero.jpg" 
+              src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/1-1-scaled.jpeg" 
               alt="SS026 Campaign" 
               fill
               className="object-cover transition-transform duration-700"
@@ -182,7 +182,7 @@ export default function LinksPage() {
               <Link 
                 href={link.href}
                 className={cn(
-                  "group relative flex items-center justify-center w-full p-4 rounded-xl border border-white/70 transition-all duration-300",
+                  "group relative flex items-center justify-center w-full p-4 border border-white/70 transition-all duration-300",
                   "bg-transparent backdrop-blur-md hover:bg-white hover:text-black hover:border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:-translate-y-1"
                 )}
               >

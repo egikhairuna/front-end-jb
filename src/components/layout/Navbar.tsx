@@ -82,7 +82,6 @@ export function Navbar() {
       { label: "FROLIC", href: "/shop?category=frolic" },
       { label: "JAMES BOOGIE | MATERNAL DISASTER", href: "/shop?category=james-boogie-maternal-disaster" },
       { label: "VENTILE®", href: "/shop?category=ventile" },
-      { label: "MOXIE", href: "/shop?category=moxie" },
     ]
   };
 
