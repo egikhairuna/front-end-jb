@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp, IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +19,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderHovered, setIsHeaderHovered] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [mobileView, setMobileView] = useState<"main" | "SHOP" | "THE BRAND">("main");
   const [isMounted, setIsMounted] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const pathname = usePathname();
@@ -115,8 +116,8 @@ export function Navbar() {
         <div className="flex w-full items-center lg:hidden h-full">
           <div className="flex-1">
             {!isMounted ? (
-              <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
-                <Menu className="size-5" />
+              <Button variant="ghost" className="px-2 pt-2 hover:bg-transparent focus-visible:bg-transparent">
+                <Image src="/hamburger.svg" alt="Menu" width={20} height={20} className={cn("size-6 transition-all", isTransparent && !isOpen ? "brightness-0 invert" : "")} />
               </Button>
             ) : (
               <Sheet open={isOpen} onOpenChange={(open) => {
@@ -124,26 +125,32 @@ export function Navbar() {
                 if (!open) {
                   setActiveMenu(null);
                   setIsHeaderHovered(false);
+                  setMobileView("main");
                 }
               }}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" className={cn("px-0 hover:bg-transparent focus-visible:bg-transparent", isTransparent && !isOpen ? "text-white" : "text-black")}>
-                    <Menu className="size-5" />
+                  <Button variant="ghost" className="px-2 pt-2 hover:bg-transparent focus-visible:bg-transparent">
+                    <Image src="/hamburger.svg" alt="Menu" width={20} height={20} className={cn("size-6 transition-all", isTransparent && !isOpen ? "brightness-0 invert" : "")} />
                   </Button>
                 </SheetTrigger>
-                <SheetContent side={"fade" as any} className="w-full h-full p-0 bg-gradient-to-b from-[#0a1128] via-[#020617] to-black border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
+                <SheetContent aria-describedby={undefined} side={"fade" as any} className="w-full h-full p-0 bg-white border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                   
                   {/* Header with Centered Logo and Close Button */}
-                  <div className="relative flex items-center justify-between px-6 h-20 border-b border-white/10">
+                  <div className="relative flex items-center justify-between px-4 h-20 border-b border-black/10">
                     {/* Close Button (Left aligned to match Hamburger icon position) */}
-                    <Button 
-                      variant="ghost" 
-                      onClick={() => setIsOpen(false)} 
-                      className="p-0 h-10 w-10 hover:bg-white/10 rounded-full flex items-center justify-center transition-colors"
-                    >
-                      <X className="size-5 text-white" />
-                    </Button>
+                    <div className="flex-1">
+                      <Button 
+                        variant="ghost" 
+                        onClick={() => {
+                          setIsOpen(false);
+                          setMobileView("main");
+                        }} 
+                        className="-ml-1 px-2 pt-2 pb-2 hover:bg-transparent focus-visible:bg-transparent h-auto w-auto"
+                      >
+                        <X className="size-6 text-black" strokeWidth={1.5} />
+                      </Button>
+                    </div>
 
                     {/* Centered Logo (Matches main navbar positioning) */}
                     <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -153,128 +160,150 @@ export function Navbar() {
                           alt="JamesBoogie" 
                           width={140} 
                           height={35} 
-                          className="h-6 w-auto brightness-0 invert"
+                          className="h-6 w-auto"
                         />
                       </Link>
                     </div>
                     
                     {/* Right spacer to keep symmetry */}
-                    <div className="w-10"></div>
+                    <div className="flex-1 flex justify-end"></div>
                   </div>
                   
                   {/* Navigation Menu */}
-                  <nav className="flex-1 flex flex-col w-full px-6 py-4 overflow-y-auto">
-                    {/* SHOP - with submenu */}
-                    <div className="border-b border-white/10">
+                  <div className="flex-1 w-full relative overflow-hidden">
+                    {/* Panel 1: Main Menu */}
+                    <nav className={cn(
+                      "absolute inset-0 w-full h-full flex flex-col px-4 pt-0 pb-4 overflow-y-auto transition-transform duration-300 ease-in-out",
+                      mobileView === "main" ? "translate-x-0" : "-translate-x-full"
+                    )}>
+                      {/* SHOP - Trigger */}
+                      <div className="border-b border-black/10">
+                        <button
+                          onClick={() => setMobileView("SHOP")}
+                          className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-black uppercase"
+                        >
+                          SHOP
+                          <IoIosArrowForward className="text-lg text-black" />
+                        </button>
+                      </div>
+
+                      {/* JOURNAL - direct link */}
+                      <div className="border-b border-black/10">
+                        <Link
+                          href="/journal"
+                          onClick={() => { setIsOpen(false); setMobileView("main"); }}
+                          className="block py-4 text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity"
+                        >
+                          JOURNAL
+                        </Link>
+                      </div>
+
+                      {/* THE BRAND - Trigger */}
+                      <div className="border-b border-black/10">
+                        <button
+                          onClick={() => setMobileView("THE BRAND")}
+                          className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-black uppercase"
+                        >
+                          THE BRAND
+                          <IoIosArrowForward className="text-lg text-black" />
+                        </button>
+                      </div>
+                    </nav>
+
+                    {/* Panel 2: SHOP */}
+                    <nav className={cn(
+                      "absolute inset-0 w-full h-full flex flex-col px-4 pt-0 pb-4 overflow-y-auto transition-transform duration-300 ease-in-out bg-white",
+                      mobileView === "SHOP" ? "translate-x-0" : "translate-x-full"
+                    )}>
                       <button
-                        onClick={() => setActiveMenu(activeMenu === "SHOP" ? null : "SHOP")}
-                        className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-white uppercase"
+                        onClick={() => setMobileView("main")}
+                        className="flex items-center gap-2 py-4 border-b border-black/10 text-sm font-regular tracking-wider text-black uppercase mb-4"
                       >
-                        SHOP
-                        {activeMenu === "SHOP" ? (
-                          <IoIosArrowUp className="text-lg text-white" />
-                        ) : (
-                          <IoIosArrowDown className="text-lg text-white" />
-                        )}
+                        <IoIosArrowBack className="text-lg" />
+                        BACK
                       </button>
-                      <div className={cn(
-                        "overflow-hidden transition-all duration-300 ease-in-out",
-                        activeMenu === "SHOP" ? "max-h-[800px] opacity-100 mb-4" : "max-h-0 opacity-0"
-                      )}>
-                        <div className="pl-4 space-y-6 pb-2">
-                          <div className="space-y-3">
-                            <h4 className="text-[10px] font-bold tracking-widest text-neutral-400 uppercase">Products</h4>
-                            {shopMenu.products.map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                onClick={() => setIsOpen(false)}
-                                className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors uppercase"
-                              >
-                                {item.label}
-                              </Link>
-                            ))}
-                          </div>
-                          <div className="space-y-3">
-                            <h4 className="text-[10px] font-bold tracking-widest text-neutral-400 uppercase">Focus On</h4>
-                            {shopMenu.focusOn.map((item) => (
-                              <Link
-                                key={item.label}
-                                href={item.href}
-                                onClick={() => setIsOpen(false)}
-                                className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors uppercase"
-                              >
-                                {item.label}
-                              </Link>
-                            ))}
-                          </div>
+                      <div className="space-y-6 pb-2">
+                        <div className="space-y-3">
+                          <h4 className="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">Products</h4>
+                          {shopMenu.products.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              onClick={() => { setIsOpen(false); setMobileView("main"); }}
+                              className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors uppercase"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                        <div className="space-y-3">
+                          <h4 className="text-[10px] font-bold tracking-widest text-neutral-500 uppercase">Season</h4>
+                          {shopMenu.focusOn.map((item) => (
+                            <Link
+                              key={item.label}
+                              href={item.href}
+                              onClick={() => { setIsOpen(false); setMobileView("main"); }}
+                              className="block text-sm font-medium text-neutral-600 hover:text-black transition-colors uppercase"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
                         </div>
                       </div>
-                    </div>
+                    </nav>
 
-                    {/* JOURNAL - direct link */}
-                    <div className="border-b border-white/10">
-                      <Link
-                        href="/journal"
-                        onClick={() => setIsOpen(false)}
-                        className="block py-4 text-sm font-regular tracking-wider text-white uppercase hover:opacity-50 transition-opacity"
-                      >
-                        JOURNAL
-                      </Link>
-                    </div>
-
-                    {/* THE BRAND - with submenu */}
-                    <div className="border-b border-white/10">
+                    {/* Panel 3: THE BRAND */}
+                    <nav className={cn(
+                      "absolute inset-0 w-full h-full flex flex-col px-4 pt-0 pb-4 overflow-y-auto transition-transform duration-300 ease-in-out bg-white",
+                      mobileView === "THE BRAND" ? "translate-x-0" : "translate-x-full"
+                    )}>
                       <button
-                        onClick={() => setActiveMenu(activeMenu === "THE BRAND" ? null : "THE BRAND")}
-                        className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-white uppercase"
+                        onClick={() => setMobileView("main")}
+                        className="flex items-center gap-2 py-4 border-b border-black/10 text-sm font-regular tracking-wider text-black uppercase mb-4"
                       >
-                        THE BRAND
-                        {activeMenu === "THE BRAND" ? (
-                          <IoIosArrowUp className="text-lg text-white" />
-                        ) : (
-                          <IoIosArrowDown className="text-lg text-white" />
-                        )}
+                        <IoIosArrowBack className="text-lg" />
+                        BACK
                       </button>
-                      <div className={cn(
-                        "overflow-hidden transition-all duration-300 ease-in-out",
-                        activeMenu === "THE BRAND" ? "max-h-[500px] opacity-100 mb-4" : "max-h-0 opacity-0"
-                      )}>
-                        <div className="pl-4 space-y-3 pb-2">
-                          <Link
-                            href="/our-story"
-                            onClick={() => setIsOpen(false)}
-                            className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors"
+                      <div className="flex flex-col gap-6 pb-20">
+                        {[
+                          { title: "OUR STORY", href: "/our-story", img: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Wallpaper_Moxie_Potrait_FHD.jpg" },
+                          { title: "OUR PEOPLE", href: "/our-people", img: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/our-people.jpg" },
+                          { title: "VENTILE®", href: "/ventile", img: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/ventile-poster-scaled.jpg" }
+                        ].map((item, index) => (
+                          <Link 
+                            key={index} 
+                            href={item.href} 
+                            onClick={() => { setIsOpen(false); setMobileView("main"); }}
+                            className="flex flex-col gap-2 w-full group"
                           >
-                            OUR STORY
+                            <div className="aspect-[4/3] bg-neutral-100 overflow-hidden relative border-y border-black/5 -mx-4">
+                              <Image 
+                                src={item.img} 
+                                alt={item.title} 
+                                fill 
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                              />
+                            </div>
+                            <div className="py-2">
+                              <h3 className="text-[13px] font-regular tracking-[0.1em] text-black">
+                                {item.title}
+                              </h3>
+                            </div>
                           </Link>
-                          <Link
-                            href="/our-people"
-                            onClick={() => setIsOpen(false)}
-                            className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors"
-                          >
-                            OUR PEOPLE
-                          </Link>
-                          <Link
-                            href="/ventile"
-                            onClick={() => setIsOpen(false)}
-                            className="block text-sm font-medium text-neutral-400 hover:text-white transition-colors"
-                          >
-                            VENTILE®
-                          </Link>
-                        </div>
+                        ))}
                       </div>
-                    </div>
-                  </nav>
+                    </nav>
+                  </div>
 
                    {/* Bottom Section - Social Icons and Search Trigger */}
-                   <div className="p-6 border-t border-white/10 bg-black/20 flex items-center justify-between">
+                   <div className="p-6 border-t border-black/10 bg-neutral-50 flex items-center justify-between mt-auto">
                      <div className="flex items-center gap-6">
                        <Link 
                          href="https://www.instagram.com/james.boogie/" 
                          target="_blank" 
                          rel="noopener noreferrer"
-                         className="text-white hover:text-neutral-400 transition-colors"
+                         className="text-black hover:text-neutral-500 transition-colors"
                        >
                          <Instagram className="h-5 w-5" />
                        </Link>
@@ -282,7 +311,7 @@ export function Navbar() {
                          href="https://www.facebook.com/jamesboogieid" 
                          target="_blank" 
                          rel="noopener noreferrer"
-                         className="text-white hover:text-neutral-400 transition-colors"
+                         className="text-black hover:text-neutral-500 transition-colors"
                        >
                          <Facebook className="h-5 w-5" />
                        </Link>
@@ -293,7 +322,7 @@ export function Navbar() {
                          setIsOpen(false);
                          setIsSearchOpen(true);
                        }}
-                       className="text-white p-2 hover:bg-transparent transition-opacity"
+                       className="text-black p-2 hover:bg-transparent transition-opacity"
                      >
                        <Search className="size-5" />
                      </button>
@@ -315,13 +344,7 @@ export function Navbar() {
              </Link>
           </div>
           
-          <div className="flex-1 flex justify-end items-center gap-2">
-             <button 
-               onClick={() => setIsSearchOpen(true)}
-               className={cn("p-2 hover:opacity-50 transition-opacity", isTransparent ? "text-white" : "text-black")}
-             >
-               <Search className="size-5" />
-             </button>
+          <div className="flex-1 flex justify-end">
              <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
           </div>
         </div>

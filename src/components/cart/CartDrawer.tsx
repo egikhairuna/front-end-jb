@@ -78,7 +78,13 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
           
           {/* Mobile Version: Icon */}
           <div className="lg:hidden relative p-2">
-            <PiShoppingBag className="size-[1.3rem]" />
+            <Image 
+                src="/cart.svg" 
+                alt="Cart" 
+                width={20} 
+                height={20} 
+                className={cn("size-5 transition-all", triggerClassName?.includes("text-white") ? "brightness-0 invert" : "")}
+            />
             {items.length > 0 && (
               <span className="absolute -top-1 -right-1 h-4 w-4 bg-black text-white text-[9px] flex items-center justify-center rounded-full font-bold">
                 {items.reduce((acc, item) => acc + item.quantity, 0)}
@@ -87,7 +93,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
           </div>
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col w-full sm:max-w-md z-[200] [&>button]:hidden">
+      <SheetContent aria-describedby={undefined} className="flex flex-col w-full sm:max-w-md z-[200] [&>button]:hidden">
         <SheetHeader className="flex flex-row items-center justify-between border-b pb-4 px-6">
           <SheetTitle className="text-sm font-bold tracking-[0.2em] uppercase">Order Summary</SheetTitle>
           <SheetClose asChild>

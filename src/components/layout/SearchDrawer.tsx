@@ -47,7 +47,7 @@ export function SearchDrawer({ triggerClassName, open: externalOpen, onOpenChang
       </SheetTrigger>
       {/* Side="fade" for full-screen appearance. Adjusted classes for full height and width. */}
       {/* Increased z-index to z-[150] to stay above the navbar (z-[100]) */}
-      <SheetContent side={"fade" as any} className="w-full h-full flex flex-col pt-4 md:pt-10 pb-0 bg-white border-none [&>button]:hidden shadow-none rounded-none animate-in animate-out fade-in fade-out duration-300 z-[150]">
+      <SheetContent aria-describedby={undefined} side={"fade" as any} className="w-full h-full flex flex-col pt-4 md:pt-10 pb-0 bg-white border-none [&>button]:hidden shadow-none rounded-none animate-in animate-out fade-in fade-out duration-300 z-[150]">
         <SheetTitle className="sr-only">Search</SheetTitle>
         <div className="w-full h-full flex flex-col relative px-4 md:px-8 lg:px-12">
             {/* Header */}
