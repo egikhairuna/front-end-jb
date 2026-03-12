@@ -49,7 +49,7 @@ export default function VentilePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="aspect-[4/5] relative overflow-hidden border border-black/5">
                 <Image
-                  src="/images/JV-lookbook.jpg"
+                  src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/Test-Ventile2-1-of-1-scaled.jpg"
                   alt="James Boogie Ventile Lookbook"
                   fill
                   className="object-cover"
@@ -58,7 +58,7 @@ export default function VentilePage() {
               </div>
               <div className="aspect-[4/5] relative overflow-hidden border border-black/5">
                 <Image
-                  src="/images/JV-lookbook2.jpg"
+                  src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/JV_For-Media-4-scaled.jpg"
                   alt="James Boogie Ventile Lookbook 2"
                   fill
                   className="object-cover"

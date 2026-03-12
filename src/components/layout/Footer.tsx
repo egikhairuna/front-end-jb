@@ -65,10 +65,10 @@ export function Footer() {
           
           {/* 1. Newsletter (Full width on mobile, Col 1 on desktop) */}
           <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold font-heading uppercase leading-tight">
+            <h2 className="text-2xl md:text-3xl font-bold font-heading uppercase leading-tight">
               Subscribe to the Newsletter
             </h2>
-            <p className="text-sm text-neutral-400 max-w-sm">
+            <p className="text-[13px] text-neutral-400 max-w-sm">
               Join our community and get access to exclusive content, previews and special offers.
             </p>
           </div>
@@ -78,7 +78,7 @@ export function Footer() {
           <div className="hidden lg:contents">
              {footerSections.map((section) => (
                 <div key={section.title} className="space-y-6">
-                   <h3 className="text-sm font-bold tracking-widest uppercase text-neutral-400">
+                   <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-400">
                       {section.title}
                    </h3>
                    <ul className="space-y-3">
@@ -86,7 +86,7 @@ export function Footer() {
                          <li key={item.label}>
                              <Link 
                                 href={item.href} 
-                                className="text-sm font-bold tracking-[0.1em] hover:text-neutral-400 transition-colors uppercase"
+                                className="text-[12px] font-bold tracking-[0.1em] hover:text-neutral-400 transition-colors uppercase"
                              >
                                 {item.label}
                              </Link>

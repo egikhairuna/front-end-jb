@@ -166,8 +166,8 @@ export function ProductGrid({
     const hasMoreContent = pageInfo.hasNextPage || fetchingStatus === "IN_STOCK";
 
     const gridClass = gridView === "wide"
-        ? "grid grid-cols-2 lg:grid-cols-4 w-full gap-0 border-t border-black/10"
-        : "grid grid-cols-1 lg:grid-cols-2 w-full gap-0 border-t border-black/10";
+        ? "grid grid-cols-2 md:grid-cols-4 w-full gap-0 border-t border-black/10"
+        : "grid grid-cols-1 md:grid-cols-6 w-full gap-0 border-t border-black/10";
 
     const activeSort = sort ?? "";
 
@@ -197,8 +197,8 @@ export function ProductGrid({
             <div
                 ref={drawerRef}
                 className={`
-                    fixed top-20 right-0 h-[calc(100%-80px)] w-full
-                    sm:top-0 sm:h-full sm:w-[320px]
+                    fixed top-0 right-0 h-full w-full
+                    sm:w-[320px]
                     bg-white z-[110]
                     flex flex-col shadow-2xl
                     transition-transform duration-300 ease-in-out
@@ -207,13 +207,13 @@ export function ProductGrid({
             >
                 {/* Drawer header */}
                 <div className="flex items-center justify-between px-6 py-5 border-b border-black/10">
-                    <span className="text-[11px] tracking-widest uppercase font-semibold">Filter &amp; Sort</span>
+                    <span className="text-[12px] tracking-widest uppercase font-medium">Filter &amp; Sort</span>
                     <button
                         onClick={() => setDrawerOpen(false)}
-                        className="text-[10px] tracking-widest uppercase font-medium text-black/60 hover:text-black transition-colors flex items-center gap-1.5"
+                        className="text-[12px] tracking-widest uppercase font-medium text-black/60 hover:text-black transition-colors flex items-center gap-1.5"
                     >
                         Close
-                        <X size={12} strokeWidth={2} />
+                        <X size={14} strokeWidth={2} />
                     </button>
                 </div>
 
@@ -222,7 +222,7 @@ export function ProductGrid({
 
                     {/* ─ Sort By ───────────────────────────────────────────── */}
                     <div>
-                        <p className="text-[11px] tracking-widest uppercase font-semibold mb-4">
+                        <p className="text-[12px] tracking-widest uppercase font-medium mb-4">
                             Sort By
                         </p>
                         <div className="flex flex-wrap gap-2">
@@ -231,7 +231,7 @@ export function ProductGrid({
                                     key={opt.value}
                                     onClick={() => handleSort(opt.value)}
                                     className={`
-                                        text-[11px] tracking-widest uppercase px-3 py-2 border transition-colors
+                                        text-[12px] tracking-widest uppercase px-3 py-2 border transition-colors
                                         ${activeSort === opt.value
                                             ? "bg-black text-white border-black"
                                             : "bg-white text-black border-black hover:border-black hover:text-black"}
@@ -244,12 +244,12 @@ export function ProductGrid({
                     </div>
 
                     {/* ─ Divider ──────────────────────────────────────────── */}
-                    <div className="h-px bg-black/10" />
+                    <div className="h-px bg-black" />
 
                     {/* ─ Category ──────────────────────────────────────────── */}
                     <div>
                         <div className="flex items-center justify-between mb-4">
-                            <p className="text-[11px] tracking-widest uppercase font-semibold">
+                            <p className="text-[12px] tracking-widest uppercase font-medium">
                                 Category
                             </p>
                             <span className="text-black/30 text-lg font-light select-none">—</span>
@@ -259,7 +259,7 @@ export function ProductGrid({
                             <button
                                 onClick={() => handleCategory(null)}
                                 className={`
-                                    text-[11px] tracking-widest uppercase px-3 py-2 border transition-colors
+                                    text-[12px] tracking-widest uppercase px-3 py-2 border transition-colors
                                     ${(!category || category === "all-products")
                                         ? "bg-black text-white border-black"
                                         : "bg-white text-black border-black hover:border-black hover:text-black"}
@@ -293,16 +293,15 @@ export function ProductGrid({
             <div className="space-y-0">
 
                 {/* ── Toolbar ─────────────────────────────────────────────── */}
-                <div className="flex items-center justify-between px-6 md:px-8 lg:px-12 py-3 border-t border-b border-black">
+                <div className="flex items-center justify-between px-6 md:px-8 lg:px-12 py-3 border-t border-b border-black/30">
 
                     {/* Left: real total count */}
-                    <span className="text-[12px] tracking-widest uppercase text-black font-medium">
-                        {totalCount} Product{totalCount !== 1 ? "s Available" : ""}
+                    <span className="hidden md:block text-[12px] tracking-widest uppercase text-black font-medium">
+                        {totalCount} Product{totalCount !== 1 ? "s" : ""}
                     </span>
 
                     {/* Right: filter button + grid toggle */}
-                    <div className="flex items-center gap-4">
-
+                    <div className="flex-1 flex items-center justify-between md:flex-none md:justify-end md:gap-4">
                         {/* Filters button */}
                         <button
                             onClick={() => setDrawerOpen(true)}
@@ -310,42 +309,42 @@ export function ProductGrid({
                             className="text-[12px] tracking-widest uppercase font-medium text-black hover:text-black transition-colors flex items-center gap-1.5"
                         >
                             Filters
-                            {/* three-line funnel icon */}
-                            <svg width="13" height="13" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
-                            </svg>
                         </button>
 
-                        {/* Divider */}
-                        <span className="w-px h-4 bg-black/20" aria-hidden />
+                        <div className="flex items-center gap-4">
+                            {/* Divider */}
+                            <span className="w-px h-4 bg-black/20" aria-hidden />
 
-                        {/* Compact grid (1-col mobile / 2-col desktop) */}
-                        <button
-                            onClick={() => setGridView("compact")}
-                            aria-label="Compact grid"
-                            className={`transition-opacity ${gridView === "compact" ? "opacity-100" : "opacity-30 hover:opacity-60"}`}
-                        >
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="1"    y="1" width="6.5" height="16" rx="0.5" fill="currentColor"/>
-                                <rect x="10.5" y="1" width="6.5" height="16" rx="0.5" fill="currentColor"/>
-                            </svg>
-                        </button>
+                            {/* Compact grid (1-col mobile / 6-col desktop) */}
+                            <button
+                                onClick={() => setGridView("compact")}
+                                aria-label="6 Column Grid"
+                                className={`transition-opacity ${gridView === "compact" ? "opacity-100" : "opacity-30 hover:opacity-60"}`}
+                            >
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1"    y="1"   width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="7.25" y="1"   width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="13.5" y="1"   width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="1"    y="9.5" width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="7.25" y="9.5" width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="13.5" y="9.5" width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                </svg>
+                            </button>
 
-                        {/* Wide grid (2-col mobile / 4-col desktop) */}
-                        <button
-                            onClick={() => setGridView("wide")}
-                            aria-label="Wide grid"
-                            className={`transition-opacity ${gridView === "wide" ? "opacity-100" : "opacity-30 hover:opacity-60"}`}
-                        >
-                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="1"    y="1"   width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
-                                <rect x="7.25" y="1"   width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
-                                <rect x="13.5" y="1"   width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
-                                <rect x="1"    y="9.5" width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
-                                <rect x="7.25" y="9.5" width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
-                                <rect x="13.5" y="9.5" width="3.5" height="7.5" rx="0.5" fill="currentColor"/>
-                            </svg>
-                        </button>
+                            {/* Wide grid (2-col mobile / 4-col desktop) */}
+                            <button
+                                onClick={() => setGridView("wide")}
+                                aria-label="4 Column Grid"
+                                className={`transition-opacity ${gridView === "wide" ? "opacity-100" : "opacity-30 hover:opacity-60"}`}
+                            >
+                                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="1"  y="1"  width="7.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="9.5" y="1"  width="7.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="1"  y="9.5" width="7.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                    <rect x="9.5" y="9.5" width="7.5" height="7.5" rx="0.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 

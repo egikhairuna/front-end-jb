@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     id: slug,
     idType: "SLUG"
   }, {
-    revalidate: 300, // 5 minutes — so private/draft products disappear quickly
+    revalidate: 300, 
     tags: [`product-${slug}`]
   });
   
@@ -56,7 +56,7 @@ async function getProduct(slug: string) {
         id: slug,
         idType: "SLUG"
     }, {
-        revalidate: 300, // 5 minutes — so private/draft products disappear quickly
+        revalidate: 300, 
         tags: [`product-${slug}`]
     });
     return data.product as Product | null;

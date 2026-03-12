@@ -3,7 +3,6 @@ import { fetchGraphQL } from "@/lib/graphql/server-client";
 import { GET_POSTS } from "@/lib/graphql/queries";
 import { JournalGrid } from "@/components/journal/JournalGrid";
 
-// ⚡ Global ISR: Journal updates every 1h
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
