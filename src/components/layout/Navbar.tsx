@@ -293,7 +293,7 @@ export function Navbar() {
                          setIsOpen(false);
                          setIsSearchOpen(true);
                        }}
-                       className="text-white p-0 hover:bg-transparent transition-opacity"
+                       className="text-white p-2 hover:bg-transparent transition-opacity"
                      >
                        <Search className="size-5" />
                      </button>
@@ -315,7 +315,13 @@ export function Navbar() {
              </Link>
           </div>
           
-          <div className="flex-1 flex justify-end">
+          <div className="flex-1 flex justify-end items-center gap-2">
+             <button 
+               onClick={() => setIsSearchOpen(true)}
+               className={cn("p-2 hover:opacity-50 transition-opacity", isTransparent ? "text-white" : "text-black")}
+             >
+               <Search className="size-5" />
+             </button>
              <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
           </div>
         </div>
@@ -323,7 +329,7 @@ export function Navbar() {
         {/* DESKTOP LAYOUT (Three Columns) */}
         <div className="hidden lg:grid lg:grid-cols-3 w-full items-center h-full">
           {/* LEFT: LINKS */}
-          <nav className="flex items-center gap-8 text-[13px] font-bold tracking-[0.2em] h-full">
+          <nav className="flex items-center gap-8 text-[13px] font-regular uppercase tracking-[0.2em] h-full">
              {navLinks.map((link) => (
                 <div
                   key={link.href}
@@ -361,11 +367,14 @@ export function Navbar() {
           <div className="flex items-center justify-end gap-2">
             <button 
               onClick={() => setIsSearchOpen(true)}
-              className={cn("p-2 hover:opacity-50 transition-opacity", isTransparent ? "text-white" : "text-black")}
+              className={cn(
+                "px-3 py-2 text-[13px] font-regular tracking-[0.2em] transition-colors hover:opacity-50 cursor-pointer", 
+                isTransparent ? "text-white" : "text-[#1a1a1a]"
+              )}
             >
-              <Search className="size-[1.2rem]" />
+              SEARCH
             </button>
-            <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-black")} />
+            <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-[#1a1a1a]")} />
           </div>
         </div>
       </div>

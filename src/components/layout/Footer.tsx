@@ -146,7 +146,7 @@ export function Footer() {
 
         {/* COPYRIGHT (Bottom bar) */}
         <div className="pt-8 md:pt-12 flex flex-col-reverse md:flex-row justify-center items-center gap-4 text-[12px] font-medium tracking-widest text-neutral-500 uppercase">
-           <p>James Boogie © 2026.All rights reserved.</p>
+           <p>James Boogie © 2026. All rights reserved.</p>
         </div>
       </div>
     </footer>

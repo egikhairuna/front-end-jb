@@ -70,13 +70,21 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
   return (
     <Sheet open={isOpen} onOpenChange={toggleCart}>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon-lg" className={cn("relative", triggerClassName)}>
-          <PiShoppingBag size={32} className="size-[1.3rem]" />
-          {items.length > 0 && (
-            <span className="absolute -top-1 -right-1 h-4 w-4 bg-black text-white text-[10px] flex items-center justify-center rounded-full">
-              {items.reduce((acc, item) => acc + item.quantity, 0)}
-            </span>
-          )}
+        <Button variant="ghost" className={cn("relative p-0 hover:bg-transparent hover:opacity-50 transition-colors cursor-pointer", triggerClassName)}>
+          {/* Desktop Version: Text BAG [10] */}
+          <span className="hidden lg:inline-flex items-center text-[13px] font-regular tracking-[0.2em] px-3 py-2">
+            CART {items.length > 0 ? `[${items.reduce((acc, item) => acc + item.quantity, 0)}]` : ""}
+          </span>
+          
+          {/* Mobile Version: Icon */}
+          <div className="lg:hidden relative p-2">
+            <PiShoppingBag className="size-[1.3rem]" />
+            {items.length > 0 && (
+              <span className="absolute -top-1 -right-1 h-4 w-4 bg-black text-white text-[9px] flex items-center justify-center rounded-full font-bold">
+                {items.reduce((acc, item) => acc + item.quantity, 0)}
+              </span>
+            )}
+          </div>
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col w-full sm:max-w-md z-[200] [&>button]:hidden">
