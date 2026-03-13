@@ -12,6 +12,12 @@ export const PRODUCT_FRAGMENT = graphql(`
       sourceUrl
       altText
     }
+    galleryImages {
+      nodes {
+        sourceUrl
+        altText
+      }
+    }
     productCategories {
       nodes {
         id
@@ -39,8 +45,8 @@ export const PRODUCT_FRAGMENT = graphql(`
 
 export const GET_PRODUCTS = graphql(`
   ${PRODUCT_FRAGMENT}
-  query GetProducts($first: Int!, $after: String, $category: String, $search: String, $stockStatus: [StockStatusEnum], $orderby: [ProductsOrderbyInput]) {
-    products(first: $first, after: $after, where: { category: $category, search: $search, stockStatus: $stockStatus, orderby: $orderby }) {
+  query GetProducts($first: Int!, $after: String, $category: String, $search: String, $stockStatus: [StockStatusEnum], $orderby: [ProductsOrderbyInput], $featured: Boolean) {
+    products(first: $first, after: $after, where: { category: $category, search: $search, stockStatus: $stockStatus, orderby: $orderby, featured: $featured }) {
       found
       pageInfo {
         hasNextPage

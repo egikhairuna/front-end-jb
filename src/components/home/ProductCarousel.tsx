@@ -2,46 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
-import { cn } from "@/lib/utils";
+import { useRef, useState, useEffect } from "react";
+import { cn, cleanPrice, formatPrice } from "@/lib/utils";
+import { Product } from "@/types/woocommerce";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface Category {
-  id: number;
-  name: string;
-  href: string;
-  image: string;
-  comingSoon?: boolean;
+interface Props {
+  products: Product[];
 }
 
-const categories: Category[] = [
-  {
-    id: 1,
-    name: "JACKETS",
-    href: "/shop?category=jackets",
-    image: "/categories/jacket-cover.png",
-  },
-  {
-    id: 2,
-    name: "SWEATSHIRTS",
-    href: "/shop?category=sweats",
-    image: "/categories/ss-cover.png",
-  },
-  {
-    id: 3,
-    name: "POLO SHIRTS",
-    href: "/shop?category=polo-shirt",
-    image: "/categories/polo-cover.png",
-  },
-  {
-    id: 4,
-    name: "ACCESSORIES",
-    href: "/shop?category=seasoning",
-    image: "/categories/acc-cover.png",
-  },
-];
-
-export function ProductCarousel() {
+export function ProductCarousel({ products }: Props) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -54,12 +28,39 @@ export function ProductCarousel() {
     }
   };
 
+  // ── Drag Scroll Handlers ──────────────────────────────────────────────────
+  
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!scrollRef.current) return;
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !scrollRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    scrollRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  if (!products || products.length === 0) return null;
+
   return (
-    <section className="w-full overflow-hidden">
+    <section className="w-full overflow-hidden bg-white select-none">
       {/* Header — label + arrows (arrows hidden on desktop) */}
       <div className="flex items-center justify-between px-4 md:px-12 py-6 border-b border-black/10">
-        <span className="text-sm font-semibold tracking-wider uppercase">
-          SHOP BY CATEGORIES
+        <span className="text-[13px] font-medium tracking-[0.2em] uppercase text-[#1a1a1a]">
+          FEATURED PRODUCTS
         </span>
         {/* Arrows — mobile only */}
         <div className="flex gap-2 md:hidden">
@@ -80,59 +81,97 @@ export function ProductCarousel() {
         </div>
       </div>
 
-      {/* Scroll container */}
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-16"
-        style={{ scrollSnapType: "x mandatory" }}
-      >
-        {categories.map((category) => (
-          <Link
-            key={category.id}
-            href={category.href}
-            className="relative flex-none w-[85vw] md:w-1/4 aspect-[3/4] md:aspect-auto md:h-[30vh] lg:h-[80vh] snap-start group overflow-hidden block"
-            style={{ scrollSnapAlign: "start" }}
-          >
-            {/* Background image */}
-            <Image
-              src={category.image}
-              alt={category.name}
-              fill
-              className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-              draggable={false}
-              priority={category.id <= 2}
-            />
+      <div className="relative group/carousel">
+        {/* Desktop Navigation Arrows — Styled as requested: White squares on edges, always visible on md+ */}
+        <button
+          onClick={() => scroll("left")}
+          className="hidden md:flex absolute left-0 top-[40%] -translate-y-1/2 z-30 w-12 h-12 items-center justify-center bg-white border border-black/10 shadow-sm hover:bg-neutral-50 transition-all disabled:opacity-0"
+          aria-label="Previous"
+        >
+          <ChevronLeft className="w-5 h-5 stroke-[1.5px]" />
+        </button>
+        
+        <button
+          onClick={() => scroll("right")}
+          className="hidden md:flex absolute right-0 top-[40%] -translate-y-1/2 z-30 w-12 h-12 items-center justify-center bg-white border border-black/10 shadow-sm hover:bg-neutral-50 transition-all disabled:opacity-0"
+          aria-label="Next"
+        >
+          <ChevronRight className="w-5 h-5 stroke-[1.5px]" />
+        </button>
 
-            {/* Dark overlay */}
-            <div className="absolute inset-0 bg-black/90 pointer-events-none" />
-
-            {/* Category label — center left */}
-            <div className="absolute inset-y-0 left-6 flex items-center z-10">
-              <span
-                className="text-white text-[11px] md:text-sm font-semibold tracking-[0.25em] uppercase"
-                style={{ fontFamily: "monospace, sans-serif", letterSpacing: "0.22em" }}
+        {/* Scroll container */}
+        <div
+          ref={scrollRef}
+          onMouseDown={handleMouseDown}
+          onMouseLeave={handleMouseLeave}
+          onMouseUp={handleMouseUp}
+          onMouseMove={handleMouseMove}
+          className={cn(
+            "flex overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 md:pb-16 px-4 md:px-0",
+            isDragging ? "snap-none cursor-grabbing" : "cursor-grab"
+          )}
+          style={{ scrollSnapType: isDragging ? "none" : "x mandatory" }}
+        >
+          {products.map((product) => {
+            const modelImage = product.galleryImages?.nodes?.[0] || product.image;
+            
+            return (
+              <div
+                key={product.id}
+                className="flex-none w-[50vw] md:w-1/4 snap-start border-r border-black/5"
+                style={{ scrollSnapAlign: "start" }}
               >
-                + {category.name}
-              </span>
-            </div>
+                <Link
+                  href={`/shop/${product.slug}`}
+                  className="group block"
+                  onClick={(e) => {
+                    // Prevent navigation if we were dragging
+                    if (isDragging) e.preventDefault();
+                  }}
+                >
+                  {/* Image box */}
+                  <div className="relative aspect-[3/4] overflow-hidden bg-[#f0f0f0]">
+                    {modelImage?.sourceUrl ? (
+                      <Image
+                        src={modelImage.sourceUrl}
+                        alt={modelImage.altText || product.name}
+                        fill
+                        className="object-cover transition-transform duration-700 md:group-hover:scale-[1.02]"
+                        draggable={false}
+                        sizes="(max-width: 768px) 50vw, 25vw"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-neutral-400 uppercase text-[10px] tracking-widest">
+                        No Image
+                      </div>
+                    )}
+                    
+                    {product.stockStatus === "OUT_OF_STOCK" && (
+                      <div className="absolute top-4 left-4 bg-black text-white text-[10px] px-2 py-1 font-bold tracking-widest">
+                        OUT OF STOCK
+                      </div>
+                    )}
+                  </div>
 
-            {/* CTA — bottom left */}
-            <div className="absolute bottom-8 left-6 z-10">
-              <span
-                className="text-white text-[11px] md:text-[12px] font-semibold tracking-[0.2em] uppercase border-b border-white/70 pb-px group-hover:border-white transition-colors"
-                style={{ fontFamily: "monospace, sans-serif" }}
-              >
-                {category.comingSoon ? "COMING SOON" : "SHOP NOW"}
-              </span>
-            </div>
-
-            {/* Thin right divider (except last) */}
-            <div className="absolute top-0 right-0 h-full w-px bg-white/10 pointer-events-none last:hidden" />
-          </Link>
-        ))}
+                  {/* Product Price and Title */}
+                  <div className="px-3 py-4 md:px-6">
+                    <h3 
+                      className="font-regular lg:text-[15px] tracking-wider text-[11px] leading-tight uppercase md:text-sm mb-1 line-clamp-2 text-black"
+                    >
+                      {product.name}
+                    </h3>
+                    <p 
+                      className="text-[11px] lg:text-[15px] font-regular tracking-[0.1em] text-black/70"
+                    >
+                      {product.price ? cleanPrice(product.price) : formatPrice(0)}
+                    </p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        </div>
       </div>
-
-
     </section>
   );
 }

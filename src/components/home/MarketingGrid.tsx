@@ -27,45 +27,45 @@ const marketingItems = [
 
 export function MarketingGrid() {
   return (
-    <section className="w-full bg-black">
-      {/* 
-        Mobile: Horizontal Scroll Snap
-        Desktop: Grid
-      */}
-      <div className="flex md:grid md:grid-cols-3 w-full h-[500px] md:h-[350px] lg:h-[600px] overflow-x-auto md:overflow-hidden snap-x snap-mandatory scrollbar-hide">
+    <section className="w-full bg-black border-t border-white/5">
+      <div className="flex md:grid md:grid-cols-3 w-full overflow-x-auto scrollbar-hide snap-x snap-mandatory">
         {marketingItems.map((item, index) => (
-          <div
+          <Link 
             key={index}
-            className="relative min-w-full md:min-w-0 w-full h-full snap-center group border-r border-neutral-800 last:border-r-0"
+            href={item.href} 
+            className="flex-none w-[100vw] md:w-auto aspect-[4/5] md:aspect-[3/4] lg:aspect-[4/5] relative group block overflow-hidden snap-start border-r border-white/10 last:border-r-0 bg-neutral-900"
           >
-            <Link href={item.href} className="block w-full h-full relative">
-              {/* Image Background */}
-              <div className="absolute inset-0">
-                <Image
-                  src={item.image}
-                  alt={item.alt}
-                  fill
-                  className="object-cover transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                {/* Overlay Gradient */}
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-500" />
-                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent" />
+            {/* Image Background */}
+            <div className="absolute inset-0">
+              <Image
+                src={item.image}
+                alt={item.alt}
+                fill
+                priority={index === 0}
+                className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              {/* Dark Overlay */}
+              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
+            </div>
+
+            {/* Text Overlay */}
+            <div className="absolute inset-0 flex flex-col p-6 md:p-10">
+              {/* Title - Middle Area */}
+              <div className="flex-1 flex items-center">
+                <h2 className="text-white font-medium text-[13px] md:text-[14px] tracking-[0.2em] uppercase">
+                  {item.title}
+                </h2>
               </div>
 
-              {/* Text Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-10 pointer-events-none">
-                 <div className="transform transition-transform duration-500 md:translate-y-4 md:group-hover:translate-y-0">
-                    <h2 className="text-white font-bold text-xl md:text-2xl mb-2 tracking-wider">
-                      {item.title}
-                    </h2>
-                    <span className="inline-block text-white/80 text-sm font-mono tracking-[0.2em] uppercase border-b border-transparent group-hover:border-white/80 transition-all duration-300 pb-1">
-                      {item.linkText}
-                    </span>
-                 </div>
+              {/* Bottom Link */}
+              <div className="mt-auto">
+                <span className="inline-block text-white text-[11px] font-medium tracking-[0.2em] uppercase border-b border-white pb-0.5">
+                  {item.linkText}
+                </span>
               </div>
-            </Link>
-          </div>
+            </div>
+          </Link>
         ))}
       </div>
     </section>

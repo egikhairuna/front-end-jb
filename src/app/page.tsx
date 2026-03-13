@@ -2,6 +2,8 @@ import { Metadata } from "next";
 import { Navbar } from "@/components/layout/Navbar";
 import { Hero } from "@/components/home/Hero";
 import { ProductCarousel } from "@/components/home/ProductCarousel";
+import { Categories } from "@/components/home/Categories";
+import { About } from "@/components/home/About";
 import { MarketingGrid } from "@/components/home/MarketingGrid";
 import { fetchGraphQL } from "@/lib/graphql/server-client";
 import { GET_PRODUCTS } from "@/lib/graphql/queries";
@@ -30,13 +32,12 @@ export const metadata: Metadata = {
   },
 };
 
-// ⚡ Global ISR: Homepage updates every 1h
 export const revalidate = 3600;
 
 async function getFeaturedProducts() {
   try {
-    const data: any = await fetchGraphQL(GET_PRODUCTS, { first: 8 }, {
-      revalidate: 300, // 5 minutes — so private/draft products disappear quickly
+    const data: any = await fetchGraphQL(GET_PRODUCTS, { first: 8, featured: true }, {
+      revalidate: 300,
       tags: ['products', 'featured']
     });
     return data.products.nodes as Product[];
@@ -91,7 +92,7 @@ const organizationSchema = {
 export default async function Home() {
   // Though currently unused in props, keeping it for data cache warming 
   // and potential future use in ProductCarousel
-  await getFeaturedProducts();
+  const products = await getFeaturedProducts();
 
   return (
     <>
@@ -101,7 +102,9 @@ export default async function Home() {
       />
       
       <Hero />
-      <ProductCarousel />
+      <ProductCarousel products={products} />
+      <Categories />
+      <About />
       <MarketingGrid />
     </>
   );
