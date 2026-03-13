@@ -112,7 +112,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
       </SheetTrigger>
       <SheetContent aria-describedby={undefined} className="flex flex-col w-full sm:max-w-md z-[200] [&>button]:hidden">
         <SheetHeader className="flex flex-row items-center justify-between border-b pb-4 px-6">
-          <SheetTitle className="text-sm font-bold tracking-[0.2em] uppercase">Order Summary</SheetTitle>
+          <SheetTitle className="text-[13px] font-medium tracking-[0.2em] uppercase">Order Summary</SheetTitle>
           <SheetClose asChild>
             <Button variant="ghost" size="icon" className="h-10 w-10 hover:bg-transparent -mr-2">
                <X className="h-7 w-7" />

@@ -212,13 +212,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <div className="flex-1"></div>
               </div>
               
-              <div className="px-6 pt-0 lg:pt-6 pb-8 space-y-8">
+              <div className="px-6 pt-0 lg:pt-6 pb-6 space-y-8">
                 {/* Product Title & Price */}
-                <div className="space-y-4">
-                  <h1 className="text-xl lg:text-2xl font-semibold tracking-tight uppercase leading-none">
+                <div className="space-y-2">
+                  <h1 className="text-[16px] lg:text-2xl font-medium uppercase leading-none">
                     {product.name}
                   </h1>
-                  <div className="text-lg tracking-wider font-regular text-black">
+                  <div className="text-[16px] font-medium text-black">
                     {displayPrice}
                   </div>
                 </div>
@@ -227,7 +227,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 {isVariableProduct && (
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[11px] font-regular text-black/50 uppercase tracking-wide">SIZES</span>
+                      <span className="text-[11px] font-regular text-black uppercase tracking-wide">SIZE</span>
                     </div>
                     <div className="grid grid-cols-5 gap-2">
                        {variations
@@ -262,7 +262,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                              className={cn(
                                "h-11 border text-[13px] font-bold transition-all uppercase",
                                isSelected && "bg-black text-white border-black",
-                               !isSelected && !isUnavailable && "border-neutral-300 hover:border-black",
+                               !isSelected && !isUnavailable && "border-black hover:border-black",
                                isUnavailable && "opacity-30 cursor-not-allowed line-through"
                              )}
                              disabled={isUnavailable}
@@ -279,7 +279,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <div className="space-y-3">
                   <Button 
                     size="lg" 
-                    className="w-full h-14 bg-black text-white hover:bg-neutral-800 uppercase tracking-wide font-bold text-sm"
+                    className="w-full h-14 bg-black text-white hover:bg-neutral-800 uppercase tracking-wide font-medium text-sm"
                     disabled={isOutOfStock}
                     onClick={handleAddToCart}
                   >
@@ -436,7 +436,7 @@ function AccordionItem({ title, isOpen, onClick, children }: AccordionItemProps)
         onClick={onClick}
         className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors"
       >
-        <span className="text-sm font-bold uppercase tracking-wide">{title}</span>
+        <span className="text-sm font-medium uppercase tracking-wide">{title}</span>
         {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
       </button>
       <div 
