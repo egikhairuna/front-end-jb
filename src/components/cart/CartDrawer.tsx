@@ -12,6 +12,28 @@ import { Separator } from "@/components/ui/separator";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { formatPrice, cleanPrice, cn } from "@/lib/utils";
+import { CartItem } from "@/types/woocommerce";
+import { toast } from "sonner";
+
+const getVariantName = (item: CartItem) => {
+  if (!item.variation) return null;
+  
+  // Try to find size attribute first
+  const sizeAttr = item.variation.attributes?.nodes?.find(
+    attr => attr.name.toLowerCase().includes('size')
+  );
+  if (sizeAttr) return sizeAttr.value;
+
+  // Fallback: Strip product name from variation name if it's a prefix
+  const productName = item.product.name;
+  if (item.variation.name.startsWith(productName)) {
+    const nameWithoutProduct = item.variation.name.replace(productName, "").replace(/^[\s-–—]+/, "").trim();
+    if (nameWithoutProduct) return nameWithoutProduct;
+  }
+
+  // Last resort: take the last part after hyphen
+  return item.variation.name.split('-').pop()?.trim() || item.variation.name;
+};
 
 export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) {
   const { items, isOpen, toggleCart, removeItem, updateQuantity, getCartTotal } = useCartStore();
@@ -26,9 +48,12 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
   // Clear error when cart changes (user removed the item)
   useEffect(() => { setValidationError(null); }, [items]);
 
-  const handleCheckout = useCallback(async () => {
-    setIsValidating(true);
+  const validateStockItems = useCallback(async (isCheckout = false) => {
+    if (items.length === 0) return true;
+    
+    if (!isCheckout) setIsValidating(true);
     setValidationError(null);
+
     try {
       const payload = items.map((item) => ({
         productId: item.product.databaseId || parseInt(item.product.id),
@@ -45,25 +70,50 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
       const data = await res.json();
 
       if (data.unavailable && data.unavailable.length > 0) {
+        // Auto-remove unavailable items if just opening the drawer
+        if (!isCheckout) {
+          data.unavailable.forEach((unItem: any) => {
+            removeItem(unItem.id.toString(), unItem.variationId?.toString());
+            toast.error(`"${unItem.name}" was removed from cart as it is no longer available.`);
+          });
+          return false;
+        }
+
         const first = data.unavailable[0];
         const reason = first.reason === 'out_of_stock'
           ? `"${first.name}" is currently out of stock. Please remove it from your cart.`
           : `"${first.name}" is no longer available and cannot be ordered. Please remove it from your cart.`;
         setValidationError(reason);
-        return;
+        return false;
       }
 
-      // All items valid — navigate to checkout
-      toggleCart();
-      router.push('/checkout');
-    } catch {
-      // On network error, let checkout page handle it
-      toggleCart();
-      router.push('/checkout');
+      return true;
+    } catch (error) {
+      console.error("Validation error:", error);
+      return true; // Proceed on network errors to avoid blocking users
     } finally {
-      setIsValidating(false);
+      if (!isCheckout) setIsValidating(false);
     }
-  }, [items, router, toggleCart]);
+  }, [items, removeItem]);
+
+  // Auto-validate when drawer opens
+  useEffect(() => {
+    if (isOpen && items.length > 0) {
+      validateStockItems();
+    }
+  }, [isOpen]); // Only trigger when isOpen changes to true
+
+  const handleCheckout = useCallback(async () => {
+    setIsValidating(true);
+    const isValid = await validateStockItems(true);
+    
+    if (isValid) {
+      toggleCart();
+      router.push('/checkout');
+    }
+    
+    setIsValidating(false);
+  }, [validateStockItems, router, toggleCart]);
 
   if (!isMounted) return null;
 
@@ -144,7 +194,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
                     <h4 className="text-sm font-medium leading-none">{item.product.name}</h4>
                     {item.variation && (
                         <p className="text-xs text-muted-foreground capitalize">
-                            Variant: {item.variation.name}
+                            Variant: {getVariantName(item)}
                         </p>
                     )}
                     <p className="text-sm font-semibold">
