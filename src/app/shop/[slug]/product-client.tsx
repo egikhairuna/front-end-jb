@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { Minus, Plus, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
+import { FindMySizeModal } from "@/components/shop/FindMySizeModal";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -20,6 +21,7 @@ interface ProductDetailClientProps {
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [quantity, setQuantity] = useState(1);
   const [selectedVariation, setSelectedVariation] = useState<ProductVariation | undefined>(undefined);
+  const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
   const { addItem } = useCartStore();
 
   const variations = product.variations?.nodes || [];
@@ -84,6 +86,23 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
     addItem(product, quantity, selectedVariation);
     toast.success("Added to cart");
+  };
+
+  const handleSelectSize = (sizeName: string) => {
+    const variation = variations.find(v => {
+      const sizeAttr = v.attributes?.nodes?.find(
+        attr => attr.name.toLowerCase().includes('size')
+      );
+      const displayName = sizeAttr?.value || v.name.split('-').pop()?.trim() || v.name;
+      return displayName.toUpperCase() === sizeName.toUpperCase();
+    });
+
+    if (variation) {
+      setSelectedVariation(variation);
+      toast.success(`Recommended size ${sizeName} selected`);
+    } else {
+      toast.error(`Recommended size ${sizeName} is not available`);
+    }
   };
   
   // Determine displayed price
@@ -227,7 +246,13 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 {isVariableProduct && (
                   <div>
                     <div className="flex items-center justify-between mb-3">
-                      <span className="text-[11px] font-regular text-black uppercase tracking-wide">SIZE</span>
+                      <span className="text-[11px] font-regular text-black/50 uppercase tracking-wide">SIZE</span>
+                      <button 
+                        onClick={() => setIsSizeModalOpen(true)}
+                        className="text-[11px] font-regular text-black border-b border-black hover:opacity-70 transition-opacity uppercase tracking-wide cursor-pointer"
+                      >
+                        Find My Size
+                      </button>
                     </div>
                     <div className="grid grid-cols-5 gap-2">
                        {variations
@@ -260,7 +285,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                              key={variant.id}
                              onClick={() => !isUnavailable && setSelectedVariation(variant)}
                              className={cn(
-                               "h-11 border text-[13px] font-bold transition-all uppercase",
+                               "h-11 border text-[13px] font-bold transition-all uppercase cursor-pointer",
                                isSelected && "bg-black text-white border-black",
                                !isSelected && !isUnavailable && "border-black hover:border-black",
                                isUnavailable && "opacity-30 cursor-not-allowed line-through"
@@ -279,7 +304,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <div className="space-y-3">
                   <Button 
                     size="lg" 
-                    className="w-full h-14 bg-black text-white hover:bg-neutral-800 uppercase tracking-wide font-medium text-sm"
+                    className="w-full h-14 bg-black text-white hover:bg-neutral-800 uppercase tracking-wide font-medium cursor-pointer text-sm"
                     disabled={isOutOfStock}
                     onClick={handleAddToCart}
                   >
@@ -418,6 +443,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           </div>
         </DialogContent>
       </Dialog>
+
+      <FindMySizeModal 
+        isOpen={isSizeModalOpen}
+        onClose={() => setIsSizeModalOpen(false)}
+        onSelectSize={handleSelectSize}
+      />
     </div>
   );
 }
@@ -434,7 +465,7 @@ function AccordionItem({ title, isOpen, onClick, children }: AccordionItemProps)
     <div className="border-b border-neutral-300 last:border-b-0">
       <button 
         onClick={onClick}
-        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors"
+        className="w-full px-6 py-4 flex items-center justify-between text-left hover:bg-neutral-50 transition-colors cursor-pointer"
       >
         <span className="text-sm font-medium uppercase tracking-wide">{title}</span>
         {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
