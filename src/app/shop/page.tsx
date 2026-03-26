@@ -6,13 +6,44 @@ import { Product } from "@/types/woocommerce";
 import { ProductGrid } from "@/components/shop/ProductGrid";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 
-export const metadata: Metadata = {
-  title: "Shop",
-  description: "Explore the latest collection, including outerwear, polo shirt, and other stuff in the statement of the season.",
-  alternates: { 
-    canonical: "/shop",
-  },
-};
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const params = await searchParams;
+  const category = typeof params.category === 'string' ? params.category : undefined;
+  
+  let title = "Shop";
+  let description = "Explore the latest collection, including outerwear, polo shirt, and other stuff in the statement of the season.";
+
+  if (category) {
+    // Basic mapping for common categories to avoid extra DB calls if possible,
+    // though we could also fetch category name here if needed.
+    const categoryNames: { [key: string]: string } = {
+      'sweats': 'Sweatshirts',
+      'jackets': 'Jackets',
+      'seasoning': 'Accessories',
+      'shorts-trousers': 'Shorts & Trousers',
+      'polo-shirt': 'Polo Shirts',
+      't-shirt': 'T-Shirts',
+      'shirt': 'Shirts',
+      'lofty': 'Lofty',
+      'fancy': 'Fancy',
+      'frolic': 'Frolic',
+      'ventile': 'Ventile®'
+    };
+
+    if (categoryNames[category]) {
+      title = `${categoryNames[category]} | James Boogie`;
+      description = `Shop the latest ${categoryNames[category]} collection from James Boogie. High-quality pop military inspired clothing.`;
+    }
+  }
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: category ? `/shop?category=${category}` : "/shop",
+    },
+  };
+}
 
 // ⚡ Global ISR config: 5 mins cache for the whole page
 export const revalidate = 300;

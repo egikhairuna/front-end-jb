@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/our-story`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/our-people`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/ventile`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${SITE_URL}/links`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.6 },
+    // Remove /links to prevent SEO confusion
     { url: `${SITE_URL}/faq`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/how-to-order`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/contact-us`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
@@ -38,6 +38,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/privacy-policy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
     { url: `${SITE_URL}/returns-refunds`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
   ];
+
+  // Shop Categories for better SEO indexing
+  const categorySlugs = [
+    'sweats', 'jackets', 'seasoning', 'shorts-trousers', 
+    'polo-shirt', 't-shirt', 'shirt', 'lofty', 'fancy', 'frolic', 'ventile'
+  ];
+  const categoryPages: MetadataRoute.Sitemap = categorySlugs.map(slug => ({
+    url: `${SITE_URL}/shop?category=${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
 
   try {
     // 🚀 Parallel Fetching for Sitemap Data
@@ -60,7 +72,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-    return [...staticPages, ...posts, ...products];
+    return [...staticPages, ...categoryPages, ...posts, ...products];
   } catch (error) {
     console.error('Error generating sitemap:', error);
     return staticPages;

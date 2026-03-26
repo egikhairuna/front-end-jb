@@ -12,8 +12,7 @@ export function About() {
         {/* Brand Story Paragraph */}
         <div className="max-w-full">
           <p className="text-[13px] md:text-[15px] leading-relaxed md:leading-[1.8] text-black/80 font-regular">
-            James Boogie represents a space where we can express our creativity in total freedom, doing what we love, without having to worry about all the rules of the fashion industry. Trying new materials, new concepts that we think are unique, and sometimes a little crazy. Inspi
-            ration for James Boogie came from many things, from what we saw and loved in life. There aremany fashion references in James Boogie, from re-adopting military fashion regarding jackets to reinterpreting 80s to 2000s fashion. , while other ideas emerge from films, comics, to music and arts.
+            James Boogie represents a space where we can express our creativity in total freedom, doing what we love, without having to worry about all the rules of the fashion industry. Trying new materials, new concepts that we think are unique, and sometimes a little crazy. Inspiration for James Boogie came from many things, from what we saw and loved in life. There are many fashion references in James Boogie, from re-adopting military fashion regarding jackets to reinterpreting 80s to 2000s fashion, while other ideas emerge from films, comics, to music and arts.
           </p>
         </div>
       </div>

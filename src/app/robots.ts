@@ -6,7 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/', '/wp-admin/'],
+        disallow: ['/api/', '/wp-admin/', '/links'],
       },
     ],
     sitemap: 'https://jamesboogie.com/sitemap.xml',
