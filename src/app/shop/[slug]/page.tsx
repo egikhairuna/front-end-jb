@@ -17,10 +17,7 @@ type Props = {
   params: Promise<{ slug: string }>
 }
 
-/**
- * 🔍 DYNAMIC SEO METADATA
- * Next.js dedupes this fetch automatically with the same params in the page component.
- */
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   

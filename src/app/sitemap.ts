@@ -30,7 +30,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/our-story`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/our-people`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/ventile`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    // Remove /links to prevent SEO confusion
     { url: `${SITE_URL}/faq`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/how-to-order`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/contact-us`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
@@ -52,7 +51,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   try {
-    // 🚀 Parallel Fetching for Sitemap Data
+    //  Parallel Fetching for Sitemap Data
     const [postsData, productsData] = await Promise.all([
       fetchGraphQL<PostsResponse>(GET_ALL_POSTS_FOR_SITEMAP, {}, { revalidate: 86400, tags: ['sitemap', 'posts'] }),
       fetchGraphQL<ProductsResponse>(GET_ALL_PRODUCTS_FOR_SITEMAP, {}, { revalidate: 86400, tags: ['sitemap', 'products'] })

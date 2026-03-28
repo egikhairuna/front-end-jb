@@ -3,6 +3,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import useEmblaCarousel from 'embla-carousel-react';
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import Image from "next/image";
 import { Product, ProductVariation } from "@/types/woocommerce";
 import { useCartStore } from "@/lib/store/cart";
@@ -47,7 +48,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
   // Keep galleryImages for progress bar count (same length as gallerySlides)
   const galleryImages = gallerySlides;
-  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [openSections, setOpenSections] = useState<string[]>(["description", "style-fit"]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -75,6 +76,36 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         : [...prev, section]
     );
   };
+
+  const [modalEmblaRef, modalEmblaApi] = useEmblaCarousel({ loop: true });
+
+  const onModalScroll = useCallback(() => {
+    if (!modalEmblaApi) return;
+    const index = modalEmblaApi.selectedScrollSnap();
+    if (activeImageIndex !== index) setActiveImageIndex(index);
+  }, [modalEmblaApi, activeImageIndex]);
+
+  useEffect(() => {
+    if (!modalEmblaApi) return;
+    modalEmblaApi.on('select', onModalScroll);
+    modalEmblaApi.on('reInit', onModalScroll);
+  }, [modalEmblaApi, onModalScroll]);
+
+  // Sync modal carousel when external activeImageIndex changes
+  useEffect(() => {
+    if (modalEmblaApi && isPreviewOpen) {
+      if (modalEmblaApi.selectedScrollSnap() !== activeImageIndex) {
+         modalEmblaApi.scrollTo(activeImageIndex, true);
+      }
+    }
+  }, [activeImageIndex, modalEmblaApi, isPreviewOpen]);
+
+  // Disable modal embla drag when zoomed
+  useEffect(() => {
+    if (modalEmblaApi) {
+      modalEmblaApi.reInit({ watchDrag: !isZoomed, loop: true });
+    }
+  }, [isZoomed, modalEmblaApi]);
 
   const isVariableProduct = variations.length > 0;
 
@@ -142,7 +173,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                     >
                       <div 
                         className="relative aspect-[3/4] w-full bg-white transition-transform"
-                        onClick={() => slide.type === "image" ? setPreviewImage(slide.sourceUrl) : undefined}
+                        onClick={() => {
+                          if (slide.type === "image") {
+                            setActiveImageIndex(idx);
+                            setIsPreviewOpen(true);
+                          }
+                        }}
                       >
                         {slide.type === "video" ? (
                           <video
@@ -189,7 +225,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 <div 
                   key={idx}
                   className="relative aspect-[3/4] w-full bg-white overflow-hidden border border-neutral-200 hover:border-primary/50 transition-all"
-                  onClick={() => slide.type === "image" ? setPreviewImage(slide.sourceUrl) : undefined}
+                  onClick={() => {
+                    if (slide.type === "image") {
+                      setActiveImageIndex(idx);
+                      setIsPreviewOpen(true);
+                    }
+                  }}
                   style={{ cursor: slide.type === "image" ? "zoom-in" : "default" }}
                 >
                   {slide.type === "video" ? (
@@ -384,62 +425,169 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         </div>
       </div>
       <Dialog 
-        open={!!previewImage} 
+        open={isPreviewOpen} 
         onOpenChange={(open) => {
-          if (!open) {
-            setPreviewImage(null);
-            setIsZoomed(false);
-          }
+          setIsPreviewOpen(open);
+          if (!open) setIsZoomed(false);
         }}
       >
         <DialogContent 
           showCloseButton={false}
-          className="max-w-[100vw] w-full h-[100vh] p-0 border-none bg-black/95 shadow-none rounded-none"
+          className="max-w-[100vw] sm:max-w-[100vw] !m-0 !p-0 w-full h-[100vh] sm:h-[100vh] border-none bg-white shadow-none rounded-none flex flex-col z-[203] overflow-hidden"
         >
           <DialogTitle className="sr-only">Product Image Preview</DialogTitle>
-          <div className={cn(
-            "relative w-full h-full flex items-center justify-center transition-all duration-300",
-            isZoomed ? "overflow-auto cursor-zoom-out" : "overflow-hidden cursor-zoom-in"
-          )}>
-            {previewImage && (
-              <div 
-                className={cn(
-                  "relative transition-all duration-300 ease-in-out",
-                  isZoomed ? "min-w-[150%] md:min-w-[110%] py-10" : "w-full h-full flex items-center justify-center p-4"
-                )}
-                onClick={() => setIsZoomed(!isZoomed)}
-              >
-                <Image
-                  src={previewImage}
-                  alt="Product Preview"
-                  width={1600}
-                  height={2000}
-                  className={cn(
-                    "rounded-sm transition-all duration-300",
-                    isZoomed ? "w-full h-auto" : "object-contain max-h-[85vh] w-auto h-auto"
-                  )}
-                  priority
-                />
-              </div>
-            )}
-            
-            {/* Custom Close Button */}
+          
+          {/* Top Bar - Premium Minimalist with Border */}
+          <div className="flex justify-end items-center px-6 lg:px-12 py-4 border-b border-black/10 bg-white z-[204]">
             <button 
-              onClick={() => {
-                setPreviewImage(null);
-                setIsZoomed(false);
-              }}
-              className="fixed top-6 right-6 p-2 bg-white/10 hover:bg-white/20 rounded-full text-white backdrop-blur-md transition-colors z-[60]"
+              onClick={() => setIsPreviewOpen(false)}
+              className="flex items-center gap-2 group transition-opacity hover:opacity-60"
             >
-              <X className="w-8 h-8" />
+              <span className="text-[12px] lg:text-[13px] tracking-[0.2em] font-medium uppercase">CLOSE</span>
+              <X className="w-5 h-5 font-light" strokeWidth={1} />
             </button>
-            
-            {/* Zoom Hint (Optional, only show when not zoomed) */}
-            {!isZoomed && (
-              <div className="fixed bottom-10 left-1/2 -translate-x-1/2 pointer-events-none text-white/40 text-[10px] uppercase tracking-widest font-bold">
-                Tap to Zoom
+          </div>
+
+          <div className="flex-1 relative flex flex-col lg:flex-row h-full overflow-hidden">
+            {/* Main Zoomable Image Area (Desktop) */}
+            <div className="hidden lg:flex flex-1 relative w-full h-full overflow-hidden items-center justify-center p-20">
+              <div className="absolute inset-0 bg-white" />
+              {gallerySlides[activeImageIndex]?.type === "image" && (
+                <TransformWrapper
+                  initialScale={1}
+                  minScale={1}
+                  maxScale={2}
+                  centerOnInit
+                  doubleClick={{ disabled: false, mode: "toggle" }}
+                  onZoom={() => setIsZoomed(true)}
+                  onZoomStop={(ref) => setIsZoomed(ref.state.scale > 1)}
+                >
+                  {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+                    <TransformComponent
+                      wrapperClass="!w-full !h-full"
+                      contentClass="!w-full !h-full flex items-center justify-center"
+                    >
+                      <div 
+                        className="relative w-full h-full flex items-center justify-center cursor-zoom-in"
+                        onClick={() => {
+                          if (window.innerWidth > 1024 && !isZoomed) zoomIn(0.5);
+                          else if (window.innerWidth > 1024 && isZoomed) resetTransform();
+                        }}
+                      >
+                        <Image
+                          src={gallerySlides[activeImageIndex].sourceUrl}
+                          alt="Product Preview"
+                          width={1600}
+                          height={2000}
+                          className="object-contain max-h-full w-auto select-none"
+                          priority
+                        />
+                      </div>
+                    </TransformComponent>
+                  )}
+                </TransformWrapper>
+              )}
+            </div>
+
+            {/* Main Zoomable Image Area (Mobile Swipeable) */}
+            <div className="flex lg:hidden flex-1 relative w-full h-full overflow-hidden" ref={modalEmblaRef}>
+              <div className="absolute inset-0 bg-white" />
+              <div className="flex w-full h-full">
+                {gallerySlides.map((slide, idx) => (
+                  <div key={idx} className="relative flex-[0_0_100%] max-w-full min-w-0 h-full">
+                     {slide.type === "image" && (
+                        <TransformWrapper
+                          initialScale={1}
+                          minScale={1}
+                          maxScale={2}
+                          centerOnInit
+                          onZoom={() => setIsZoomed(true)}
+                          onZoomStop={(ref) => setIsZoomed(ref.state.scale > 1)}
+                          panning={{ disabled: !isZoomed }}
+                        >
+                          {({ zoomIn, zoomOut, resetTransform }) => (
+                            <TransformComponent
+                              wrapperClass="!w-full !h-full"
+                              contentClass="!w-full !h-full flex items-center justify-center"
+                            >
+                              <div className="relative w-full h-full flex items-center justify-center p-4">
+                                <Image
+                                  src={slide.sourceUrl}
+                                  alt={`Product Preview ${idx}`}
+                                  width={1600}
+                                  height={2000}
+                                  className="object-contain max-h-full w-auto select-none pointer-events-none"
+                                  priority={idx === activeImageIndex}
+                                />
+                              </div>
+                            </TransformComponent>
+                          )}
+                        </TransformWrapper>
+                     )}
+                     {slide.type === "video" && (
+                        <div className="relative w-full h-full flex items-center justify-center p-4">
+                          <video
+                            autoPlay
+                            muted
+                            loop
+                            playsInline
+                            className="w-full h-full object-contain pointer-events-none"
+                          >
+                            <source src={slide.sourceUrl} />
+                          </video>
+                        </div>
+                     )}
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+
+            {/* Thumbnail Navigator (lg: Vertical Strip on Right, Mobile: Bottom Strip) */}
+            <div className={cn(
+               "lg:absolute lg:right-10 lg:top-1/2 lg:-translate-y-1/2 lg:w-32 z-[206]",
+               "w-full px-6 py-4 lg:p-0 bg-white lg:bg-transparent"
+            )}>
+              <div className="flex lg:flex-col justify-center items-center gap-3 lg:gap-4 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 scrollbar-hide">
+                {gallerySlides.map((slide, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setActiveImageIndex(idx);
+                      setIsZoomed(false);
+                    }}
+                    className={cn(
+                      "relative flex-shrink-0 w-16 h-20 lg:w-20 lg:h-24 bg-[#E5E1D8] overflow-hidden transition-all duration-300",
+                      activeImageIndex === idx 
+                        ? "ring-1 ring-black ring-offset-2 opacity-100 scale-105 shadow-md" 
+                        : "opacity-40 hover:opacity-70 scale-100"
+                    )}
+                  >
+                    {slide.type === "video" ? (
+                      <div className="w-full h-full bg-neutral-100 flex items-center justify-center">
+                         <div className="w-6 h-6 bg-black/20 rounded-full flex items-center justify-center">
+                           <div className="border-l-[6px] border-l-black border-y-[4px] border-y-transparent ml-1" />
+                         </div>
+                      </div>
+                    ) : (
+                      <Image
+                        src={slide.sourceUrl}
+                        alt={`Thumb ${idx}`}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                      />
+                    )}
+                  </button>
+                ))}
+                
+                {/* Arrow indicator (Matches screenshot) */}
+                <div className="hidden lg:flex mt-2 opacity-60 animate-bounce">
+                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                   </svg>
+                </div>
+              </div>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
