@@ -490,10 +490,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             </div>
 
             {/* Main Zoomable Image Area (Mobile Swipeable) */}
-            <div className="flex lg:hidden flex-1 relative w-full h-full overflow-hidden" ref={modalEmblaRef}>
-              <div className="absolute inset-0 bg-white" />
-              <div className="flex w-full h-full">
-                {gallerySlides.map((slide, idx) => (
+            <div className="flex lg:hidden flex-1 relative w-full h-full overflow-hidden bg-white">
+              <div className="w-full h-full overflow-hidden" ref={modalEmblaRef}>
+                <div className="flex w-full h-full">
+                  {gallerySlides.map((slide, idx) => (
                   <div key={idx} className="relative flex-[0_0_100%] max-w-full min-w-0 h-full">
                      {slide.type === "image" && (
                         <TransformWrapper
@@ -541,8 +541,9 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 ))}
               </div>
             </div>
+          </div>
 
-            {/* Thumbnail Navigator (lg: Vertical Strip on Right, Mobile: Bottom Strip) */}
+          {/* Thumbnail Navigator (lg: Vertical Strip on Right, Mobile: Bottom Strip) */}
             <div className={cn(
                "lg:absolute lg:right-10 lg:top-1/2 lg:-translate-y-1/2 lg:w-32 z-[206]",
                "w-full px-6 py-4 lg:p-0 bg-white lg:bg-transparent"
