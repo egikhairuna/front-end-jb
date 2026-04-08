@@ -91,7 +91,7 @@ export function CategoriesDropdown({ categories, currentCategory }: Props) {
               {categories.map((cat) => (
                 <li key={cat.id}>
                   <Link
-                    href={`/shop?category=${cat.slug}`}
+                    href={`/shop/category/${cat.slug}`}
                     onClick={() => setIsOpen(false)}
                     className={cn(
                       "block px-4 py-2.5 text-sm font-bold tracking-wider uppercase transition-colors hover:bg-neutral-100",

@@ -19,17 +19,17 @@ import { cn } from "@/lib/utils";
 const links = [
   {
     title: "FANCY",
-    href: "/shop?category=fancy",
+    href: "/shop/category/fancy",
     icon: <PiShoppingBag className="w-5 h-5" />
   },
   {
     title: "JACKETS",
-    href: "/shop?category=jackets",
+    href: "/shop/category/jackets",
     icon: <PiShoppingBag className="w-5 h-5" />
   },
   {
     title: "SWEATSHIRTS",
-    href: "/shop?category=sweats",
+    href: "/shop/category/sweats",
     icon: <Info className="w-5 h-5" />
   },
   {
@@ -150,7 +150,7 @@ export default function LinksPage() {
              <h2 className="text-sm font-medium text-white uppercase">OUT NOW !</h2>
           </div>
           
-          <Link href="/shop?category=lofty" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+          <Link href="/shop/category/lofty" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
               src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/1-1-scaled.jpeg" 
               alt="SS026 Campaign" 

@@ -76,7 +76,12 @@ export const metadata: Metadata = {
       },
     ],
   },
-
+  twitter: {
+    card: "summary_large_image",
+    title: "James Boogie",
+    description: "Discover the pop military vibes jackets and clothing, a journey where every detail is refined, every process considered, and James Boogie arrives at its most deliberate point.",
+    images: ["/og-image.jpg"],
+  },
   robots: {
     index: true,
     follow: true,

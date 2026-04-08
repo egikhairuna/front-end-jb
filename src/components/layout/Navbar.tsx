@@ -68,21 +68,21 @@ export function Navbar() {
 
   const shopMenu = {
     products: [
-      { label: "ALL PRODUCTS", href: "/shop?category=all-products" },
-      { label: "ACCESSORIES", href: "/shop?category=seasoning" },
-      { label: "JACKETS", href: "/shop?category=jackets" },
-      { label: "SWEATSHIRTS", href: "/shop?category=sweats" },
-      { label: "SHORTS & TROUSERS", href: "/shop?category=shorts-trousers" },
-      { label: "POLO SHIRTS", href: "/shop?category=polo-shirt" },
-      { label: "T-SHIRTS", href: "/shop?category=t-shirt" },
-      { label: "SHIRTS", href: "/shop?category=shirt" },
+      { label: "ALL PRODUCTS", href: "/shop" },
+      { label: "ACCESSORIES", href: "/shop/category/seasoning" },
+      { label: "JACKETS", href: "/shop/category/jackets" },
+      { label: "SWEATSHIRTS", href: "/shop/category/sweats" },
+      { label: "SHORTS & TROUSERS", href: "/shop/category/shorts-trousers" },
+      { label: "POLO SHIRTS", href: "/shop/category/polo-shirt" },
+      { label: "T-SHIRTS", href: "/shop/category/t-shirt" },
+      { label: "SHIRTS", href: "/shop/category/shirt" },
     ],
     focusOn: [
-      { label: "LOFTY", href: "/shop?category=lofty" },
-      { label: "FANCY", href: "/shop?category=fancy" },
-      { label: "FROLIC", href: "/shop?category=frolic" },
-      { label: "JAMES BOOGIE | MATERNAL DISASTER", href: "/shop?category=james-boogie-maternal-disaster" },
-      { label: "VENTILE®", href: "/shop?category=ventile" },
+      { label: "LOFTY", href: "/shop/category/lofty" },
+      { label: "FANCY", href: "/shop/category/fancy" },
+      { label: "FROLIC", href: "/shop/category/frolic" },
+      { label: "JAMES BOOGIE | MATERNAL DISASTER", href: "/shop/category/james-boogie-maternal-disaster" },
+      { label: "VENTILE®", href: "/shop/category/ventile" },
     ]
   };
 

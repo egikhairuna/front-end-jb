@@ -141,18 +141,19 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const isOutOfStock = selectedVariation ? selectedVariation.stockStatus === 'OUT_OF_STOCK' : product.stockStatus === 'OUT_OF_STOCK';
 
   // Breadcrumbs
-  const categories = (product.productCategories?.nodes || []).filter(
+  const cats = (product.productCategories?.nodes || []).filter(
     (cat) => cat.slug !== "all-products"
   );
+  
   const breadcrumbItems: { label: string; href: string; active?: boolean }[] = [
-    { label: "Shop", href: "/shop" },
+    { label: "Shop", href: "/shop", active: cats.length === 0 },
   ];
 
-  categories.forEach((cat, idx) => {
+  cats.forEach((cat, idx) => {
     breadcrumbItems.push({ 
       label: cat.name, 
       href: `/shop/category/${cat.slug}`,
-      active: idx === categories.length - 1
+      active: idx === cats.length - 1
     });
   });
 
@@ -198,6 +199,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                             fill
                             className="object-cover"
                             priority={idx < 2}
+                            sizes="(max-width: 768px) 100vw, 50vw"
                           />
                         )}
                       </div>
@@ -251,6 +253,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                       fill
                       className="object-cover"
                       priority={idx < 2}
+                      sizes="(max-width: 1024px) 100vw, 50vw"
                     />
                   )}
                 </div>
@@ -481,6 +484,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                           height={2000}
                           className="object-contain max-h-full w-auto select-none"
                           priority
+                          sizes="100vw"
                         />
                       </div>
                     </TransformComponent>
@@ -518,6 +522,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                                   height={2000}
                                   className="object-contain max-h-full w-auto select-none pointer-events-none"
                                   priority={idx === activeImageIndex}
+                                  sizes="100vw"
                                 />
                               </div>
                             </TransformComponent>

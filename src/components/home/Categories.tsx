@@ -54,7 +54,7 @@ export function Categories() {
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
-              href={`/shop?category=${cat.slug}`}
+              href={`/shop/category/${cat.slug}`}
               className="flex-none w-[82vw] md:w-auto aspect-[4/5] md:aspect-[3/4] bg-black relative overflow-hidden snap-start group/item"
             >
               {/* Black Overlay/Background */}

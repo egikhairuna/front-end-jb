@@ -122,7 +122,7 @@ export function ProductCarousel({ products }: Props) {
                 style={{ scrollSnapAlign: "start" }}
               >
                 <Link
-                  href={`/shop/${product.slug}`}
+                  href={`/product/${product.slug}`}
                   className="group block"
                   onClick={(e) => {
                     // Prevent navigation if we were dragging

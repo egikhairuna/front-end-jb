@@ -5,40 +5,48 @@ import { GET_PRODUCTS, GET_CATEGORIES, GET_PRODUCT_COUNT } from "@/lib/graphql/q
 import { Product } from "@/types/woocommerce";
 import { ProductGrid } from "@/components/shop/ProductGrid";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
-import { permanentRedirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
-export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
-  const params = await searchParams;
-  const category = typeof params.category === 'string' ? params.category : undefined;
+// Types
+type Props = {
+  params: Promise<{ category: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { category } = await params;
   
-  let title = "Shop";
-  let description = "Explore the latest collection, including outerwear, polo shirt, and other stuff in the statement of the season.";
+  const categoryNames: { [key: string]: string } = {
+    'sweats': 'Sweatshirts',
+    'jackets': 'Jackets',
+    'seasoning': 'Accessories',
+    'shorts-trousers': 'Shorts & Trousers',
+    'polo-shirt': 'Polo Shirts',
+    't-shirt': 'T-Shirts',
+    'shirt': 'Shirts',
+    'lofty': 'Lofty',
+    'fancy': 'Fancy',
+    'frolic': 'Frolic',
+    'ventile': 'Ventile®'
+  };
 
-  if (category) {
-    return {
-      title: "Redirecting...",
-      alternates: {
-        canonical: `/shop/category/${category}`,
-      },
-    };
-  }
+  const title = categoryNames[category] 
+    ? `${categoryNames[category]} | James Boogie` 
+    : `${category.charAt(0).toUpperCase() + category.slice(1)} | James Boogie`;
+    
+  const description = `Shop the latest ${categoryNames[category] || category} collection from James Boogie. High-quality pop military inspired clothing.`;
 
   return {
     title,
     description,
     alternates: {
-      canonical: "/shop",
+      canonical: `/shop/category/${category}`,
     },
   };
 }
 
-// ⚡ Global ISR config: 5 mins cache for the whole page
+// ⚡ Global ISR config: 5 mins cache
 export const revalidate = 300;
-
-// Types
-type Props = {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
 
 // Map URL sort param → WooCommerce orderby input
 function buildOrderby(sort?: string) {
@@ -50,7 +58,7 @@ function buildOrderby(sort?: string) {
     case 'new':
       return [{ field: 'DATE', order: 'DESC' }];
     default:
-      return null; // WooCommerce default (menu order)
+      return null;
   }
 }
 
@@ -70,18 +78,16 @@ async function getProducts({
   first?: number;
 }) {
    try {
-     const categoryFilter = (category === "all-products" || !category) ? null : category;
-
      const data: any = await fetchGraphQL(GET_PRODUCTS, {
        first,
        after,
-       category: categoryFilter,
+       category,
        search: search || null,
        stockStatus: stockStatus ? [stockStatus] : null,
        orderby: buildOrderby(sort),
      }, {
        revalidate: 600,
-       tags: ['products', stockStatus || 'all']
+       tags: ['products', category || 'all']
      });
      return data.products;
    } catch (error) {
@@ -92,14 +98,13 @@ async function getProducts({
 
 async function getTotalInStockCount(category?: string, search?: string) {
   try {
-    const categoryFilter = (category === "all-products" || !category) ? null : category;
     const data: any = await fetchGraphQL(GET_PRODUCT_COUNT, {
-      category: categoryFilter,
+      category,
       search: search || null,
       stockStatus: ['IN_STOCK'],
     }, {
       revalidate: 600,
-      tags: ['products', 'count']
+      tags: ['products', 'count', category || 'all']
     });
     return data.products?.found ?? 0;
   } catch {
@@ -119,35 +124,35 @@ async function getCategories() {
     }
 }
 
-export default async function ShopPage({ searchParams }: Props) {
-  const params = await searchParams;
-  const search   = typeof params.search   === 'string' ? params.search   : undefined;
-  const category = typeof params.category === 'string' ? params.category : undefined;
-  const sort     = typeof params.sort     === 'string' ? params.sort     : undefined;
-
-  // Handle Legacy Category Redirect (SEO)
-  if (category) {
-    const query = new URLSearchParams();
-    if (search) query.set("search", search);
-    if (sort) query.set("sort", sort);
-    const queryString = query.toString();
-    permanentRedirect(`/shop/category/${category}${queryString ? `?${queryString}` : ""}`);
-  }
-
+export default async function CategoryPage({ params, searchParams }: Props) {
+  const { category } = await params;
+  const sParams = await searchParams;
+  
+  const search = typeof sParams.search === 'string' ? sParams.search : undefined;
+  const sort   = typeof sParams.sort   === 'string' ? sParams.sort   : undefined;
   const BATCH_SIZE = 12;
 
-  // 🚀 Parallel fetch: products, categories, total count
+  // 🚀 Parallel fetch
   const [productsData, categories, totalCount] = await Promise.all([
     getProducts({ search, category, stockStatus: 'IN_STOCK', sort, first: BATCH_SIZE }),
     getCategories(),
     getTotalInStockCount(category, search),
   ]);
 
+  // If category doesn't exist in our list, it might be a 404
+  const activeCategory = categories.find((c: any) => c.slug === category);
+  if (!activeCategory && category !== "all-products") {
+     // Optional: check if it's a valid category slug from DB if not in the map
+     // For now, let's trust the GraphQL results. If no products and no category found, maybe 404
+     if (productsData.nodes.length === 0 && !activeCategory) {
+        // notFound(); 
+     }
+  }
+
   let products: Product[] = productsData.nodes;
   let pageInfo = productsData.pageInfo;
   let currentStockStatus = 'IN_STOCK';
   
-  // 🔄 If IN_STOCK exhausted before batch is full, top up with OUT_OF_STOCK
   if (!pageInfo.hasNextPage && products.length < BATCH_SIZE) {
     const remainingCount = BATCH_SIZE - products.length;
     const outOfStockData = await getProducts({ 
@@ -163,17 +168,13 @@ export default async function ShopPage({ searchParams }: Props) {
     currentStockStatus = 'OUT_OF_STOCK';
   }
   
-  // Find active category
-  const activeCategory = category 
-    ? categories.find((c: any) => c.slug === category) 
-    : null;
-  
-  const displayTitle = activeCategory ? activeCategory.name : "SHOP";
+  const displayTitle = activeCategory ? activeCategory.name : (category.charAt(0).toUpperCase() + category.slice(1));
 
   // Breadcrumbs
   const breadcrumbItems = [
     { label: "Home", href: "/" },
-    { label: "Shop", href: "/shop", active: true },
+    { label: "Shop", href: "/shop", active: false },
+    { label: displayTitle, href: `/shop/category/${category}`, active: true },
   ];
 
   return (
@@ -187,10 +188,9 @@ export default async function ShopPage({ searchParams }: Props) {
             {search && <p className="text-muted-foreground">Showing results for &quot;{search}&quot;</p>}
           </div>
 
-          {/* Product Grid */}
           <div className="w-full">
             <ProductGrid 
-              key={`${category || 'all'}-${search || 'none'}-${sort || 'default'}`}
+              key={`${category}-${search || 'none'}-${sort || 'default'}`}
               initialProducts={products} 
               initialPageInfo={pageInfo}
               category={category}

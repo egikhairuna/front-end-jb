@@ -66,6 +66,7 @@ export function JournalGrid({ initialPosts, initialPageInfo }: Props) {
                                     alt={post.featuredImage.node.altText || post.title}
                                     fill
                                     className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 />
                                 ) : (
                                 <div className="w-full h-full flex items-center justify-center text-neutral-300">

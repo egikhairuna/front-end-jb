@@ -74,10 +74,21 @@ export default async function JournalPostPage({ params }: Props) {
     // Fix relative image URLs in WordPress content
     // This handles both src and srcset, and matches variations in path
     const baseUrl = process.env.NEXT_PUBLIC_WORDPRESS_URL || "https://vps.jamesboogie.com";
-    const fixedContent = post.content ? post.content.replace(
+    let fixedContent = post.content ? post.content.replace(
         /(src|srcset)="(\/)?wp-content\/uploads\//g,
         (match, attr, slash) => `${attr}="${baseUrl}/wp-content/uploads/`
     ) : "";
+
+    // 🔗 SEO: Update any hardcoded /shop/[slug] links in the content to /product/[slug]
+    // This prevents unnecessary redirects and keeps the URL structure consistent
+    fixedContent = fixedContent.replace(
+        /href="https:\/\/jamesboogie\.com\/shop\/([^/"]+)"/g,
+        'href="https://jamesboogie.com/product/$1"'
+    );
+    fixedContent = fixedContent.replace(
+        /href="\/shop\/([^/"]+)"/g,
+        'href="/product/$1"'
+    );
 
     // Ensure featured image has an absolute URL
     let featuredImageUrl = post.featuredImage?.node?.sourceUrl;

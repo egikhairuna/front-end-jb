@@ -41,7 +41,7 @@ export function Hero() {
         </p>
         <div className="flex items-center justify-center">
           <Link 
-            href="/shop?category=lofty" 
+            href="/shop/category/lofty" 
             className="group flex items-center gap-2 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:opacity-70 transition-opacity"
           >
             Discover More

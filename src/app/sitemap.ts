@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     'polo-shirt', 't-shirt', 'shirt', 'lofty', 'fancy', 'frolic', 'ventile'
   ];
   const categoryPages: MetadataRoute.Sitemap = categorySlugs.map(slug => ({
-    url: `${SITE_URL}/shop?category=${slug}`,
+    url: `${SITE_URL}/shop/category/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.7,
@@ -65,7 +65,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     const products: MetadataRoute.Sitemap = productsData.products.nodes.map((product: SitemapNode) => ({
-      url: `${SITE_URL}/shop/${product.slug}`,
+      url: `${SITE_URL}/product/${product.slug}`,
       lastModified: new Date(product.modified),
       changeFrequency: 'weekly',
       priority: 0.8,

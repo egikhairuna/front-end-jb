@@ -98,13 +98,27 @@ export function ProductGrid({
                 params.set(key, value);
             }
         }
+        // Always ensure category is NOT in query params anymore
+        params.delete("category");
         const qs = params.toString();
         router.push(`${pathname}${qs ? `?${qs}` : ""}`);
         setDrawerOpen(false);
     };
 
-    const handleCategory = (slug: string | null) => navigate({ category: slug ?? null });
-    const handleSort     = (value: string)       => navigate({ sort: value || null });
+    const handleCategory = (slug: string | null) => {
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete("category"); // Clean up old query param if it exists
+        const qs = params.toString();
+        
+        if (!slug || slug === "all-products") {
+            router.push(`/shop${qs ? `?${qs}` : ""}`);
+        } else {
+            router.push(`/shop/category/${slug}${qs ? `?${qs}` : ""}`);
+        }
+        setDrawerOpen(false);
+    };
+
+    const handleSort = (value: string) => navigate({ sort: value || null });
 
     // ── Load more ─────────────────────────────────────────────────────────────
 
@@ -352,7 +366,7 @@ export function ProductGrid({
                 <div className={gridClass}>
                     {products.map((product) => (
                         <Link
-                            href={`/shop/${product.slug}`}
+                            href={`/product/${product.slug}`}
                             key={`${product.id}-${product.slug}`}
                             className="group block bg-card overflow-hidden hover:border-black hover:border transition-all"
                         >
