@@ -197,55 +197,6 @@ export function validateOrderPayload(payload: WCOrderPayload): {
     errors,
   };
 }
-}
 
-/**
- * Maps a product from the WC Store API (REST) to the Product interface
- * used by our GraphQL-based UI components.
- */
-export function mapStoreProductToUI(sp: StoreProduct): any {
-  return {
-    id: sp.id.toString(),
-    databaseId: sp.id,
-    name: sp.name,
-    slug: sp.slug,
-    shortDescription: sp.short_description || sp.description?.substring(0, 100) + '...',
-    description: sp.description,
-    image: sp.images[0] ? {
-      sourceUrl: sp.images[0].src,
-      altText: sp.images[0].alt || sp.name,
-    } : null,
-    galleryImages: {
-      nodes: sp.images.slice(1).map(img => ({
-        sourceUrl: img.src,
-        altText: img.alt || sp.name,
-      }))
-    },
-    price: sp.price, // Already in the correct currency format from Store API
-    regularPrice: sp.regular_price,
-    stockStatus: sp.stock_status === 'instock' ? 'IN_STOCK' : 'OUT_OF_STOCK',
-    stockQuantity: sp.stock_quantity,
-    productCategories: {
-      nodes: sp.categories.map(cat => ({
-        id: cat.id.toString(),
-        name: cat.name,
-        slug: cat.slug,
-      }))
-    },
-    variations: {
-      nodes: sp.variations.map(v => ({
-        id: v.id.toString(),
-        databaseId: v.id,
-        name: sp.name + ' - ' + v.attributes.map(a => a.value).join(', '),
-        price: sp.price, // Store API v1 simplified; if specific variation prices needed, v3 or extra fetch required
-        stockStatus: sp.stock_status === 'instock' ? 'IN_STOCK' : 'OUT_OF_STOCK',
-        attributes: {
-          nodes: v.attributes.map(a => ({
-            name: a.name,
-            value: a.value
-          }))
-        }
-      }))
-    }
-  };
-}
+
+
