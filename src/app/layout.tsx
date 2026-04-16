@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
@@ -46,6 +46,13 @@ const dinPro = localFont({
   ],
   variable: "--font-dinpro",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://jamesboogie.com'),
