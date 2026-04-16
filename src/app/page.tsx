@@ -52,7 +52,7 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "ClothingStore",
   "name": "James Boogie",
-  "description": "Premium Pop Military streetwear brand",
+  "description": "a Pop Military brand",
   "url": "https://jamesboogie.com",
   "logo": "https://jamesboogie.com/logo.png",
   "image": "https://jamesboogie.com/og-image.jpg",
@@ -74,7 +74,7 @@ const organizationSchema = {
     "dayOfWeek": [
       "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"
     ],
-    "opens": "10:00",
+    "opens": "13:00",
     "closes": "21:00"
   },
   "contactPoint": {

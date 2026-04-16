@@ -129,11 +129,11 @@ export function Navbar() {
                 }
               }}>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" className="px-2 pt-2 hover:bg-transparent focus-visible:bg-transparent">
+                  <Button variant="ghost" className="px-2 pt-2 hover:bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none focus-visible:bg-transparent">
                     <Image src="/hamburger.svg" alt="Menu" width={20} height={20} className={cn("size-6 transition-all", isTransparent && !isOpen ? "brightness-0 invert" : "")} />
                   </Button>
                 </SheetTrigger>
-                <SheetContent aria-describedby={undefined} side={"fade" as any} className="w-full h-full p-0 bg-white border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
+                <SheetContent onOpenAutoFocus={(e) => e.preventDefault()} aria-describedby={undefined} side={"fade" as any} className="w-full h-full p-0 bg-white border-none flex flex-col animate-in animate-out fade-in fade-out duration-500 z-[200] [&>button]:hidden">
                   <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                   
                   {/* Header with Centered Logo and Close Button */}
@@ -146,7 +146,7 @@ export function Navbar() {
                           setIsOpen(false);
                           setMobileView("main");
                         }} 
-                        className="-ml-1 px-2 pt-2 pb-2 hover:bg-transparent focus-visible:bg-transparent h-auto w-auto"
+                        className="-ml-1 px-2 pt-2 pb-2 hover:bg-transparent focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none focus-visible:bg-transparent h-auto w-auto"
                       >
                         <X className="size-6 text-black" strokeWidth={1.5} />
                       </Button>
