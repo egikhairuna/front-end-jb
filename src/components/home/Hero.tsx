@@ -4,18 +4,18 @@ import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const mobileImages = [
-  "/hero/h1.jpeg",
-  "/hero/h2.jpeg",
-  "/hero/h3.jpeg",
-  "/hero/h4.jpeg",
-  "/hero/h5.jpeg",
-  "/hero/h6.jpeg",
-  "/hero/h7.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h1-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h2-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h3-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h4-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h5-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h6-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/h7-scaled.jpeg",
 ];
 
 const desktopImages = [
-  "/hero/desktop1.jpeg",
-  "/hero/desktop2.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/desktop1-scaled.jpeg",
+  "https://vps.jamesboogie.com/wp-content/uploads/2026/04/desktop2-scaled.jpeg",
 ];
 
 function useSlider(images: string[]) {
@@ -157,10 +157,10 @@ export function Hero() {
         </p>
         <div className="flex items-center justify-center">
           <Link
-            href="#"
+            href="/shop/category/pristine"
             className="group flex items-center gap-2 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:opacity-70 transition-opacity"
           >
-            Will be there soon
+            Discover More
             <span className="text-[10px] md:text-lg mb-[0.2em] font-regular transition-transform group-hover:translate-x-1">
               &gt;
             </span>

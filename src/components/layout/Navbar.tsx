@@ -78,6 +78,7 @@ export function Navbar() {
       { label: "SHIRTS", href: "/shop/category/shirt" },
     ],
     focusOn: [
+      { label: "PRISTINE", href: "/shop/category/pristine" },
       { label: "LOFTY", href: "/shop/category/lofty" },
       { label: "FANCY", href: "/shop/category/fancy" },
       { label: "FROLIC", href: "/shop/category/frolic" },

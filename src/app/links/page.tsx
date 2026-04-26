@@ -150,9 +150,9 @@ export default function LinksPage() {
              <h2 className="text-sm font-medium text-white uppercase">OUT NOW !</h2>
           </div>
           
-          <Link href="/shop/category/lofty" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+          <Link href="/shop/category/pristine" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
-              src="https://vps.jamesboogie.com/wp-content/uploads/2026/03/1-1-scaled.jpeg" 
+              src="https://vps.jamesboogie.com/wp-content/uploads/2026/04/pristinehero-scaled.jpeg" 
               alt="SS026 Campaign" 
               fill
               className="object-cover transition-transform duration-700"
@@ -161,7 +161,7 @@ export default function LinksPage() {
 
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent flex justify-between items-end">
                <span className="text-sm font-mono text-white/90 font-semibold uppercase tracking-widest bg-black/50 backdrop-blur-md px-2 py-1 rounded">
-                 LOFTY '026
+                 PRISTINE '026
                </span>
                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md text-white">
                   <ArrowUpRight className="w-4 h-4" />
