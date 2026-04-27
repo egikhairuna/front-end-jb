@@ -153,7 +153,7 @@ export default function RootLayout({
             <Navbar />
           </ConditionalNavbar>
         </ClientOnly>
-        <main className="min-h-screen flex flex-col">
+        <main className="min-h-screen">
           {children}
         </main>
         <Toaster />

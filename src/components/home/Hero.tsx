@@ -85,7 +85,7 @@ export function Hero() {
   };
 
   return (
-    <section className="relative h-[80vh] md:h-screen w-full bg-neutral-900 text-white flex items-end justify-center overflow-hidden p-8 pb-32 md:pb-24">
+    <section className="relative h-[83vh] md:h-screen w-full bg-neutral-900 text-white flex items-end justify-center overflow-hidden p-8 pb-32 md:pb-24">
       {/* Background */}
       <div className="absolute inset-0 z-0">
 
