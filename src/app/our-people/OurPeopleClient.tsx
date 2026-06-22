@@ -16,7 +16,7 @@ const TEAM = [
   {
     name: "ERRY FERDIANTO",
     role: "Chief Operating Officer",
-    bio: "As a pivotal part of my responsibilities, I serve as a conduit for ideas originating from the CEO and my team. One of my primary objectives is to ensure smooth operational flow within the company, strategically maximizing efficiency. I am deeply involved in maintaining and enhancing the standards of our products and services through rigorous quality control measures. Financial management is another crucial aspect of my role. I am accountable for formulating and managing budgets, meticulously monitoring expenditures, and safeguarding the company’s cash flow to ensure financial sustainability, steering the company towards long-term success and resilience amidst economic uncertainties. Through a strategic foresight, careful planning, and decisive action, I strive to drive the company towards sustainable growth and success in a dynamic and competitive business landscape.",
+    bio: "Good work starts with honesty. In a world where trends change so quickly, staying true to what we believe in is more important than ever. Every product starts with an idea, a story, and a genuine passion for creating something meaningful. Rather than chasing trends, the focus is on making products with character, quality, and attention to detail. Success is not about being the loudest brand or following every trend. It is about creating with honesty, staying consistent with our values, and making products that people can truly appreciate and enjoy for years to come.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Om-hers-scaled.jpg", 
     alt: "Elena Rossetic - Head of Operations portrait"
   },
