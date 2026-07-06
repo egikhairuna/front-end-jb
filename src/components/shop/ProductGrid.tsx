@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
@@ -35,6 +35,22 @@ type Props = {
     totalCount?: number;
 };
 
+type GridSession = {
+    version: string;
+    loadMoreCount: number;
+    scrollY: number;
+    timestamp: number;
+};
+
+const SESSION_VERSION = "v1";
+const SESSION_TTL = 10 * 60 * 1000; // 10 minutes
+
+function buildSessionKey(pathname: string, searchParams: URLSearchParams): string {
+    const params = new URLSearchParams(searchParams.toString());
+    const qs = params.toString();
+    return `shop_session_${pathname}${qs ? `?${qs}` : ""}`;
+}
+
 // ─── Sort options ──────────────────────────────────────────────────────────────
 
 const SORT_OPTIONS = [
@@ -62,12 +78,146 @@ export function ProductGrid({
     const [loading, setLoading]           = useState(false);
     const [gridView, setGridView]         = useState<"wide" | "compact">("wide");
     const [drawerOpen, setDrawerOpen]     = useState(false);
+    const [loadMoreCount, setLoadMoreCount] = useState(0);
 
     const drawerRef = useRef<HTMLDivElement>(null);
 
     const router      = useRouter();
     const pathname    = usePathname();
     const searchParams = useSearchParams();
+
+    const sessionKey = useMemo(
+        () => buildSessionKey(pathname, searchParams),
+        [pathname, searchParams]
+    );
+
+    // ── Restore on mount: re-fetch all pages ──────────────────────────────
+    useEffect(() => {
+        // One-time: clear all old-format cache entries (pg_ prefix)
+        try {
+            Object.keys(sessionStorage)
+                .filter(k => k.startsWith("pg_"))
+                .forEach(k => sessionStorage.removeItem(k));
+        } catch {}
+
+        const restore = async () => {
+            try {
+                // Check if user is returning from a product page
+                const returningFlag = sessionStorage.getItem(`${sessionKey}_returning`);
+                if (!returningFlag) {
+                    // Not a back-navigation — clear any stale session and scroll to top
+                    sessionStorage.removeItem(sessionKey);
+                    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+                    return;
+                }
+
+                // Clear the flag immediately (one-time use)
+                sessionStorage.removeItem(`${sessionKey}_returning`);
+
+                const raw = sessionStorage.getItem(sessionKey);
+                if (!raw) return;
+
+                const session: GridSession = JSON.parse(raw);
+
+                // Validate
+                if (session.version !== SESSION_VERSION) {
+                    sessionStorage.removeItem(sessionKey);
+                    return;
+                }
+                if (Date.now() - session.timestamp > SESSION_TTL) {
+                    sessionStorage.removeItem(sessionKey);
+                    return;
+                }
+                if (session.loadMoreCount <= 0) return;
+
+                // Re-fetch all extra pages silently (no loading spinner shown)
+                setLoading(true);
+
+                let allProducts = [...initialProducts];
+                let currentPageInfo = initialPageInfo;
+                let currentStatus = initialStockStatus || "IN_STOCK";
+                const catFilter = category === "all-products" ? undefined : category;
+                const BATCH = 12;
+
+                for (let i = 0; i < session.loadMoreCount; i++) {
+                    let cursor = currentPageInfo.endCursor;
+                    let status = currentStatus;
+                    let hasMore = currentPageInfo.hasNextPage;
+
+                    if (!hasMore && status === "IN_STOCK") {
+                        status = "OUT_OF_STOCK";
+                        cursor = null;
+                        hasMore = true;
+                    } else if (!hasMore) {
+                        break;
+                    }
+
+                    const result = await fetchMoreProducts({
+                        after: cursor ?? undefined,
+                        category: catFilter,
+                        search,
+                        stockStatus: status,
+                        first: BATCH,
+                    });
+
+                    let newNodes = [...result.nodes];
+                    let updatedPI = result.pageInfo;
+
+                    if (!updatedPI.hasNextPage && status === "IN_STOCK") {
+                        const remaining = BATCH - newNodes.length;
+                        if (remaining > 0) {
+                            const oos = await fetchMoreProducts({
+                                after: undefined,
+                                category: catFilter,
+                                search,
+                                stockStatus: "OUT_OF_STOCK",
+                                first: remaining,
+                            });
+                            newNodes = [...newNodes, ...oos.nodes];
+                            updatedPI = oos.pageInfo;
+                        }
+                        status = "OUT_OF_STOCK";
+                    }
+
+                    allProducts = [...allProducts, ...newNodes];
+                    currentPageInfo = updatedPI;
+                    currentStatus = status;
+                }
+
+                setProducts(allProducts);
+                setPageInfo(currentPageInfo);
+                setFetchStatus(currentStatus);
+                setLoadMoreCount(session.loadMoreCount);
+
+                // Restore scroll after DOM updates
+                setTimeout(() => {
+                    window.scrollTo({ top: session.scrollY, behavior: "instant" as ScrollBehavior });
+                }, 100);
+
+            } catch (e) {
+                console.error("Failed to restore shop session", e);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        restore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // ── Save session state before navigating ──────────────────────────────
+    const saveSession = useCallback(() => {
+        try {
+            const session: GridSession = {
+                version: SESSION_VERSION,
+                loadMoreCount,
+                scrollY: window.scrollY,
+                timestamp: Date.now(),
+            };
+            sessionStorage.setItem(sessionKey, JSON.stringify(session));
+            sessionStorage.setItem(`${sessionKey}_returning`, "1");
+        } catch {}
+    }, [loadMoreCount, sessionKey]);
 
     // Close drawer on outside click
     useEffect(() => {
@@ -90,6 +240,10 @@ export function ProductGrid({
     // ── Navigation helpers ──────────────────────────────────────────────────
 
     const navigate = (updates: Record<string, string | null>) => {
+        try {
+            sessionStorage.removeItem(sessionKey);
+            sessionStorage.removeItem(`${sessionKey}_returning`);
+        } catch {}
         const params = new URLSearchParams(searchParams.toString());
         for (const [key, value] of Object.entries(updates)) {
             if (value === null || value === "") {
@@ -106,6 +260,10 @@ export function ProductGrid({
     };
 
     const handleCategory = (slug: string | null) => {
+        try {
+            sessionStorage.removeItem(sessionKey);
+            sessionStorage.removeItem(`${sessionKey}_returning`);
+        } catch {}
         const params = new URLSearchParams(searchParams.toString());
         params.delete("category"); // Clean up old query param if it exists
         const qs = params.toString();
@@ -168,6 +326,7 @@ export function ProductGrid({
 
             setProducts(prev => [...prev, ...newNodes]);
             setPageInfo(updatedPI);
+            setLoadMoreCount(prev => prev + 1);
         } catch (e) {
             console.error("Failed to load more products", e);
         } finally {
@@ -368,6 +527,7 @@ export function ProductGrid({
                         <Link
                             href={`/product/${product.slug}`}
                             key={`${product.id}-${product.slug}`}
+                            onClick={saveSession}
                             className="group block bg-card overflow-hidden hover:border-black hover:border transition-all"
                         >
                             <div className="relative aspect-[4/5] overflow-hidden bg-neutral-100">
