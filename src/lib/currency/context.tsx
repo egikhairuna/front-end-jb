@@ -3,6 +3,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { formatPrice as formatPriceHelper, formatProductPriceRange as formatProductPriceRangeHelper } from './config';
+import { toast } from 'sonner';
 
 type Currency = 'IDR' | 'USD';
 
@@ -29,6 +30,11 @@ export function CurrencyProvider({
     setCurrencyState(next);
     if (typeof window !== 'undefined') {
       document.cookie = `preferred_currency=${next}; path=/; max-age=${90 * 24 * 60 * 60}; SameSite=Lax`;
+      if (next === 'USD') {
+        toast.success("Currency switched to USD ($)");
+      } else {
+        toast.success("Currency switched to IDR (Rp)");
+      }
     }
   };
 

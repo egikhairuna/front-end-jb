@@ -323,21 +323,29 @@ export function Navbar() {
                     </div>
                     <div className="flex items-center gap-2 text-sm font-regular tracking-wider text-black uppercase">
                       <span>SHOP IN :</span>
-                      <div className="relative inline-block">
-                        <select
-                          value={currency}
-                          onChange={(e) => setCurrency(e.target.value as 'IDR' | 'USD')}
-                          className="bg-transparent text-black px-2 py-0.5 pr-6 rounded-none text-sm font-regular tracking-wider uppercase focus:outline-none focus:border-black appearance-none cursor-pointer transition-colors"
-                          style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 0.3rem center',
-                            backgroundSize: '0.6rem'
-                          }}
+                      <div className="flex items-center gap-3">
+                        <button
+                          onClick={() => setCurrency('IDR')}
+                          className={cn(
+                            "transition-all duration-200 hover:text-black uppercase tracking-wider text-sm font-regular",
+                            currency === 'IDR'
+                              ? "text-black font-bold border-b border-black pb-0.5"
+                              : "text-neutral-400 font-regular pb-0.5 border-b border-transparent"
+                          )}
                         >
-                          <option value="IDR" className="bg-white text-black">IDR</option>
-                          <option value="USD" className="bg-white text-black">USD</option>
-                        </select>
+                          IDR
+                        </button>
+                        <button
+                          onClick={() => setCurrency('USD')}
+                          className={cn(
+                            "transition-all duration-200 hover:text-black uppercase tracking-wider text-sm font-regular",
+                            currency === 'USD'
+                              ? "text-black font-bold border-b border-black pb-0.5"
+                              : "text-neutral-400 font-regular pb-0.5 border-b border-transparent"
+                          )}
+                        >
+                          USD
+                        </button>
                       </div>
                     </div>
                   </div>

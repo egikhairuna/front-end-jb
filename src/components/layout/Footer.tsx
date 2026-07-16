@@ -174,21 +174,29 @@ function CurrencySwitcherDropdown() {
   return (
     <div className="flex items-center gap-3 text-sm md:text-[12px] font-medium tracking-wide uppercase text-white">
       <span>Shop In :</span>
-      <div className="relative inline-block">
-        <select
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value as 'IDR' | 'USD')}
-          className="bg-transparent text-white px-3 py-1.5 pr-8 rounded-none text-sm md:text-[12px] font-medium tracking-wide uppercase focus:outline-none focus:border-white appearance-none cursor-pointer transition-colors"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-            backgroundRepeat: 'no-repeat',
-            backgroundPosition: 'right 0.5rem center',
-            backgroundSize: '0.8rem'
-          }}
+      <div className="flex items-center gap-4">
+        <button
+          onClick={() => setCurrency('IDR')}
+          className={cn(
+            "transition-all duration-200 hover:text-white uppercase tracking-wider text-sm md:text-[12px]",
+            currency === 'IDR'
+              ? "text-white font-bold border-b-2 border-white pb-0.5"
+              : "text-neutral-500 font-medium pb-0.5 border-b-2 border-transparent"
+          )}
         >
-          <option value="IDR" className="bg-black text-white">IDR</option>
-          <option value="USD" className="bg-black text-white">USD</option>
-        </select>
+          IDR
+        </button>
+        <button
+          onClick={() => setCurrency('USD')}
+          className={cn(
+            "transition-all duration-200 hover:text-white uppercase tracking-wider text-sm md:text-[12px]",
+            currency === 'USD'
+              ? "text-white font-bold border-b-2 border-white pb-0.5"
+              : "text-neutral-500 font-medium pb-0.5 border-b-2 border-transparent"
+          )}
+        >
+          USD
+        </button>
       </div>
     </div>
   );
