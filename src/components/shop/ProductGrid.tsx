@@ -5,7 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { formatPrice, cleanPrice } from "@/lib/utils";
+import { cleanPrice } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency/context";
+import { parsePriceString } from "@/lib/currency/config";
 import { Product } from "@/types/woocommerce";
 import { fetchMoreProducts } from "@/app/actions/shop";
 import { Loader2, X, SlidersHorizontal } from "lucide-react";
@@ -72,6 +74,7 @@ export function ProductGrid({
     categories = [],
     totalCount = 0,
 }: Props) {
+    const { formatPrice, formatProductPriceRange } = useCurrency();
     const [products, setProducts]         = useState<Product[]>(initialProducts);
     const [pageInfo, setPageInfo]         = useState<PageInfo>(initialPageInfo);
     const [fetchingStatus, setFetchStatus] = useState<string>(initialStockStatus || "IN_STOCK");
@@ -555,7 +558,7 @@ export function ProductGrid({
                                     {product.name}
                                 </h3>
                                 <p className="text-[12px] lg:text-[15px] font-regular tracking-[0.1em]">
-                                    {product.price ? cleanPrice(product.price) : formatPrice(0)}
+                                    {formatProductPriceRange(product.price)}
                                 </p>
                             </div>
                         </Link>

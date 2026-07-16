@@ -4,6 +4,7 @@ import { validateOrigin } from '@/lib/auth/csrf';
 import { checkRateLimit, getClientIP } from '@/lib/auth/rate-limit';
 import { changePasswordSchema } from '@/lib/schemas/auth';
 import { getWooCommerceClient } from '@/lib/woocommerce/client';
+import { redis } from '@/lib/redis';
 
 const WORDPRESS_URL = process.env.NEXT_PUBLIC_WORDPRESS_URL || '';
 
@@ -69,6 +70,13 @@ export async function POST(request: NextRequest) {
     // Update customer password via WooCommerce REST API
     const wc = getWooCommerceClient();
     await wc.updateCustomer(session.id, { password: newPassword });
+
+    // Invalidate session cache after password change
+    try {
+      await redis.del(`session:customer:${session.id}`);
+    } catch {
+      // Non-critical
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

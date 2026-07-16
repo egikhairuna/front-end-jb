@@ -8,7 +8,8 @@ import Image from "next/image";
 import { Product, ProductVariation } from "@/types/woocommerce";
 import { useCartStore } from "@/lib/store/cart";
 import { Button } from "@/components/ui/button";
-import { formatPrice, cleanPrice, cn } from "@/lib/utils";
+import { cleanPrice, cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency/context";
 import { toast } from "sonner";
 import { Minus, Plus, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
@@ -20,6 +21,7 @@ interface ProductDetailClientProps {
 }
 
 export function ProductDetailClient({ product }: ProductDetailClientProps) {
+  const { formatProductPriceRange } = useCurrency();
   const [quantity, setQuantity] = useState(1);
   const [selectedVariation, setSelectedVariation] = useState<ProductVariation | undefined>(undefined);
   const [isSizeModalOpen, setIsSizeModalOpen] = useState(false);
@@ -137,7 +139,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   };
   
   // Determine displayed price
-  const displayPrice = selectedVariation ? cleanPrice(selectedVariation.price) : (product.price ? cleanPrice(product.price) : formatPrice(0));
+  const displayPrice = formatProductPriceRange(selectedVariation ? selectedVariation.price : product.price);
   const isOutOfStock = selectedVariation ? selectedVariation.stockStatus === 'OUT_OF_STOCK' : product.stockStatus === 'OUT_OF_STOCK';
 
   // Breadcrumbs

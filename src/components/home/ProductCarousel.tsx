@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, useState, useEffect } from "react";
-import { cn, cleanPrice, formatPrice } from "@/lib/utils";
+import { cn, cleanPrice } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency/context";
 import { Product } from "@/types/woocommerce";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export function ProductCarousel({ products }: Props) {
+  const { formatProductPriceRange } = useCurrency();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -163,7 +165,7 @@ export function ProductCarousel({ products }: Props) {
                     <p 
                       className="text-[11px] lg:text-[15px] font-regular tracking-[0.1em] text-black/70"
                     >
-                      {product.price ? cleanPrice(product.price) : formatPrice(0)}
+                      {formatProductPriceRange(product.price)}
                     </p>
                   </div>
                 </Link>

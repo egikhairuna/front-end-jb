@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, ArrowUpRight, Plus, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
+import { useCurrency } from "@/lib/currency/context";
+
 
 // Types for navigation items
 type FooterItem = {
@@ -48,6 +50,7 @@ const footerSections: FooterSection[] = [
 export function Footer() {
   const pathname = usePathname();
   const [openSection, setOpenSection] = useState<string | null>(null);
+  const { currency, setCurrency } = useCurrency();
 
   // Hide footer on specific pages
   if (pathname === "/links") return null;
@@ -68,9 +71,17 @@ export function Footer() {
             <h2 className="text-2xl md:text-3xl font-bold font-heading uppercase leading-tight">
               Subscribe to the Newsletter
             </h2>
-            <p className="text-[13px] text-neutral-400 max-w-sm">
-              Join our community and get access to exclusive content, previews and special offers.
+            <p className="text-[13px] text-neutral-400 max-w-sm font-sans font-medium tracking-normal leading-relaxed uppercase">
+              Create an account and get access to exclusive content, previews and special offers.
             </p>
+            <div className="pt-2">
+              <Link 
+                href="/account/login"
+                className="inline-block bg-white text-black border border-white hover:bg-black hover:text-white hover:border-white transition-colors px-3 py-1 text-sm font-medium uppercase tracking-widest rounded-none text-center"
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
 
           {/* 2-4. Navigation Links */}
@@ -93,6 +104,11 @@ export function Footer() {
                          </li>
                       ))}
                    </ul>
+                   {section.title === "CUSTOMER CARE" && (
+                     <div className="pt-2">
+                       <CurrencySwitcherDropdown />
+                     </div>
+                   )}
                 </div>
              ))}
           </div>
@@ -135,14 +151,13 @@ export function Footer() {
                    </div>
                 </div>
              ))}
+             <div className="pt-6">
+                <CurrencySwitcherDropdown />
+             </div>
           </div>
         </div>
 
-        {/* BOTTOM SECTION */}
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-           <div className="flex flex-col md:flex-row gap-8 items-start md:items-center w-full md:w-auto justify-between">              
-           </div>
-        </div>
+
 
         {/* COPYRIGHT (Bottom bar) */}
         <div className="pt-8 md:pt-12 flex flex-col-reverse md:flex-row justify-center items-center gap-4 text-[12px] font-medium tracking-widest text-neutral-500 uppercase">
@@ -150,5 +165,31 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function CurrencySwitcherDropdown() {
+  const { currency, setCurrency } = useCurrency();
+
+  return (
+    <div className="flex items-center gap-3 text-sm md:text-[12px] font-medium tracking-wide uppercase text-white">
+      <span>Shop In :</span>
+      <div className="relative inline-block">
+        <select
+          value={currency}
+          onChange={(e) => setCurrency(e.target.value as 'IDR' | 'USD')}
+          className="bg-transparent text-white px-3 py-1.5 pr-8 rounded-none text-sm md:text-[12px] font-medium tracking-wide uppercase focus:outline-none focus:border-white appearance-none cursor-pointer transition-colors"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'right 0.5rem center',
+            backgroundSize: '0.8rem'
+          }}
+        >
+          <option value="IDR" className="bg-black text-white">IDR</option>
+          <option value="USD" className="bg-black text-white">USD</option>
+        </select>
+      </div>
+    </div>
   );
 }

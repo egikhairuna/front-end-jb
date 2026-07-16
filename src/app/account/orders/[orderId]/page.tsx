@@ -8,6 +8,7 @@ import { CopyableText } from '@/components/ui/copyable-text';
 import { Button } from '@/components/ui/button';
 import { FormError } from '@/components/ui/FormError';
 import { BankTransferInstructions } from '@/components/checkout/BankTransferInstructions';
+import { formatPrice } from '@/lib/currency/config';
 
 const STATUS_COLORS: Record<string, string> = {
   'DELIVERED': 'text-green-600',
@@ -211,8 +212,10 @@ export default function OrderDetailPage({ params }: { params: Promise<{ orderId:
     accountName: "ERRY FERDIANTO"
   };
 
+  const orderCurrency = (order.billing?.country === 'ID' || order.billing?.country === 'MY') ? 'IDR' : 'USD';
+
   const whatsappMessage = `Hi JamesBoogie, Saya ingin melakukan konfirmasi pembayaran untuk order #${order.number}. 
-Total: Rp ${parseFloat(order.total).toLocaleString('id-ID')}
+Total: ${formatPrice(parseFloat(order.total), orderCurrency)}
 Mohon konfirmasi.`;
   const whatsappUrl = `https://wa.me/6285157000263?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -393,12 +396,12 @@ Mohon konfirmasi.`;
               <div className="border-t border-black/5 pt-4 space-y-2">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-neutral-500">Subtotal</span>
-                  <span>Rp {subtotal.toLocaleString('id-ID')}</span>
+                  <span>{formatPrice(subtotal, orderCurrency)}</span>
                 </div>
                 {shippingLine && (
                   <div className="flex justify-between items-center text-sm">
                     <span className="text-neutral-500">Shipping ({shippingLine.method_title})</span>
-                    <span>Rp {shippingCost.toLocaleString('id-ID')}</span>
+                    <span>{formatPrice(shippingCost, orderCurrency)}</span>
                   </div>
                 )}
                 {order.fee_lines?.map((fee, idx) => {
@@ -406,7 +409,7 @@ Mohon konfirmasi.`;
                   return (
                     <div key={idx} className="flex justify-between items-center text-sm">
                       <span className="text-neutral-500">{fee.name}</span>
-                      <span>Rp {parseFloat(fee.total).toLocaleString('id-ID')}</span>
+                      <span>{formatPrice(parseFloat(fee.total), orderCurrency)}</span>
                     </div>
                   );
                 })}
@@ -414,7 +417,7 @@ Mohon konfirmasi.`;
                   <span className="text-xs font-bold uppercase tracking-wider">Total Amount</span>
                   <CopyableText text={order.total} label="Total Amount">
                     <span className="font-bold text-lg text-black font-heading">
-                      Rp {parseFloat(order.total).toLocaleString('id-ID')}
+                      {formatPrice(parseFloat(order.total), orderCurrency)}
                     </span>
                   </CopyableText>
                 </div>
@@ -458,11 +461,11 @@ Mohon konfirmasi.`;
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-bold uppercase truncate">{item.name}</p>
                 <p className="text-xs text-neutral-500">
-                  {item.quantity} × Rp {parseFloat(item.price).toLocaleString('id-ID')}
+                  {item.quantity} × {formatPrice(parseFloat(item.price), orderCurrency)}
                 </p>
               </div>
               <p className="text-sm font-bold shrink-0">
-                Rp {parseFloat(item.total).toLocaleString('id-ID')}
+                {formatPrice(parseFloat(item.total), orderCurrency)}
               </p>
             </div>
           ))}
@@ -472,18 +475,18 @@ Mohon konfirmasi.`;
         <div className="border-t border-black px-4 py-4 space-y-2">
           <div className="flex justify-between text-sm">
             <span className="text-neutral-500">Subtotal</span>
-            <span>Rp {subtotal.toLocaleString('id-ID')}</span>
+            <span>{formatPrice(subtotal, orderCurrency)}</span>
           </div>
           {shippingLine && (
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">Shipping ({shippingTitle})</span>
-              <span>Rp {shippingCost.toLocaleString('id-ID')}</span>
+              <span>{formatPrice(shippingCost, orderCurrency)}</span>
             </div>
           )}
           {order.unique_code && (
             <div className="flex justify-between text-sm">
               <span className="text-neutral-500">Unique Code</span>
-              <span>Rp {parseInt(order.unique_code, 10).toLocaleString('id-ID')}</span>
+              <span>{formatPrice(parseInt(order.unique_code, 10), orderCurrency)}</span>
             </div>
           )}
           {order.fee_lines?.map((fee, idx) => {
@@ -491,13 +494,13 @@ Mohon konfirmasi.`;
             return (
               <div key={idx} className="flex justify-between text-sm">
                 <span className="text-neutral-500">{fee.name}</span>
-                <span>Rp {parseFloat(fee.total).toLocaleString('id-ID')}</span>
+                <span>{formatPrice(parseFloat(fee.total), orderCurrency)}</span>
               </div>
             );
           })}
           <div className="flex justify-between text-sm font-bold pt-2 border-t border-black">
             <span className="uppercase tracking-wider">Total</span>
-            <span>Rp {parseFloat(order.total).toLocaleString('id-ID')}</span>
+            <span>{formatPrice(parseFloat(order.total), orderCurrency)}</span>
           </div>
         </div>
       </div>

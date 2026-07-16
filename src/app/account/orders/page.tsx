@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Package } from 'lucide-react';
+import { useCurrency } from '@/lib/currency/context';
 
 interface Order {
   id: number;
@@ -35,6 +36,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function OrdersPage() {
+  const { formatPrice } = useCurrency();
   const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
@@ -149,7 +151,7 @@ export default function OrdersPage() {
                     </td>
                     <td className="px-4 py-4 text-sm text-neutral-500">{order.itemCount} item{order.itemCount !== 1 ? 's' : ''}</td>
                     <td className="px-4 py-4 text-sm font-bold text-right">
-                      Rp {parseFloat(order.total).toLocaleString('id-ID')}
+                      {formatPrice(parseFloat(order.total))}
                     </td>
                     <td className="px-4 py-4 text-right">
                       <Link
@@ -190,7 +192,7 @@ export default function OrdersPage() {
                     {order.itemCount} item{order.itemCount !== 1 ? 's' : ''}
                   </span>
                   <span className="font-bold text-sm text-black">
-                    Rp {parseFloat(order.total).toLocaleString('id-ID')}
+                    {formatPrice(parseFloat(order.total))}
                   </span>
                 </div>
                 {/* On-Hold / Shipment Status text for mobile card */}

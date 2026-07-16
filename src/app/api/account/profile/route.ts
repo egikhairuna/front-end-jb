@@ -14,6 +14,7 @@ import { getSession } from '@/lib/auth/session';
 import { validateOrigin } from '@/lib/auth/csrf';
 import { profileSchema } from '@/lib/schemas/auth';
 import { getWooCommerceClient } from '@/lib/woocommerce/client';
+import { redis } from '@/lib/redis';
 
 export async function GET() {
   try {
@@ -73,6 +74,13 @@ export async function PATCH(request: NextRequest) {
       email,
       billing: { phone: phone || '' },
     });
+
+    // Invalidate session cache so next request gets fresh data
+    try {
+      await redis.del(`session:customer:${session.id}`);
+    } catch {
+      // Non-critical — cache will expire naturally after 5 minutes
+    }
 
     return NextResponse.json({
       profile: {

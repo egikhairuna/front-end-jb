@@ -13,8 +13,10 @@ import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import { IoIosArrowDown, IoIosArrowUp, IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 import { useAuth } from "@/hooks/useAuth";
+import { useCurrency } from "@/lib/currency/context";
 
 export function Navbar() {
+  const { currency, setCurrency } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -318,6 +320,25 @@ export function Navbar() {
                       >
                         CUSTOMER SUPPORT
                       </Link>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm font-regular tracking-wider text-black uppercase">
+                      <span>SHOP IN :</span>
+                      <div className="relative inline-block">
+                        <select
+                          value={currency}
+                          onChange={(e) => setCurrency(e.target.value as 'IDR' | 'USD')}
+                          className="bg-transparent text-black px-2 py-0.5 pr-6 rounded-none text-sm font-regular tracking-wider uppercase focus:outline-none focus:border-black appearance-none cursor-pointer transition-colors"
+                          style={{
+                            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='black'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'right 0.3rem center',
+                            backgroundSize: '0.6rem'
+                          }}
+                        >
+                          <option value="IDR" className="bg-white text-black">IDR</option>
+                          <option value="USD" className="bg-white text-black">USD</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
 

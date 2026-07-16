@@ -189,7 +189,20 @@ export async function POST(request: NextRequest) {
         }
       }
     } catch (e) {
-      console.error('Failed to validate shipping, falling back to client value (Risky):', e);
+      console.error('⚠️ Shipping validation failed — rejecting order to prevent price manipulation:', e);
+
+      // Clean up idempotency key so customer can retry
+      if (redisKey) {
+        try { await redis.del(redisKey); } catch {}
+      }
+
+      return NextResponse.json(
+        { 
+          error: 'Unable to verify shipping cost at this time. Please try again in a moment.',
+          code: 'SHIPPING_VALIDATION_FAILED'
+        },
+        { status: 503 }
+      );
     }
 
     // Update payloads to use validated data

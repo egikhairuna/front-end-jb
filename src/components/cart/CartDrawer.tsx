@@ -11,7 +11,9 @@ import Image from "next/image";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { formatPrice, cleanPrice, cn } from "@/lib/utils";
+import { cleanPrice, cn } from "@/lib/utils";
+import { useCurrency } from "@/lib/currency/context";
+import { parsePriceString } from "@/lib/currency/config";
 import { CartItem } from "@/types/woocommerce";
 import { toast } from "sonner";
 
@@ -36,6 +38,7 @@ const getVariantName = (item: CartItem) => {
 };
 
 export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) {
+  const { formatPrice } = useCurrency();
   const { items, isOpen, toggleCart, removeItem, updateQuantity, getCartTotal } = useCartStore();
   const router = useRouter();
 
@@ -198,7 +201,7 @@ export function CartDrawer({ triggerClassName }: { triggerClassName?: string }) 
                         </p>
                     )}
                     <p className="text-sm font-semibold">
-                      {item.variation?.price ? cleanPrice(item.variation.price) : (item.product.price ? cleanPrice(item.product.price) : formatPrice(0))}
+                      {formatPrice(parsePriceString(item.variation?.price || item.product.price || 0))}
                     </p>
                     
                     {/* Quantity & Stock Validation */}

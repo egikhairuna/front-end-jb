@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Package, MapPin, User } from 'lucide-react';
+import { useCurrency } from '@/lib/currency/context';
 
 interface OrderSummary {
   id: number;
@@ -30,6 +31,7 @@ const statusColors: Record<string, string> = {
 };
 
 export default function AccountDashboard() {
+  const { formatPrice } = useCurrency();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [recentOrders, setRecentOrders] = useState<OrderSummary[]>([]);
   const [loading, setLoading] = useState(true);
@@ -183,7 +185,7 @@ export default function AccountDashboard() {
                   ) : null}
                 </div>
                 <p className="text-sm font-bold shrink-0">
-                  Rp {parseFloat(order.total).toLocaleString('id-ID')}
+                  {formatPrice(parseFloat(order.total))}
                 </p>
               </Link>
             ))}

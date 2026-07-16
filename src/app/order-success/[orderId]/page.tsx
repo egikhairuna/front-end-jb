@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 import { CheckCircle2, AlertTriangle } from "lucide-react";
 import Link from "next/link";
 import { getWooCommerceClient } from "@/lib/woocommerce/client";
-import { formatPrice } from "@/lib/utils";
+import { formatPrice } from "@/lib/currency/config";
 import { CopyableText } from "@/components/ui/copyable-text";
 import { BankTransferInstructions } from "@/components/checkout/BankTransferInstructions";
 
@@ -57,6 +57,7 @@ export default async function OrderSuccessPage({ params, searchParams }: Props) 
   const uniqueCode = order.meta_data?.find((m: any) => m.key === '_unique_payment_code')?.value || '';
   const transferAmount = order.meta_data?.find((m: any) => m.key === '_transfer_amount')?.value || order.total;
   const isBacsPayment = (order as any).payment_method === 'bacs';
+  const orderCurrency = (order.billing?.country === 'ID' || order.billing?.country === 'MY') ? 'IDR' : 'USD';
   
   // Bank Details (Could be fetched from env or settings)
   const bankDetails = {
@@ -66,7 +67,7 @@ export default async function OrderSuccessPage({ params, searchParams }: Props) 
   };
 
   const whatsappMessage = `Hi JamesBoogie, Saya sudah melakukan transfer untuk order #${order.number}. 
-Total: Rp ${parseFloat(order.total).toLocaleString('id-ID')}
+Total: ${formatPrice(parseFloat(order.total), orderCurrency)}
 Mohon konfirmasi.`;
   const whatsappUrl = `https://wa.me/6285157000263?text=${encodeURIComponent(whatsappMessage)}`;
 
@@ -121,26 +122,26 @@ Mohon konfirmasi.`;
                     <div className="border-t pt-4 space-y-2">
                       <div className="flex justify-between items-center text-sm">
                           <span className="text-muted-foreground">Subtotal</span>
-                          <span>Rp {(parseFloat(order.total) - parseFloat(order.shipping_total) - (order.fee_lines?.reduce((acc, fee) => acc + parseFloat(fee.total), 0) || 0)).toLocaleString('id-ID')}</span>
+                          <span>{formatPrice(parseFloat(order.total) - parseFloat(order.shipping_total) - (order.fee_lines?.reduce((acc: number, fee: any) => acc + parseFloat(fee.total), 0) || 0), orderCurrency)}</span>
                       </div>
                       {shippingLine && (
                           <div className="flex justify-between items-center text-sm">
                               <span className="text-muted-foreground">Shipping ({shippingLine.method_title} {shippingService})</span>
-                              <span>Rp {parseFloat(order.shipping_total).toLocaleString('id-ID')}</span>
+                              <span>{formatPrice(parseFloat(order.shipping_total), orderCurrency)}</span>
                           </div>
                       )}
                       {/* Display Fee Lines (Unique Code) */}
                       {order.fee_lines && order.fee_lines.length > 0 && order.fee_lines.map((fee: any, idx: number) => (
                         <div key={idx} className="flex justify-between items-center text-sm">
                             <span className="text-muted-foreground">{fee.name}</span>
-                            <span>Rp {parseFloat(fee.total).toLocaleString('id-ID')}</span>
+                            <span>{formatPrice(parseFloat(fee.total), orderCurrency)}</span>
                         </div>
                       ))}
                       <div className="pt-2 flex justify-between items-center">
                            <span className="text-sm font-bold uppercase tracking-wider">Total Amount</span>
                            <CopyableText text={order.total} label="Total Amount">
                              <span className="font-bold text-xl text-primary font-heading">
-                                Rp {parseFloat(order.total).toLocaleString('id-ID')}
+                                {formatPrice(parseFloat(order.total), orderCurrency)}
                              </span>
                            </CopyableText>
                       </div>

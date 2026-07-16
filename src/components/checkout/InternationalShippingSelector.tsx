@@ -4,12 +4,14 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ShippingOption } from "@/types/woocommerce";
 import { COUNTRIES } from "@/constants/countries";
+import { formatPrice } from "@/lib/currency/config";
 
 interface InternationalShippingSelectorProps {
   countryName: string;
   weightGrams: number;
   onShippingResolved: (option: ShippingOption | null, countryId: string | null) => void;
   disabled?: boolean;
+  checkoutCurrency?: 'IDR' | 'USD';
 }
 
 export function InternationalShippingSelector({
@@ -17,6 +19,7 @@ export function InternationalShippingSelector({
   weightGrams,
   onShippingResolved,
   disabled = false,
+  checkoutCurrency = 'USD',
 }: InternationalShippingSelectorProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -143,7 +146,7 @@ export function InternationalShippingSelector({
             </div>
           </div>
           <div className="text-sm font-bold">
-            Rp {shippingOption.price.toLocaleString("id-ID")}
+            {formatPrice(shippingOption.price, checkoutCurrency)}
           </div>
         </div>
       )}

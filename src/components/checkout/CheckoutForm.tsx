@@ -10,6 +10,8 @@ import { AddressSelector } from './AddressSelector';
 import { COUNTRIES } from '@/constants/countries';
 import { InternationalShippingSelector } from './InternationalShippingSelector';
 import { FormError } from '@/components/ui/FormError';
+import { formatPrice } from '@/lib/currency/config';
+
 
 interface ShippingOption {
   service: string;
@@ -27,6 +29,10 @@ interface CheckoutFormProps {
   };
 }
 
+const isPaymentAvailable = (countryName: string): boolean => {
+  return countryName === 'Indonesia' || countryName === 'Malaysia';
+};
+
 export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {}) {
   const { items: cartItems, getCartTotal, getTotalWeight, clearCart } = useCartStore();
   const hasSavedAddress = !!(savedAddresses?.billing?.first_name || savedAddresses?.billing?.address_1);
@@ -42,26 +48,28 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
   const getInitialFormData = (): CheckoutFormData => {
     const billing = savedAddresses?.billing;
     if (hasSavedAddress && billing) {
+      const isIndonesia = billing.country === 'ID';
+      const countryName = isIndonesia ? 'Indonesia' : (COUNTRIES.find(c => c.code === billing.country)?.name || 'Indonesia');
       return {
         firstName: billing.first_name || '',
         lastName: billing.last_name || '',
         phone: billing.phone || '',
         email: billing.email || '',
         address: billing.address_1 || '',
-        country: billing.country === 'ID' ? 'Indonesia' : (COUNTRIES.find(c => c.code === billing.country)?.name || 'Indonesia'),
-        province: billing.state || '',
-        city: billing.city || '',
+        country: countryName,
+        province: isIndonesia ? (billing.state || '') : '',
+        city: isIndonesia ? (billing.city || '') : '',
         district: '',
-        subdistrict: billing.address_2 || '',
-        postalCode: billing.postcode || '',
+        subdistrict: isIndonesia ? (billing.address_2 || '') : '',
+        postalCode: isIndonesia ? (billing.postcode || '') : '',
         jneDestinationCode: '',
         locationLabel: '',
-        internationalCity: '',
-        internationalPostalCode: '',
-        internationalCountryCode: '',
+        internationalCity: isIndonesia ? '' : (billing.city || ''),
+        internationalPostalCode: isIndonesia ? '' : (billing.postcode || ''),
+        internationalCountryCode: isIndonesia ? '' : (billing.country || ''),
         internationalShippingCountryId: '',
-        internationalAddress2: '',
-        internationalState: '',
+        internationalAddress2: isIndonesia ? '' : (billing.address_2 || ''),
+        internationalState: isIndonesia ? '' : (billing.state || ''),
       };
     }
     return {
@@ -89,6 +97,9 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
 
   const [formData, setFormData] = useState<CheckoutFormData>(getInitialFormData);
 
+  // Calculate display currency locally based on checkout country
+  const checkoutCurrency = isPaymentAvailable(formData.country || 'Indonesia') ? 'IDR' : 'USD';
+
   // Shipping state
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
   const [selectedShipping, setSelectedShipping] = useState<ShippingOption | null>(null);
@@ -98,6 +109,51 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
   const [loadingOrder, setLoadingOrder] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
+
+  // UI states for saved address JNE resolution
+  const [resolvingSavedAddress, setResolvingSavedAddress] = useState(false);
+  const [savedAddressResolveFailed, setSavedAddressResolveFailed] = useState(false);
+  const [manualSearchQuery, setManualSearchQuery] = useState('');
+  const [manualSearchResults, setManualSearchResults] = useState<any[]>([]);
+  const [manualSearchLoading, setManualSearchLoading] = useState(false);
+
+  const handleManualLocationSearch = async (query: string) => {
+    setManualSearchQuery(query);
+    if (query.trim().length < 3) {
+      setManualSearchResults([]);
+      return;
+    }
+    setManualSearchLoading(true);
+    try {
+      const res = await fetch(`/api/shipping/search?search=${encodeURIComponent(query)}`);
+      const json = await res.json();
+      if (json.data && Array.isArray(json.data)) {
+        setManualSearchResults(json.data);
+      } else {
+        setManualSearchResults([]);
+      }
+    } catch (e) {
+      console.error('Error searching manual JNE destination:', e);
+    } finally {
+      setManualSearchLoading(false);
+    }
+  };
+
+  const handleSelectManualLocation = (result: any) => {
+    setFormData(prev => ({
+      ...prev,
+      jneDestinationCode: result.id,
+      locationLabel: result.label,
+      province: result.detail.province,
+      city: result.detail.city,
+      district: result.detail.district,
+      subdistrict: result.detail.subdistrict,
+      postalCode: result.detail.zip || prev.postalCode,
+    }));
+    setSavedAddressResolveFailed(false);
+    setManualSearchResults([]);
+    setManualSearchQuery('');
+  };
 
   // JNE Shipping Calculation
   const calculateShipping = useCallback(async () => {
@@ -160,19 +216,38 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
       if (!useSavedAddress || !savedAddresses?.billing) return;
 
       const billing = savedAddresses.billing;
+
+      // If it is international, do not resolve JNE code
+      if (billing.country !== 'ID') {
+        const countryName = COUNTRIES.find(c => c.code === billing.country)?.name || billing.country;
+        setFormData(prev => ({
+          ...prev,
+          country: countryName,
+          locationLabel: [billing.city, billing.state, countryName].filter(Boolean).join(', '),
+        }));
+        setSavedAddressResolveFailed(false);
+        return;
+      }
+
       const searchPostcode = billing.postcode?.trim();
       const searchSubdistrict = billing.address_2?.trim();
       const searchCity = billing.city?.trim();
 
-      if (!searchPostcode) return;
+      if (!searchPostcode) {
+        setSavedAddressResolveFailed(true);
+        return;
+      }
 
-      setLoadingShipping(true);
+      setResolvingSavedAddress(true);
+      setSavedAddressResolveFailed(false);
       setError(null);
 
       try {
         // Step 1: Search by postcode
         const res = await fetch(`/api/shipping/search?search=${encodeURIComponent(searchPostcode)}`);
         const json = await res.json();
+
+        let resolved = false;
 
         if (json.data && Array.isArray(json.data) && json.data.length > 0) {
           // If we have search results, find the best match
@@ -224,6 +299,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
             subdistrict: bestMatch.detail.subdistrict,
             postalCode: bestMatch.detail.zip || prev.postalCode,
           }));
+          resolved = true;
         } else {
           // Fall back to searching by subdistrict/district name
           const fallbackSearch = searchSubdistrict || searchCity;
@@ -243,13 +319,19 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                 subdistrict: bestMatch.detail.subdistrict,
                 postalCode: bestMatch.detail.zip || prev.postalCode,
               }));
+              resolved = true;
             }
           }
         }
+
+        if (!resolved) {
+          setSavedAddressResolveFailed(true);
+        }
       } catch (err) {
         console.error('Failed to resolve JNE destination code:', err);
+        setSavedAddressResolveFailed(true);
       } finally {
-        setLoadingShipping(false);
+        setResolvingSavedAddress(false);
       }
     }
 
@@ -301,6 +383,11 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
   const total = subtotal + shippingCost;
 
   const handlePlaceOrder = async () => {
+    if (!isPaymentAvailable(formData.country || 'Indonesia')) {
+      setError('Payment is not available for the selected country.');
+      return;
+    }
+
     if (formData.country !== 'Indonesia') {
       if (!formData.internationalState?.trim()) {
         setError('State / Province is required for international shipping.');
@@ -407,6 +494,9 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                       setUseSavedAddress(e.target.checked);
                       if (e.target.checked) {
                         setFormData(getInitialFormData());
+                        setSavedAddressResolveFailed(false);
+                        setManualSearchQuery('');
+                        setManualSearchResults([]);
                       }
                     }}
                   />
@@ -460,11 +550,52 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                           <p className="font-bold text-[9px] text-neutral-400">RESOLVED SHIPPING LOCATION:</p>
                           <p className="normal-case text-[13px] text-neutral-800 font-sans font-normal mt-1">{formData.locationLabel}</p>
                         </div>
-                      ) : (
+                      ) : resolvingSavedAddress ? (
                         <div className="mt-4 p-3 bg-neutral-50 border border-black/10 text-xs text-neutral-400 font-medium uppercase tracking-wider animate-pulse">
                           Resolving shipping location details...
                         </div>
-                      )}
+                      ) : savedAddressResolveFailed ? (
+                        <div className="mt-4 p-4 bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-3">
+                          <p className="font-bold uppercase tracking-wider">⚠️ Could not resolve shipping location automatically</p>
+                          <p className="normal-case text-[13px] text-neutral-700 font-sans">
+                            We couldn't automatically verify the JNE shipping code for your postcode (<strong>{billing.postcode}</strong>) or address. Please select your location manually below to calculate shipping, or uncheck "Use saved address" above.
+                          </p>
+                          
+                          {/* Manual JNE Location Search Input */}
+                          <div className="space-y-2 mt-2">
+                            <label className="font-bold text-[9px] text-amber-900 uppercase tracking-wider block">
+                              Search Shipping Location (District, City, or Subdistrict)
+                            </label>
+                            <input
+                              type="text"
+                              className="w-full bg-white border border-amber-300 p-3 text-sm text-neutral-800 focus:outline-none focus:ring-1 focus:ring-amber-500 rounded-none font-sans"
+                              placeholder="Type at least 3 characters to search (e.g. Coblong, Bandung)..."
+                              value={manualSearchQuery}
+                              onChange={(e) => handleManualLocationSearch(e.target.value)}
+                            />
+                            {manualSearchLoading && (
+                              <p className="text-[10px] italic text-amber-600 animate-pulse">Searching matching destinations...</p>
+                            )}
+                            
+                            {manualSearchResults.length > 0 && (
+                              <div className="border border-neutral-200 max-h-48 overflow-y-auto bg-white divide-y divide-neutral-100 mt-1 font-sans">
+                                {manualSearchResults.map((result) => (
+                                  <div
+                                    key={result.id}
+                                    onClick={() => handleSelectManualLocation(result)}
+                                    className="p-3 hover:bg-neutral-50 cursor-pointer text-xs text-neutral-700 normal-case transition-colors"
+                                  >
+                                    {result.label}
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                            {manualSearchQuery.trim().length >= 3 && !manualSearchLoading && manualSearchResults.length === 0 && (
+                              <p className="text-[10px] text-neutral-500 italic">No locations found. Try searching with a different keyword.</p>
+                            )}
+                          </div>
+                        </div>
+                      ) : null}
                     </div>
                   );
                 })()}
@@ -608,24 +739,26 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                         </div>
                       </div>
 
-                      {/* INTERNATIONAL SHIPPING SELECTOR */}
-                      <InternationalShippingSelector
-                        countryName={formData.country}
-                        weightGrams={getTotalWeight()}
-                        onShippingResolved={(option, countryId) => {
-                          setSelectedShipping(option);
-                          setFormData((prev) => ({
-                            ...prev,
-                            internationalShippingCountryId: countryId || '',
-                          }));
-                        }}
-                        disabled={loadingOrder}
-                      />
                     </>
                   )}
                 </section>
               </>
             )}
+
+            {/* INTERNATIONAL SHIPPING SELECTOR */}
+            <InternationalShippingSelector
+              countryName={formData.country}
+              weightGrams={getTotalWeight()}
+              onShippingResolved={(option, countryId) => {
+                setSelectedShipping(option);
+                setFormData((prev) => ({
+                  ...prev,
+                  internationalShippingCountryId: countryId || '',
+                }));
+              }}
+              disabled={loadingOrder}
+              checkoutCurrency={checkoutCurrency}
+            />
 
             {/* SHIPPING METHOD (IF CALCULATED) */}
             {loadingShipping && <div className="text-xs italic py-2">Calculating shipping rates...</div>}
@@ -654,7 +787,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                         </div>
                       </div>
                       <div className="text-sm font-bold">
-                        Rp {opt.price.toLocaleString('id-ID')}
+                        {formatPrice(opt.price, checkoutCurrency)}
                       </div>
                     </div>
                   ))}
@@ -691,7 +824,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                             ) : ''} × {item.quantity}
                           </p>
                         </div>
-                        <p className="font-bold">Rp {(cleanPrice * item.quantity).toLocaleString('id-ID')}</p>
+                        <p className="font-bold">{formatPrice(cleanPrice * item.quantity, checkoutCurrency)}</p>
                       </div>
                     );
                   })}
@@ -700,17 +833,17 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                 <div className="mt-8 pt-6 border-t border-black space-y-2 text-sm uppercase font-bold">
                   <div className="flex justify-between">
                     <span>Subtotal</span>
-                    <span>Rp {subtotal.toLocaleString('id-ID')}</span>
+                    <span>{formatPrice(subtotal, checkoutCurrency)}</span>
                   </div>
                   {selectedShipping && (
                     <div className="flex justify-between">
                       <span>Shipping ({formData.country === 'Indonesia' ? `JNE ${selectedShipping.service}` : 'JNE INTL'})</span>
-                      <span>Rp {shippingCost.toLocaleString('id-ID')}</span>
+                      <span>{formatPrice(shippingCost, checkoutCurrency)}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-lg pt-4">
                     <span>Total</span>
-                    <span>Rp {total.toLocaleString('id-ID')}</span>
+                    <span>{formatPrice(total, checkoutCurrency)}</span>
                   </div>
                 </div>
                 
@@ -720,25 +853,36 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                 <h2 className="text-sm font-bold uppercase tracking-wider mb-6 border-b border-black pb-2">
                   Payment Method
                 </h2>
-                <div className="bg-white border border-gray-100 p-6 rounded-sm shadow-sm">
-                   <div className="flex flex-col gap-4">
-                      <div className="flex items-center gap-3">
-                         <input type="radio" checked readOnly className="accent-black" />
-                         <span className="text-sm font-bold uppercase">BCA - Bank Transfer</span>
-                      </div>
-                      <div className="pl-6">
-                         <div className="mb-4">
-                            <Image 
-                              src="/Bank_Central_Asia.svg" 
-                              alt="BCA" 
-                              width={7} 
-                              height={5} 
-                              className="h-6 w-auto"
-                            />
-                         </div>
-                      </div>
-                   </div>
-                </div>
+                {!isPaymentAvailable(formData.country || 'Indonesia') ? (
+                  <div className="bg-white border border-black p-6 rounded-sm">
+                    <p className="text-sm font-bold text-red-700 uppercase tracking-wide">
+                      Payment Option Unavailable
+                    </p>
+                    <p className="text-xs text-red-700 mt-2 font-sans font-medium uppercase leading-relaxed">
+                      International card payment is currently being set up — please check back soon.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="bg-white border border-gray-100 p-6 rounded-sm shadow-sm">
+                     <div className="flex flex-col gap-4">
+                        <div className="flex items-center gap-3">
+                           <input type="radio" checked readOnly className="accent-black" />
+                           <span className="text-sm font-bold uppercase">BCA - Bank Transfer</span>
+                        </div>
+                        <div className="pl-6">
+                           <div className="mb-4">
+                              <Image 
+                                 src="/Bank_Central_Asia.svg" 
+                                 alt="BCA" 
+                                 width={7} 
+                                 height={5} 
+                                 className="h-6 w-auto"
+                              />
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                )}
               </section>
 
               <div className="space-y-6">
@@ -761,7 +905,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                 <FormError message={error} />
 
                 <button
-                  disabled={!agreedToTerms || !selectedShipping || loadingOrder}
+                  disabled={!agreedToTerms || !selectedShipping || loadingOrder || !isPaymentAvailable(formData.country || 'Indonesia')}
                   onClick={handlePlaceOrder}
                   className="w-full bg-black text-white cursor-pointer border border-black py-4 uppercase font-bold text-sm tracking-widest hover:bg-black hover:text-white transition-all disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
                 >

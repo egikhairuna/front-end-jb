@@ -10,6 +10,9 @@ import GTM, { GTMNoScript } from "@/components/analytics/GTM";
 import Script from "next/script";
 import { FacebookPixel } from "@/components/analytics/FacebookPixel";
 import { Suspense } from "react";
+import { cookies } from "next/headers";
+import { CurrencyProvider } from "@/lib/currency/context";
+
 
 const dinPro = localFont({
   src: [
@@ -106,58 +109,63 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const cookieStore = await cookies();
+  const initialCurrency = (cookieStore.get('preferred_currency')?.value as 'IDR' | 'USD') || 'IDR';
+
   return (
     <html lang="en">
       <body
         className={`${dinPro.variable} antialiased bg-background text-foreground font-sans`}
       >
-        <GTMNoScript />
-        <GTM />
-        {/* Meta Pixel */}
-        <Script
-          id="fb-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '${process.env.NEXT_PUBLIC_META_PIXEL_ID}');
-            `,
-          }}
-        />
-        <noscript>
-          <img
-            height="1"
-            width="1"
-            style={{ display: "none" }}
-            src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_META_PIXEL_ID}&ev=PageView&noscript=1`}
-            alt=""
+        <CurrencyProvider initialCurrency={initialCurrency}>
+          <GTMNoScript />
+          <GTM />
+          {/* Meta Pixel */}
+          <Script
+            id="fb-pixel"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+                !function(f,b,e,v,n,t,s)
+                {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+                fbq('init', '${process.env.NEXT_PUBLIC_META_PIXEL_ID}');
+              `,
+            }}
           />
-        </noscript>
-        <Suspense fallback={null}>
-          <FacebookPixel />
-        </Suspense>
-        <ClientOnly>
-          <ConditionalNavbar>
-            <Navbar />
-          </ConditionalNavbar>
-        </ClientOnly>
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <Toaster />
-        <Footer />
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style={{ display: "none" }}
+              src={`https://www.facebook.com/tr?id=${process.env.NEXT_PUBLIC_META_PIXEL_ID}&ev=PageView&noscript=1`}
+              alt=""
+            />
+          </noscript>
+          <Suspense fallback={null}>
+            <FacebookPixel />
+          </Suspense>
+          <ClientOnly>
+            <ConditionalNavbar>
+              <Navbar />
+            </ConditionalNavbar>
+          </ClientOnly>
+          <main className="min-h-screen">
+            {children}
+          </main>
+          <Toaster />
+          <Footer />
+        </CurrencyProvider>
       </body>
     </html>
   );

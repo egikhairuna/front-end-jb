@@ -6,12 +6,16 @@
  * requireSession() — same as getSession but throws if not authenticated.
  *
  * 🔒 SECURITY: Always verifies the JWT before trusting any user claims.
+ * ⚡ PERFORMANCE: Caches basic customer data in Redis (5 min TTL) to reduce WooCommerce API calls.
  */
 
 import { getAuthToken, clearAuthCookie } from './cookies';
 import { verifyJWT, extractUserIdFromToken } from './jwt';
 import type { AuthUser } from '@/types/auth';
 import { getWooCommerceClient } from '@/lib/woocommerce/client';
+import { redis } from '@/lib/redis';
+
+const SESSION_CACHE_TTL = 5 * 60; // 5 minutes in seconds
 
 /**
  * Get the current authenticated session.
@@ -37,18 +41,38 @@ export async function getSession(): Promise<AuthUser | null> {
     return null;
   }
 
+  // Try Redis cache first
+  const cacheKey = `session:customer:${userId}`;
   try {
-    // Fetch customer details from WooCommerce to build AuthUser
+    const cached = await redis.get(cacheKey);
+    if (cached) {
+      return JSON.parse(cached) as AuthUser;
+    }
+  } catch {
+    // Redis unavailable — fall through to WooCommerce fetch
+  }
+
+  // Cache miss — fetch from WooCommerce
+  try {
     const wc = getWooCommerceClient();
     const customer = await wc.getCustomer(userId);
 
-    return {
+    const authUser: AuthUser = {
       id: customer.id,
       email: customer.email,
       displayName: `${customer.first_name} ${customer.last_name}`.trim() || customer.email,
       firstName: customer.first_name,
       lastName: customer.last_name,
     };
+
+    // Store in Redis cache
+    try {
+      await redis.set(cacheKey, JSON.stringify(authUser), 'EX', SESSION_CACHE_TTL);
+    } catch {
+      // Redis unavailable — continue without caching
+    }
+
+    return authUser;
   } catch {
     // 🔒 SECURITY: Log minimal info — no PII, no token
     console.error('🔒 Session: Failed to fetch customer data for user ID:', userId);
