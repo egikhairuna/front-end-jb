@@ -182,10 +182,10 @@ export function Navbar() {
                       mobileView === "main" ? "translate-x-0" : "-translate-x-full"
                     )}>
                       {/* SHOP - Trigger */}
-                      <div className="border-b border-black/10">
+                      <div>
                         <button
                           onClick={() => setMobileView("SHOP")}
-                          className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-black uppercase"
+                          className="w-full flex items-center justify-between py-3 text-sm font-regular tracking-wider text-black uppercase"
                         >
                           SHOP
                           <IoIosArrowForward className="text-lg text-black" />
@@ -193,21 +193,21 @@ export function Navbar() {
                       </div>
 
                       {/* JOURNAL - direct link */}
-                      <div className="border-b border-black/10">
+                      <div>
                         <Link
                           href="/journal"
                           onClick={() => { setIsOpen(false); setMobileView("main"); }}
-                          className="block py-4 text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity"
+                          className="block py-3 text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity"
                         >
                           JOURNAL
                         </Link>
                       </div>
 
                       {/* THE BRAND - Trigger */}
-                      <div className="border-b border-black/10">
+                      <div>
                         <button
                           onClick={() => setMobileView("THE BRAND")}
-                          className="w-full flex items-center justify-between py-4 text-sm font-regular tracking-wider text-black uppercase"
+                          className="w-full flex items-center justify-between py-3 text-sm font-regular tracking-wider text-black uppercase"
                         >
                           THE BRAND
                           <IoIosArrowForward className="text-lg text-black" />
@@ -302,75 +302,78 @@ export function Navbar() {
                   </div>
 
                   {/* Account and Customer Support links above the footer border */}
-                  <div className="px-6 py-4 bg-white flex flex-col gap-4">
-                    <div>
-                      <Link
-                        href={user ? "/account" : "/account/login"}
-                        onClick={() => setIsOpen(false)}
-                        className="text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity inline-block"
-                      >
-                        {user ? "ACCOUNT" : "LOG IN"}
-                      </Link>
-                    </div>
-                    <div>
-                      <Link
-                        href="/contact-us"
-                        onClick={() => setIsOpen(false)}
-                        className="text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity inline-block"
-                      >
-                        CUSTOMER SUPPORT
-                      </Link>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm font-regular tracking-wider text-black uppercase">
-                      <span>SHOP IN :</span>
-                      <div className="flex items-center gap-3">
-                        <button
-                          onClick={() => setCurrency('IDR')}
-                          className={cn(
-                            "transition-all duration-200 hover:text-black uppercase tracking-wider text-sm font-regular",
-                            currency === 'IDR'
-                              ? "text-black font-bold border-b border-black pb-0.5"
-                              : "text-neutral-400 font-regular pb-0.5 border-b border-transparent"
-                          )}
+                  {mobileView === "main" && (
+                    <div className="px-6 py-4 bg-white flex flex-col gap-4">
+                      <div>
+                        <Link
+                          href={user ? "/account" : "/account/login"}
+                          onClick={() => setIsOpen(false)}
+                          className="text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity inline-block"
                         >
-                          IDR
-                        </button>
-                        <button
-                          onClick={() => setCurrency('USD')}
-                          className={cn(
-                            "transition-all duration-200 hover:text-black uppercase tracking-wider text-sm font-regular",
-                            currency === 'USD'
-                              ? "text-black font-bold border-b border-black pb-0.5"
-                              : "text-neutral-400 font-regular pb-0.5 border-b border-transparent"
-                          )}
+                          {user ? "ACCOUNT" : "LOG IN"}
+                        </Link>
+                      </div>
+                      <div>
+                        <Link
+                          href="/contact-us"
+                          onClick={() => setIsOpen(false)}
+                          className="text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity inline-block"
                         >
-                          USD
-                        </button>
+                          CUSTOMER SUPPORT
+                        </Link>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm font-regular tracking-wider text-black uppercase">
+                        <span>SHOP IN :</span>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => setCurrency('IDR')}
+                            className={cn(
+                              "transition-all duration-200 hover:text-black uppercase tracking-wider text-sm font-regular",
+                              currency === 'IDR'
+                                ? "text-black font-bold border-b border-black pb-0.5"
+                                : "text-neutral-400 font-regular pb-0.5 border-b border-transparent"
+                            )}
+                          >
+                            IDR
+                          </button>
+                          <button
+                            onClick={() => setCurrency('USD')}
+                            className={cn(
+                              "transition-all duration-200 hover:text-black uppercase tracking-wider text-sm font-regular",
+                              currency === 'USD'
+                                ? "text-black font-bold border-b border-black pb-0.5"
+                                : "text-neutral-400 font-regular pb-0.5 border-b border-transparent"
+                            )}
+                          >
+                            USD
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                   {/* Bottom Section - Social Icons and Search Trigger */}
-                   <div className="p-6 border-t border-black/10 bg-neutral-50 flex items-center justify-between mt-auto">
-                     <div className="flex items-center gap-6">
-                       <Link 
-                         href="https://www.instagram.com/james.boogie/" 
-                         target="_blank" 
-                         rel="noopener noreferrer"
-                         className="text-black hover:text-neutral-500 transition-colors"
-                       >
-                         <Instagram className="h-5 w-5" />
-                       </Link>
-                       <Link 
-                         href="https://www.facebook.com/jamesboogieid" 
-                         target="_blank" 
-                         rel="noopener noreferrer"
-                         className="text-black hover:text-neutral-500 transition-colors"
-                       >
-                         <Facebook className="h-5 w-5" />
-                       </Link>
-                     </div>
- 
+                  {/* Bottom Section - Social Icons and Search Trigger */}
+                  {mobileView === "main" && (
+                    <div className="p-6 border-t border-black/10 bg-neutral-50 flex items-center justify-between mt-auto">
+                      <div className="flex items-center gap-6">
+                        <Link 
+                          href="https://www.instagram.com/james.boogie/" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-black hover:text-neutral-500 transition-colors"
+                        >
+                          <Instagram className="h-5 w-5" />
+                        </Link>
+                        <Link 
+                          href="https://www.facebook.com/jamesboogieid" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-black hover:text-neutral-500 transition-colors"
+                        >
+                          <Facebook className="h-5 w-5" />
+                        </Link>
+                      </div>
+
                       <div className="flex items-center gap-4">
                         <button 
                           onClick={() => {
@@ -382,7 +385,8 @@ export function Navbar() {
                           SEARCH
                         </button>
                       </div>
-                   </div>
+                    </div>
+                  )}
                 </SheetContent>
               </Sheet>
             )}
