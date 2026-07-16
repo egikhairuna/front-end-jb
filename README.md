@@ -10,7 +10,7 @@ This project uses a **Hybrid Architecture** designed to solve common headless Wo
 -   **Catalog/Read**: [WPGraphQL](https://wpgraphql.com/) + [WooCommerce GraphQL](https://woographql.com/)
 -   **Checkout/Write**: [WooCommerce REST API](https://woocommerce.github.io/woocommerce-rest-api-docs/)
 -   **State Management**: [Zustand](https://github.com/pmndrs/zustand)
--   **Shipping**: Custom JNE Integration (Indonesia)
+-   **Shipping**: Custom JNE Integration (Domestic) & RajaOngkir API Integration (International JNE)
 
 ### Why Hybrid?
 
@@ -44,9 +44,15 @@ WOOCOMMERCE_CONSUMER_KEY=ck_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 WOOCOMMERCE_CONSUMER_SECRET=cs_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 WOOCOMMERCE_API_URL=your-site.com/wp-json/wc/v3
 
-# 📦 Shipping API (JNE)
+# 📦 Shipping API (JNE & RajaOngkir)
 JNE_USERNAME=your_username
 JNE_API_KEY=your_key
+JNE_TRACKING_ENDPOINT=https://apiv2.jne.co.id:10205/tracing/api/trackingCnote
+
+# 🌏 International Shipping (RajaOngkir / JNE INTL)
+RAJAONGKIR_API_KEY=your_rajaongkir_api_key
+RAJAONGKIR_ORIGIN_ID=4816  # Bandung domestic subdistrict ID
+
 ```
 
 ### Installation

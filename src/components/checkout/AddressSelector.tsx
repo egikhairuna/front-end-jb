@@ -28,9 +28,24 @@ interface AddressSelectorProps {
     jneDestinationCode: string;
   }) => void;
   disabled?: boolean;
+  initialProvince?: string;
+  initialCity?: string;
+  initialDistrict?: string;
+  initialSubdistrict?: string;
+  initialPostalCode?: string;
+  initialJneCode?: string;
 }
 
-export function AddressSelector({ onAddressChange, disabled }: AddressSelectorProps) {
+export function AddressSelector({ 
+  onAddressChange, 
+  disabled,
+  initialProvince,
+  initialCity,
+  initialDistrict,
+  initialSubdistrict,
+  initialPostalCode,
+  initialJneCode
+}: AddressSelectorProps) {
   // State for data lists
   const [provinces, setProvinces] = useState<Region[]>([]);
   const [cities, setCities] = useState<Region[]>([]);
@@ -58,13 +73,97 @@ export function AddressSelector({ onAddressChange, disabled }: AddressSelectorPr
     jneDestinationCode: ''
   });
 
-  // Load Provinces on mount
+  // Load Provinces on mount & sequential resolution of initial values
   useEffect(() => {
-    fetch('/api/locations/provinces')
-      .then(res => res.json())
-      .then(data => setProvinces(data))
-      .catch(err => console.error('Failed to load provinces:', err));
-  }, []);
+    async function loadAndInitialize() {
+      try {
+        const provRes = await fetch('/api/locations/provinces');
+        const provData = await provRes.json();
+        setProvinces(provData);
+
+        if (initialProvince) {
+          const matchedProv = provData.find((p: Region) => 
+            p.name.toLowerCase() === initialProvince.toLowerCase()
+          );
+          if (matchedProv) {
+            const provId = matchedProv.id.toString();
+            setSelectedProvId(provId);
+            setSelectedNames(prev => ({ ...prev, province: matchedProv.name }));
+
+            // Fetch cities list for matched province
+            const cityRes = await fetch(`/api/locations/cities?province_id=${provId}`);
+            const cityData = await cityRes.json();
+            setCities(cityData);
+
+            if (initialCity) {
+              const matchedCity = cityData.find((c: Region) => 
+                c.name.toLowerCase() === initialCity.toLowerCase()
+              );
+              if (matchedCity) {
+                const cityId = matchedCity.id.toString();
+                setSelectedCityId(cityId);
+                setSelectedNames(prev => ({ ...prev, city: matchedCity.name }));
+
+                // Fetch districts list for matched city
+                const distRes = await fetch(`/api/locations/districts?city_id=${cityId}`);
+                const distData = await distRes.json();
+                setDistricts(distData);
+
+                let matchedDist: Region | undefined;
+
+                // Resolve district using JNE postcode lookups
+                if (initialPostalCode) {
+                  try {
+                    const searchRes = await fetch(`/api/shipping/search?search=${encodeURIComponent(initialPostalCode)}`);
+                    const searchJson = await searchRes.json();
+                    if (searchJson.data && searchJson.data.length > 0) {
+                      const resolved = searchJson.data[0];
+                      const resolvedDistrict = resolved.detail.district;
+                      
+                      matchedDist = distData.find((d: Region) => 
+                        d.name.toLowerCase() === resolvedDistrict.toLowerCase()
+                      );
+                    }
+                  } catch (e) {
+                    console.error('Failed to resolve initial district from postcode:', e);
+                  }
+                }
+
+                // Fallback to name-based match
+                if (!matchedDist && initialDistrict) {
+                  matchedDist = distData.find((d: Region) => 
+                    d.name.toLowerCase() === initialDistrict.toLowerCase()
+                  );
+                }
+
+                if (matchedDist) {
+                  const distId = matchedDist.id.toString();
+                  setSelectedDistId(distId);
+                  setSelectedNames({
+                    province: matchedProv.name,
+                    city: matchedCity.name,
+                    district: matchedDist.name,
+                    subdistrict: initialSubdistrict || '',
+                    postalCode: initialPostalCode || '',
+                    jneDestinationCode: initialJneCode || ''
+                  });
+
+                  // Fetch subdistricts list for state cache
+                  const subRes = await fetch(`/api/locations/subdistricts?district_id=${distId}`);
+                  const subData = await subRes.json();
+                  setSubdistricts(subData);
+                }
+              }
+            }
+          }
+        }
+      } catch (err) {
+        console.error('Failed to initialize address selector data:', err);
+      }
+    }
+
+    loadAndInitialize();
+  }, [initialProvince, initialCity, initialDistrict, initialSubdistrict, initialPostalCode, initialJneCode]);
 
   // Handle Province Change
   const handleProvChange = async (provId: string) => {

@@ -125,6 +125,103 @@ class WooCommerceClient {
   async getVariation(productId: number, variationId: number): Promise<any> {
     return this.request<any>(`/products/${productId}/variations/${variationId}`);
   }
+
+  // ============================================
+  // Customer Methods
+  // ============================================
+
+  /**
+   * Create a new WooCommerce customer
+   * 🔒 SECURITY: Log only non-PII metadata
+   */
+  async createCustomer(data: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+    username?: string;
+    billing?: {
+      first_name?: string;
+      last_name?: string;
+      email?: string;
+      phone?: string;
+    };
+    meta_data?: Array<{ key: string; value: any }>;
+  }): Promise<any> {
+    console.log('👤 Creating WooCommerce customer...');
+    
+    try {
+      const customer = await this.request<any>('/customers', {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+
+      console.log('✅ Customer created:', { id: customer.id, role: customer.role });
+      return customer;
+    } catch (error) {
+      console.error('💥 Customer creation failed:', error instanceof Error ? error.message : error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get a customer by ID
+   */
+  async getCustomer(customerId: number): Promise<any> {
+    return this.request<any>(`/customers/${customerId}`);
+  }
+
+  /**
+   * Update a customer by ID
+   * 🔒 SECURITY: Log only non-PII metadata
+   */
+  async updateCustomer(customerId: number, data: Record<string, any>): Promise<any> {
+    console.log('✏️ Updating WooCommerce customer:', { id: customerId, fields: Object.keys(data) });
+    
+    try {
+      const customer = await this.request<any>(`/customers/${customerId}`, {
+        method: 'PUT',
+        body: JSON.stringify(data),
+      });
+
+      console.log('✅ Customer updated:', { id: customer.id });
+      return customer;
+    } catch (error) {
+      console.error('💥 Customer update failed:', error instanceof Error ? error.message : error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get orders for a specific customer, paginated
+   */
+  async getCustomerOrders(
+    customerId: number,
+    page: number = 1,
+    perPage: number = 10
+  ): Promise<{ orders: any[]; totalPages: number; total: number }> {
+    const endpoint = `/orders?customer=${customerId}&page=${page}&per_page=${perPage}&orderby=date&order=desc`;
+    const url = `${this.baseUrl}${endpoint}`;
+
+    const response = await fetch(url, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': this.getAuthHeader(),
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to fetch orders');
+    }
+
+    return {
+      orders: data,
+      totalPages: parseInt(response.headers.get('X-WP-TotalPages') || '1', 10),
+      total: parseInt(response.headers.get('X-WP-Total') || '0', 10),
+    };
+  }
 }
 
 let instance: WooCommerceClient | null = null;

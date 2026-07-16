@@ -10,10 +10,16 @@ export async function GET(req: Request) {
       return NextResponse.json([]);
     }
 
+    const type = searchParams.get("type");
+    const isInternational = type === "international";
+    const endpoint = isInternational
+      ? `https://rajaongkir.komerce.id/api/v1/destination/international-destination?search=${encodeURIComponent(search)}`
+      : `https://rajaongkir.komerce.id/api/v1/destination/domestic-destination?search=${encodeURIComponent(
+          search
+        )}&limit=20&offset=0`;
+
     const res = await fetch(
-      `https://rajaongkir.komerce.id/api/v1/destination/domestic-destination?search=${encodeURIComponent(
-        search
-      )}&limit=20&offset=0`,
+      endpoint,
       {
         headers: {
           key: process.env.RAJAONGKIR_API_KEY!,

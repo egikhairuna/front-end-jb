@@ -71,8 +71,8 @@ export interface CartState {
   getTotalWeight: () => number;
   shippingFee: number;
   setShippingFee: (fee: number) => void;
-  selectedShipping: any;
-  setSelectedShipping: (shipping: any) => void;
+  selectedShipping: ShippingOption | null;
+  setSelectedShipping: (shipping: ShippingOption | null) => void;
 }
 
 // ============================================
@@ -104,6 +104,7 @@ export interface WCShippingLine {
   method_id: string;
   method_title: string;
   total: string;
+  meta_data?: Array<{ key: string; value: string }>;
 }
 
 export interface WCMetaData {
@@ -122,6 +123,7 @@ export interface WCOrderPayload {
   payment_method_title: string;
   set_paid: boolean;
   status?: string;
+  customer_id?: number;
   billing: WCAddress;
   shipping: WCAddress;
   line_items: WCLineItem[];
@@ -141,6 +143,8 @@ export interface WCOrderResponse {
   shipping_total: string;
   date_created: string;
   payment_url?: string;
+  customer_id: number;
+  payment_method: string;
   billing: WCAddress;
   shipping: WCAddress;
   line_items: Array<{
@@ -151,7 +155,7 @@ export interface WCOrderResponse {
     total: string;
   }>;
   shipping_lines: WCShippingLine[];
-  fee_lines: any[];
+  fee_lines: WCFeeLine[];
   meta_data: WCMetaData[];
 }
 
@@ -183,10 +187,19 @@ export interface CheckoutFormData {
   jneDestinationCode: string; // Replaces districtId (JNE Tariff Code)
   
   locationLabel?: string; // Optional: Full formatted address string for display
+
+  // International shipping (optional, only used when country !== 'Indonesia')
+  internationalCity?: string;
+  internationalPostalCode?: string;
+  internationalCountryCode?: string;  // ISO 3166-1 alpha-2
+  internationalShippingCountryId?: string;  // RajaOngkir country_id for server validation
+  internationalAddress2?: string;   // optional, district/area
+  internationalState?: string;      // required for international, free-text province/state
 }
 
 export interface ShippingOption {
   service: string;
+  service_code?: string;
   description: string;
   price: number;
   etd_from: string;

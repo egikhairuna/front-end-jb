@@ -8,6 +8,7 @@ import {
   CheckoutFormData,
   ShippingOption
 } from '@/types/woocommerce';
+import { COUNTRIES } from '@/constants/countries';
 
 /**
  * Transform cart items to WooCommerce line items format
@@ -34,15 +35,20 @@ export function transformFormToAddress(
   formData: CheckoutFormData,
   includeEmail: boolean = true
 ): WCAddress {
+  const isDomestic = formData.country === 'Indonesia';
+  const countryCode = isDomestic 
+    ? 'ID' 
+    : (COUNTRIES.find(c => c.name === formData.country)?.code || formData.internationalCountryCode || 'US');
+
   const address: WCAddress = {
     first_name: formData.firstName,
     last_name: formData.lastName,
     address_1: formData.address, // Street address
-    address_2: formData.subdistrict, // Use subdistrict as address_2
-    city: formData.city,
-    state: formData.province, // Mapping province to state
-    postcode: formData.postalCode,
-    country: 'ID', // Indonesia
+    address_2: isDomestic ? formData.subdistrict : (formData.internationalAddress2 || ''),
+    city: isDomestic ? formData.city : (formData.internationalCity || ''),
+    state: isDomestic ? formData.province : (formData.internationalState || ''),
+    postcode: isDomestic ? formData.postalCode : (formData.internationalPostalCode || ''),
+    country: countryCode,
     phone: formData.phone,
   };
 
@@ -58,8 +64,25 @@ export function createShippingLine(
   shippingOption: ShippingOption
 ): WCShippingLine {
   return {
-    method_id: 'jne',
+    method_id: 'jneshof_shipping',
     method_title: `JNE ${shippingOption.service}`,
+    total: shippingOption.price.toString(),
+    meta_data: [
+      {
+        key: 'service_code',
+        value: shippingOption.service_code || shippingOption.service,
+      }
+    ],
+  };
+}
+
+// Create shipping line for RajaOngkir International
+export function createInternationalShippingLine(
+  shippingOption: ShippingOption
+): WCShippingLine {
+  return {
+    method_id: 'rajaongkir_intl',
+    method_title: 'JNE INTL Service - Paket',
     total: shippingOption.price.toString(),
   };
 }
@@ -83,6 +106,23 @@ export function createJNEMetadata(
   ];
 }
 
+// Create metadata for RajaOngkir International shipping details
+export function createInternationalMetadata(
+  formData: CheckoutFormData,
+  shippingOption: ShippingOption
+): WCMetaData[] {
+  return [
+    { key: 'country', value: formData.country },
+    { key: 'city', value: formData.internationalCity || '' },
+    { key: 'postal_code', value: formData.internationalPostalCode || '' },
+    { key: 'rajaongkir_country_id', value: formData.internationalShippingCountryId || '' },
+    
+    // Legacy internal fields for backward compatibility if needed
+    { key: '_shipping_jne_service', value: shippingOption.service },
+    { key: '_shipping_jne_etd', value: `${shippingOption.etd_from}-${shippingOption.etd_thru} days` },
+  ];
+}
+
 /**
  * Build complete order payload
  */
@@ -96,8 +136,14 @@ export function buildOrderPayload(
   const billing = transformFormToAddress(formData, true);
   const shipping = transformFormToAddress(formData, false);
   const lineItems = transformCartToLineItems(cartItems);
-  const shippingLines = [createShippingLine(shippingOption)];
-  const metaData = createJNEMetadata(formData, shippingOption);
+  
+  const isDomestic = formData.country === 'Indonesia';
+  const shippingLines = [
+    isDomestic ? createShippingLine(shippingOption) : createInternationalShippingLine(shippingOption)
+  ];
+  const metaData = isDomestic
+    ? createJNEMetadata(formData, shippingOption)
+    : createInternationalMetadata(formData, shippingOption);
 
   // Calculate subtotal for unique code generation
   const subtotal = cartItems.reduce((sum, item) => {

@@ -12,6 +12,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import { IoIosArrowDown, IoIosArrowUp, IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { useAuth } from "@/hooks/useAuth";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +23,7 @@ export function Navbar() {
   const [mobileView, setMobileView] = useState<"main" | "SHOP" | "THE BRAND">("main");
   const [isMounted, setIsMounted] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { user } = useAuth();
   const pathname = usePathname();
   const isHome = pathname === "/";
   const lastScrollY = useRef(0);
@@ -174,7 +176,7 @@ export function Navbar() {
                   <div className="flex-1 w-full relative overflow-hidden">
                     {/* Panel 1: Main Menu */}
                     <nav className={cn(
-                      "absolute inset-0 w-full h-full flex flex-col px-4 pt-0 pb-4 overflow-y-auto transition-transform duration-300 ease-in-out",
+                      "absolute inset-0 w-full h-full flex flex-col px-6 pt-0 pb-4 overflow-y-auto transition-transform duration-300 ease-in-out",
                       mobileView === "main" ? "translate-x-0" : "-translate-x-full"
                     )}>
                       {/* SHOP - Trigger */}
@@ -297,6 +299,28 @@ export function Navbar() {
                     </nav>
                   </div>
 
+                  {/* Account and Customer Support links above the footer border */}
+                  <div className="px-6 py-4 bg-white flex flex-col gap-4">
+                    <div>
+                      <Link
+                        href={user ? "/account" : "/account/login"}
+                        onClick={() => setIsOpen(false)}
+                        className="text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity inline-block"
+                      >
+                        {user ? "ACCOUNT" : "LOG IN"}
+                      </Link>
+                    </div>
+                    <div>
+                      <Link
+                        href="/contact-us"
+                        onClick={() => setIsOpen(false)}
+                        className="text-sm font-regular tracking-wider text-black uppercase hover:opacity-50 transition-opacity inline-block"
+                      >
+                        CUSTOMER SUPPORT
+                      </Link>
+                    </div>
+                  </div>
+
                    {/* Bottom Section - Social Icons and Search Trigger */}
                    <div className="p-6 border-t border-black/10 bg-neutral-50 flex items-center justify-between mt-auto">
                      <div className="flex items-center gap-6">
@@ -318,15 +342,17 @@ export function Navbar() {
                        </Link>
                      </div>
  
-                     <button 
-                       onClick={() => {
-                         setIsOpen(false);
-                         setIsSearchOpen(true);
-                       }}
-                       className="text-black p-2 hover:bg-transparent transition-opacity"
-                     >
-                       <Search className="size-5" />
-                     </button>
+                      <div className="flex items-center gap-4">
+                        <button 
+                          onClick={() => {
+                            setIsOpen(false);
+                            setIsSearchOpen(true);
+                          }}
+                          className="text-sm font-bold tracking-[0.2em] transition-colors hover:opacity-50 text-black py-2 cursor-pointer"
+                        >
+                          SEARCH
+                        </button>
+                      </div>
                    </div>
                 </SheetContent>
               </Sheet>
@@ -398,6 +424,15 @@ export function Navbar() {
             >
               SEARCH
             </button>
+            <Link
+              href={user ? "/account" : "/account/login"}
+              className={cn(
+                "px-3 py-2 text-[13px] font-regular tracking-[0.2em] transition-colors hover:opacity-50 cursor-pointer",
+                isTransparent ? "text-white" : "text-[#1a1a1a]"
+              )}
+            >
+              {user ? "ACCOUNT" : "LOGIN"}
+            </Link>
             <CartDrawer triggerClassName={cn(isTransparent ? "text-white" : "text-[#1a1a1a]")} />
           </div>
         </div>
