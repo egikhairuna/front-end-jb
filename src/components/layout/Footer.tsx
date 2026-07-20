@@ -71,7 +71,7 @@ export function Footer() {
             <h2 className="text-2xl md:text-3xl font-bold font-heading uppercase leading-tight">
               Subscribe to the Newsletter
             </h2>
-            <p className="text-[13px] text-neutral-400 max-w-sm font-sans font-medium tracking-normal leading-relaxed uppercase">
+            <p className="text-[13px] text-neutral-300 max-w-sm font-sans font-medium tracking-normal leading-relaxed uppercase">
               Create an account and get access to exclusive content, previews and special offers.
             </p>
             <div className="pt-2">
@@ -89,7 +89,7 @@ export function Footer() {
           <div className="hidden lg:contents">
              {footerSections.map((section) => (
                 <div key={section.title} className="space-y-6">
-                   <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-400">
+                   <h3 className="text-[13px] font-bold tracking-widest uppercase text-neutral-300">
                       {section.title}
                    </h3>
                    <ul className="space-y-3">
@@ -97,7 +97,7 @@ export function Footer() {
                          <li key={item.label}>
                              <Link 
                                 href={item.href} 
-                                className="text-[12px] font-bold tracking-[0.1em] hover:text-neutral-400 transition-colors uppercase"
+                                className="text-[12px] font-bold tracking-[0.1em] hover:text-neutral-300 transition-colors uppercase"
                              >
                                 {item.label}
                              </Link>
@@ -160,7 +160,7 @@ export function Footer() {
 
 
         {/* COPYRIGHT (Bottom bar) */}
-        <div className="pt-8 md:pt-12 flex flex-col-reverse md:flex-row justify-center items-center gap-4 text-[12px] font-medium tracking-widest text-neutral-500 uppercase">
+        <div className="pt-8 md:pt-12 flex flex-col-reverse md:flex-row justify-center items-center gap-4 text-[12px] font-medium tracking-widest text-neutral-300 uppercase">
            <p>James Boogie © 2026. All rights reserved.</p>
         </div>
       </div>
@@ -181,7 +181,7 @@ function CurrencySwitcherDropdown() {
             "transition-all duration-200 hover:text-white uppercase tracking-wider text-sm md:text-[12px]",
             currency === 'IDR'
               ? "text-white font-bold border-b-2 border-white pb-0.5"
-              : "text-neutral-500 font-medium pb-0.5 border-b-2 border-transparent"
+              : "text-neutral-300 font-medium pb-0.5 border-b-2 border-transparent"
           )}
         >
           IDR
@@ -192,7 +192,7 @@ function CurrencySwitcherDropdown() {
             "transition-all duration-200 hover:text-white uppercase tracking-wider text-sm md:text-[12px]",
             currency === 'USD'
               ? "text-white font-bold border-b-2 border-white pb-0.5"
-              : "text-neutral-500 font-medium pb-0.5 border-b-2 border-transparent"
+              : "text-neutral-300 font-medium pb-0.5 border-b-2 border-transparent"
           )}
         >
           USD

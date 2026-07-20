@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState, useCallback } from "react";
 
@@ -73,19 +74,8 @@ export function Hero() {
     willChange: "transform" as const,
   });
 
-  const imgStyle: React.CSSProperties = {
-    width: "100vw",
-    height: "100%",
-    objectFit: "cover",
-    objectPosition: "center top",
-    display: "block",
-    flexShrink: 0,
-    margin: 0,
-    padding: 0,
-  };
-
   return (
-    <section className="relative h-[83vh] md:h-screen w-full bg-neutral-900 text-white flex items-end justify-center overflow-hidden p-8 pb-32 md:pb-24">
+    <section className="relative h-[83vh] md:h-screen w-full bg-neutral-900 text-white flex items-end justify-center overflow-hidden p-8 pb-16 md:pb-20">
       {/* Background */}
       <div className="absolute inset-0 z-0">
 
@@ -97,8 +87,17 @@ export function Hero() {
         >
           <div className="flex h-full" style={sliderStyles(desktopImages, desktop.currentIndex)}>
             {desktopImages.map((src, i) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={i} src={src} alt={`Desktop Hero ${i + 1}`} style={imgStyle} />
+              <div key={i} className="relative w-[100vw] h-full flex-shrink-0">
+                <Image
+                  src={src}
+                  alt={`Desktop Hero ${i + 1}`}
+                  fill
+                  sizes="100vw"
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  priority={i === 0}
+                  quality={80}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -111,8 +110,17 @@ export function Hero() {
         >
           <div className="flex h-full" style={sliderStyles(mobileImages, mobile.currentIndex)}>
             {mobileImages.map((src, i) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img key={i} src={src} alt={`Mobile Hero ${i + 1}`} style={imgStyle} />
+              <div key={i} className="relative w-[100vw] h-full flex-shrink-0">
+                <Image
+                  src={src}
+                  alt={`Mobile Hero ${i + 1}`}
+                  fill
+                  sizes="100vw"
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                  priority={i === 0}
+                  quality={80}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -121,41 +129,15 @@ export function Hero() {
         <div className="absolute inset-0 pointer-events-none bg-black/15 bg-gradient-to-t from-black/60 to-transparent" />
       </div>
 
-      {/* ── Desktop Dots ── */}
-      <div className="hidden md:flex absolute bottom-[6rem] left-0 right-0 justify-center gap-1.5 z-10">
-        {desktopImages.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => { desktop.goTo(i); desktop.startAutoPlay(); }}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === desktop.currentIndex ? "bg-white w-4" : "bg-white/40 w-1.5"
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* ── Mobile Dots ── */}
-      <div className="md:hidden absolute bottom-[7rem] left-0 right-0 flex justify-center gap-1.5 z-10">
-        {mobileImages.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => { mobile.goTo(i); mobile.startAutoPlay(); }}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === mobile.currentIndex ? "bg-white w-4" : "bg-white/40 w-1.5"
-            }`}
-          />
-        ))}
-      </div>
-
       {/* Hero Text */}
-      <header className="relative z-10 max-w-4xl flex flex-col items-center text-center space-y-1">
+      <header className="relative z-10 max-w-4xl flex flex-col items-center text-center space-y-1.5 mb-2 md:mb-4">
         <h1 className="text-3xl md:text-5xl font-medium font-heading tracking-wider leading-tight uppercase">
           PRISTINE '026
         </h1>
         <p className="text-[10px] md:text-xs text-neutral-300 tracking-[0.4em] uppercase font-medium">
           Untouched, Unspoiled, and Unblemished
         </p>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center pt-1">
           <Link
             href="/shop/category/pristine"
             className="group flex items-center gap-2 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:opacity-70 transition-opacity"
@@ -167,6 +149,40 @@ export function Hero() {
           </Link>
         </div>
       </header>
+
+      {/* ── Desktop Dots ── */}
+      <div className="hidden md:flex absolute bottom-4 left-0 right-0 justify-center gap-1 z-10">
+        {desktopImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => { desktop.goTo(i); desktop.startAutoPlay(); }}
+            className="p-2 flex items-center justify-center cursor-pointer"
+            aria-label={`Go to slide ${i + 1}`}
+            aria-current={i === desktop.currentIndex ? "true" : undefined}
+          >
+            <span className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === desktop.currentIndex ? "bg-white w-4" : "bg-white/40 w-1.5"
+            }`} />
+          </button>
+        ))}
+      </div>
+
+      {/* ── Mobile Dots ── */}
+      <div className="md:hidden absolute bottom-4 left-0 right-0 flex justify-center gap-1 z-10">
+        {mobileImages.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => { mobile.goTo(i); mobile.startAutoPlay(); }}
+            className="p-2 flex items-center justify-center cursor-pointer"
+            aria-label={`Go to slide ${i + 1}`}
+            aria-current={i === mobile.currentIndex ? "true" : undefined}
+          >
+            <span className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === mobile.currentIndex ? "bg-white w-4" : "bg-white/40 w-1.5"
+            }`} />
+          </button>
+        ))}
+      </div>
     </section>
   );
 }

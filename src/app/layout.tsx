@@ -119,6 +119,11 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        {/* Preconnect to WordPress for faster image loading */}
+        <link rel="preconnect" href="https://vps.jamesboogie.com" />
+        <link rel="dns-prefetch" href="https://vps.jamesboogie.com" />
+      </head>
       <body
         className={`${dinPro.variable} antialiased bg-background text-foreground font-sans`}
       >

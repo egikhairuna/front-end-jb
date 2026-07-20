@@ -157,11 +157,11 @@ export function ProductCarousel({ products }: Props) {
 
                   {/* Product Price and Title */}
                   <div className="px-3 py-4 md:px-6">
-                    <h3 
+                    <p 
                       className="font-regular lg:text-[15px] tracking-wider text-[11px] leading-tight uppercase md:text-sm mb-1 line-clamp-2 text-black"
                     >
                       {product.name}
-                    </h3>
+                    </p>
                     <p 
                       className="text-[11px] lg:text-[15px] font-regular tracking-[0.1em] text-black/70"
                     >
