@@ -13,8 +13,11 @@ const AUTH_COOKIE_NAME = 'jb_auth_token';
 // Routes that require authentication
 const PROTECTED_PREFIX = '/account';
 
-// Auth routes that authenticated users should be redirected away from
-const AUTH_ROUTES = ['/account/login', '/account/register'];
+// Auth routes accessible without login (and redirected to /account if logged in)
+const isPublicAuthRoute = (pathname: string) =>
+  pathname === '/account/login' ||
+  pathname === '/account/register' ||
+  pathname.startsWith('/account/forgot-password');
 
 function isPrivateIP(ip: string): boolean {
   if (!ip) return true;
@@ -81,15 +84,16 @@ export async function middleware(request: NextRequest) {
 
   // If user is on a protected route /account
   if (pathname.startsWith(PROTECTED_PREFIX)) {
-    // If user is on login/register and has a cookie, redirect to /account
-    if (AUTH_ROUTES.includes(pathname) && hasAuthCookie) {
+    const isAuth = isPublicAuthRoute(pathname);
+    // If user is on public auth pages and already has a cookie, redirect to /account
+    if (isAuth && hasAuthCookie) {
       const url = request.nextUrl.clone();
       url.pathname = '/account';
       url.search = '';
       response = NextResponse.redirect(url);
     }
-    // If user is on a protected route (not login/register) and has no cookie, redirect to login
-    else if (!AUTH_ROUTES.includes(pathname) && !hasAuthCookie) {
+    // If user is on a protected account route and has no cookie, redirect to login
+    else if (!isAuth && !hasAuthCookie) {
       const url = request.nextUrl.clone();
       url.pathname = '/account/login';
       response = NextResponse.redirect(url);
