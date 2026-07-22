@@ -1,19 +1,28 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
-import * as fp from "@/lib/metaPixel";
 
 const PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export const FacebookPixel = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
-    // Track SPA navigation pageviews (after initial load)
-    fp.pageview();
+    // Skip first render — initial PageView already tracked by fbq('track', 'PageView')
+    // inside the Script below when fbevents.js loads
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    // SPA navigation pageview — only fire if fbq has already loaded
+    if (typeof window !== "undefined" && typeof window.fbq === "function") {
+      window.fbq("track", "PageView");
+    }
   }, [pathname, searchParams]);
 
   if (!PIXEL_ID) return null;
