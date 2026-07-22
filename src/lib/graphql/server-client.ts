@@ -14,6 +14,9 @@ export async function fetchGraphQL<T>(
   const endpoint = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || "https://vps.jamesboogie.com/graphql";
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+
     const res = await fetch(endpoint, {
       method: 'POST',
       headers: { 
@@ -23,11 +26,14 @@ export async function fetchGraphQL<T>(
         query,
         variables,
       }),
+      signal: controller.signal,
       next: {
         revalidate,
         tags: ['graphql', ...tags],
       },
     });
+
+    clearTimeout(timeoutId);
 
     if (!res.ok) {
         const text = await res.text();

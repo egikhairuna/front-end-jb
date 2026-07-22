@@ -18,8 +18,8 @@ import { cn } from "@/lib/utils";
 
 const links = [
   {
-    title: "FANCY",
-    href: "/shop/category/fancy",
+    title: "PRISTINE",
+    href: "/shop/category/pristine",
     icon: <PiShoppingBag className="w-5 h-5" />
   },
   {
@@ -147,13 +147,13 @@ export default function LinksPage() {
           className="w-full mb-8"
         >
           <div className="flex justify-center mb-4 mt-14">
-             <h2 className="text-sm font-medium text-white uppercase">OUT NOW !</h2>
+             <h2 className="text-sm font-medium text-white uppercase">COMING SOON !</h2>
           </div>
           
-          <Link href="/shop/category/pristine" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+          <Link href="#" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
-              src="https://vps.jamesboogie.com/wp-content/uploads/2026/04/pristinehero-scaled.jpeg" 
-              alt="SS026 Campaign" 
+              src="https://vps.jamesboogie.com/wp-content/uploads/2026/07/Zesty_Poster_Landscape-scaled.jpg" 
+              alt="Zesty '026 Campaign" 
               fill
               className="object-cover transition-transform duration-700"
             />
@@ -161,7 +161,7 @@ export default function LinksPage() {
 
             <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent flex justify-between items-end">
                <span className="text-sm font-mono text-white/90 font-semibold uppercase tracking-widest bg-black/50 backdrop-blur-md px-2 py-1 rounded">
-                 PRISTINE '026
+                 ZESTY '026
                </span>
                <div className="w-8 h-8 flex items-center justify-center rounded-full bg-white/20 backdrop-blur-md text-white">
                   <ArrowUpRight className="w-4 h-4" />

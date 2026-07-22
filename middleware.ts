@@ -47,34 +47,12 @@ export async function middleware(request: NextRequest) {
   let currencyToSet: string | null = null;
 
   if (isPageRequest && !request.cookies.has('preferred_currency')) {
-    // Geolocation lookup via x-forwarded-for (first IP in list) or request.ip
-    const forwardedFor = request.headers.get('x-forwarded-for');
-    let clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '';
-
-    if (!clientIp) {
-      clientIp = (request as any).ip || '';
-    }
-
-    let country = 'ID'; // Default to Indonesia
-    if (clientIp && !isPrivateIP(clientIp)) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 1500);
-      try {
-        const geoRes = await fetch(`https://ipapi.co/${clientIp}/json/`, {
-          signal: controller.signal,
-        });
-        if (geoRes.ok) {
-          const data = await geoRes.json();
-          if (data?.country_code) {
-            country = data.country_code;
-          }
-        }
-      } catch (err) {
-        console.warn(`⚠️ IP Geolocation fetch failed for IP ${clientIp}:`, err);
-      } finally {
-        clearTimeout(timeoutId);
-      }
-    }
+    // Check instant Edge CDN country headers (Vercel / Cloudflare / Nginx) or default to ID
+    const country =
+      request.headers.get('x-vercel-ip-country') ||
+      request.headers.get('cf-ipcountry') ||
+      request.headers.get('x-country-code') ||
+      'ID';
 
     // Indonesia (ID) or Malaysia (MY) -> IDR, else USD
     currencyToSet = (country === 'ID' || country === 'MY') ? 'IDR' : 'USD';
