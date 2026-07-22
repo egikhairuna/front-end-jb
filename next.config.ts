@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizePackageImports: ["react-icons", "lucide-react", "framer-motion"],
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "vps.jamesboogie.com" },
