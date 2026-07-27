@@ -61,18 +61,32 @@ export function transformFormToAddress(
 
 // Create shipping line for JNE
 export function createShippingLine(
-  shippingOption: ShippingOption
+  shippingOption: ShippingOption,
+  formData?: CheckoutFormData
 ): WCShippingLine {
+  const meta: WCMetaData[] = [
+    {
+      key: 'service_code',
+      value: shippingOption.service_code || shippingOption.service,
+    }
+  ];
+
+  if (formData?.jneDestinationCode) {
+    meta.push(
+      { key: 'destination_code', value: formData.jneDestinationCode },
+      { key: '_destination_code', value: formData.jneDestinationCode },
+      { key: 'jne_destination_code', value: formData.jneDestinationCode },
+      { key: '_jne_destination_code', value: formData.jneDestinationCode },
+      { key: 'olshop_dest', value: formData.jneDestinationCode },
+      { key: '_olshop_dest', value: formData.jneDestinationCode }
+    );
+  }
+
   return {
     method_id: 'jneshof_shipping',
     method_title: `JNE ${shippingOption.service}`,
     total: shippingOption.price.toString(),
-    meta_data: [
-      {
-        key: 'service_code',
-        value: shippingOption.service_code || shippingOption.service,
-      }
-    ],
+    meta_data: meta,
   };
 }
 
@@ -98,7 +112,15 @@ export function createJNEMetadata(
     { key: 'district', value: formData.district },
     { key: 'subdistrict', value: formData.subdistrict },
     { key: 'postal_code', value: formData.postalCode },
+
+    // Core & Protected Destination Code aliases for JNE Shof / AgenShipping plugin compatibility
     { key: 'jne_destination_code', value: formData.jneDestinationCode },
+    { key: '_jne_destination_code', value: formData.jneDestinationCode },
+    { key: 'destination_code', value: formData.jneDestinationCode },
+    { key: '_destination_code', value: formData.jneDestinationCode },
+    { key: '_shipping_jne_destination_code', value: formData.jneDestinationCode },
+    { key: 'olshop_dest', value: formData.jneDestinationCode },
+    { key: '_olshop_dest', value: formData.jneDestinationCode },
     
     // Legacy internal fields for backward compatibility if needed
     { key: '_shipping_jne_service', value: shippingOption.service },
@@ -139,7 +161,7 @@ export function buildOrderPayload(
   
   const isDomestic = formData.country === 'Indonesia';
   const shippingLines = [
-    isDomestic ? createShippingLine(shippingOption) : createInternationalShippingLine(shippingOption)
+    isDomestic ? createShippingLine(shippingOption, formData) : createInternationalShippingLine(shippingOption)
   ];
   const metaData = isDomestic
     ? createJNEMetadata(formData, shippingOption)

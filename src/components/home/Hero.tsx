@@ -66,10 +66,10 @@ export function Hero() {
         </p>
         <div className="flex items-center justify-center pt-1">
           <Link
-            href="#"
+            href="/shop/category/zesty"
             className="group flex items-center gap-2 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase hover:opacity-70 transition-opacity"
           >
-            Coming Soon
+            DISCOVER MORE
             <span className="text-[10px] md:text-lg mb-[0.2em] font-regular transition-transform group-hover:translate-x-1">
               &gt;
             </span>

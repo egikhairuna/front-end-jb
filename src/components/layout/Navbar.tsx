@@ -82,6 +82,7 @@ export function Navbar() {
       { label: "SHIRTS", href: "/shop/category/shirt" },
     ],
     focusOn: [
+      { label: "ZESTY", href: "/shop/category/zesty" },
       { label: "PRISTINE", href: "/shop/category/pristine" },
       { label: "LOFTY", href: "/shop/category/lofty" },
       { label: "FANCY", href: "/shop/category/fancy" },
