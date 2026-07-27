@@ -1,13 +1,11 @@
-/**
- * CSRF protection via Origin header validation.
- * Since auth uses a cookie, we add Origin checking on state-changing requests
- * (POST/PATCH/DELETE) as a lightweight defense-in-depth measure.
- * SameSite=Lax already blocks most cross-site POSTs, but this is a cheap extra layer.
- */
-
 import { NextRequest } from 'next/server';
 
-const FRONTEND_URL = process.env.NEXT_PUBLIC_FRONTEND_URL || '';
+/**
+ * Helper to normalize host string by stripping default port and leading 'www.'
+ */
+function normalizeHost(host: string): string {
+  return host.toLowerCase().replace(/^www\./, '').split(':')[0];
+}
 
 /**
  * Validate that the request's Origin matches this site.
@@ -39,12 +37,29 @@ export function validateOrigin(request: NextRequest): boolean {
     }
   }
 
+  const requestHost = request.headers.get('x-forwarded-host') || request.headers.get('host') || request.nextUrl.host;
+  const configuredFrontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL;
+  let configuredHost = '';
+  if (configuredFrontendUrl) {
+    try {
+      configuredHost = new URL(configuredFrontendUrl).host;
+    } catch {
+      configuredHost = configuredFrontendUrl;
+    }
+  }
+
+  const allowedHosts = new Set(
+    [
+      requestHost ? normalizeHost(requestHost) : '',
+      configuredHost ? normalizeHost(configuredHost) : '',
+    ].filter(Boolean)
+  );
+
   // Check Origin header first (most reliable)
   if (origin) {
     try {
-      const originUrl = new URL(origin);
-      const frontendUrl = new URL(FRONTEND_URL || 'http://localhost:3000');
-      return originUrl.host === frontendUrl.host;
+      const originHost = normalizeHost(new URL(origin).host);
+      return allowedHosts.has(originHost);
     } catch {
       return false;
     }
@@ -53,9 +68,8 @@ export function validateOrigin(request: NextRequest): boolean {
   // Fall back to Referer header if Origin is not present
   if (referer) {
     try {
-      const refererUrl = new URL(referer);
-      const frontendUrl = new URL(FRONTEND_URL || 'http://localhost:3000');
-      return refererUrl.host === frontendUrl.host;
+      const refererHost = normalizeHost(new URL(referer).host);
+      return allowedHosts.has(refererHost);
     } catch {
       return false;
     }
