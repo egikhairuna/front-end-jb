@@ -147,10 +147,10 @@ export default function LinksPage() {
           className="w-full mb-8"
         >
           <div className="flex justify-center mb-4 mt-14">
-             <h2 className="text-sm font-medium text-white uppercase">COMING SOON !</h2>
+             <h2 className="text-sm font-medium text-white uppercase">OUT NOW !</h2>
           </div>
           
-          <Link href="#" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+          <Link href="/shop/category/zesty/" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
               src="https://vps.jamesboogie.com/wp-content/uploads/2026/07/Zesty_Poster_Landscape-scaled.jpg" 
               alt="Zesty '026 Campaign" 
