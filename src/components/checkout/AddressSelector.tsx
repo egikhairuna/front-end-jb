@@ -62,6 +62,7 @@ export function AddressSelector({
   const [selectedCityId, setSelectedCityId] = useState<string>('');
   const [selectedDistId, setSelectedDistId] = useState<string>('');
   const [selectedSubId, setSelectedSubId] = useState<string>('');
+  const [manualPostalCode, setManualPostalCode] = useState<string>('');
 
   // Selected names for callback
   const [selectedNames, setSelectedNames] = useState({
@@ -139,6 +140,7 @@ export function AddressSelector({
                 if (matchedDist) {
                   const distId = matchedDist.id.toString();
                   setSelectedDistId(distId);
+                  setManualPostalCode(initialPostalCode || '');
                   setSelectedNames({
                     province: matchedProv.name,
                     city: matchedCity.name,
@@ -167,6 +169,7 @@ export function AddressSelector({
 
   // Handle Province Change
   const handleProvChange = async (provId: string) => {
+    setManualPostalCode('');
     setSelectedProvId(provId);
     setSelectedCityId('');
     setSelectedDistId('');
@@ -195,6 +198,7 @@ export function AddressSelector({
 
   // Handle City Change
   const handleCityChange = async (cityId: string) => {
+    setManualPostalCode('');
     setSelectedCityId(cityId);
     setSelectedDistId('');
     setSelectedSubId('');
@@ -239,17 +243,19 @@ export function AddressSelector({
         setSubdistricts(data);
 
         // ⚡ AUTO-SELECT LOGIC (JNE Code & Zip only)
-        // We pick the first subdistrict to get the JNE Code & Zip for calculation
-        // But we DO NOT set the subdistrict name, as the user will type it manually.
+        // We pick the first subdistrict to get the JNE Code for calculation
+        // But we DO NOT set the subdistrict name or postal code, as the user will type it manually.
         if (data.length > 0) {
           const firstSub = data[0];
-          // We don't set selectedSubId since we aren't using a dropdown for it.
           
+          // Reset postal code to empty when district changes — user must type it manually
+          setManualPostalCode('');
+
           const finalNames = {
             ...newNames,
             subdistrict: '', // Reset text input when district changes
-            postalCode: firstSub.postal_code || '',
-            jneDestinationCode: firstSub.jne_code || ''
+            postalCode: '',                               // Always empty — user types manually
+            jneDestinationCode: firstSub.jne_code || ''  // Keep auto-populated for shipping calc
           };
           setSelectedNames(finalNames);
           onAddressChange(finalNames);
@@ -348,14 +354,26 @@ export function AddressSelector({
         />
       </div>
 
-      {/* Subdistrict Selector REMOVED as per request - Auto-filled now */}
-
-      {/* Postal Code Display */}
-      {selectedNames.postalCode && (
-        <div className="text-sm text-gray-500 mt-2">
-          Postal Code: <strong>{selectedNames.postalCode}</strong>
-        </div>
-      )}
+      {/* Postal Code — Manual Input */}
+      <div className="space-y-2">
+        <Label>ZIP CODE / KODE POS *</Label>
+        <input
+          type="text"
+          inputMode="numeric"
+          maxLength={5}
+          className="w-full h-[40px] bg-white border border-gray-200 rounded-md px-3 text-sm focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
+          placeholder="e.g. 40361"
+          value={manualPostalCode}
+          onChange={(e) => {
+            const val = e.target.value.replace(/\D/g, '').slice(0, 5);
+            setManualPostalCode(val);
+            const updatedNames = { ...selectedNames, postalCode: val };
+            setSelectedNames(updatedNames);
+            onAddressChange(updatedNames);
+          }}
+          disabled={disabled || !selectedDistId}
+        />
+      </div>
     </div>
   );
 }

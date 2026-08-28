@@ -684,22 +684,6 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                           disabled={loadingOrder}
                         />
                       </div>
-
-                      {/* AUTOMATIC ZIP CODE (READ ONLY) */}
-                      <div className="">
-                        <div className="space-y-1">
-                          <label className="text-sm font-semibold uppercase tracking-tighter">
-                            Zip Code (Auto)
-                          </label>
-                          <input
-                            type="text"
-                            className="w-full bg-gray-100 border border-gray-300 p-3 text-sm text-gray-500 focus:outline-none cursor-not-allowed"
-                            value={formData.postalCode}
-                            readOnly
-                            placeholder="Auto-filled"
-                          />
-                        </div>
-                      </div>
                     </>
                   ) : (
                     <>
