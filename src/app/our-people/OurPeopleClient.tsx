@@ -18,85 +18,147 @@ const TEAM = [
     role: "Chief Operating Officer",
     bio: "Good work starts with honesty. In a world where trends change so quickly, staying true to what we believe in is more important than ever. Every product starts with an idea, a story, and a genuine passion for creating something meaningful. Rather than chasing trends, the focus is on making products with character, quality, and attention to detail. Success is not about being the loudest brand or following every trend. It is about creating with honesty, staying consistent with our values, and making products that people can truly appreciate and enjoy for years to come.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Om-hers-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Erry Ferdianto - COO portrait"
   },
   {
     name: "DICKY FIRMANSYAH",
     role: "Chief Marketing Officer",
     bio: "The fashion industry often prioritizes speed and cost efficiency to maximize profits. Low prices for the latest styles may seem like a good deal, but these apparent savings often come at significant environmental and social costs. I share the same concerns regarding the fashion industry’s impact on the environment and society. Slow fashion advocates for a different approach—it’s about designing, producing, consuming, and living in a more sustainable and mindful way. So, I encourage you to choose slow fashion. Choose James Boogie, where we prioritize sustainability and ethical practices in every aspect of our work.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Pa-Dikey-scaled.jpg", 
-    alt: "Thomas Vander - Master Craftsman portrait"
+    alt: "Dicky Firmansyah - CMO portrait"
   },
   {
     name: "ALGHIFARI KHAIRUNA",
     role: "Full Stack Developer and Graphic Designer",
-    bio: "I started this adventure by participating in James Boogie’s Design Assets, of which I am the Graphic Designer. My practice is geared towards the cross-pollination of different fields and inspirations. Based on a thorough visual research, spanning from Hand-drawing, to visual arts. my artistic identity benefits from a layered approach to image making. With a specific attention to lighting and mood, and a strong interest in body anatomy as a way to investigate form, my practice aims to create the perfect balance between the subject’s peculiarities and my signature style. My first significant venture is represented by the fashion field, where I currently collaborate with the most important majors in the Indonesian Brand. Later, Among my projects, the most important are: James Boogie X Maternal. an crisp alliance between two syndicates of polar opposites. James Boogie and Maternal team up to collaborate for the first time. This collaboration synthesizes two ideas and gave birth to limited edition items influenced by the culture of military fashion pop culture. I was born in Bandung, where I live and work for James Boogie and take responsibilities for Website and Commercial System",
+    bio: "I started this adventure by participating in James Boogie's Design Assets, of which I am the Graphic Designer. My practice is geared towards the cross-pollination of different fields and inspirations. Based on a thorough visual research, spanning from Hand-drawing, to visual arts. my artistic identity benefits from a layered approach to image making. With a specific attention to lighting and mood, and a strong interest in body anatomy as a way to investigate form, my practice aims to create the perfect balance between the subject's peculiarities and my signature style. I was born in Bandung, where I live and work for James Boogie and take responsibilities for Website and Commercial System",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Rev-1-of-1-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Alghifari Khairuna - Full Stack Developer and Graphic Designer portrait"
   },
   {
     name: "MEGA WASTUKENCANA",
     role: "Videographer and Graphic Designer",
     bio: "I began my journey at James Boogie in 2020 as a Freelancer in the photography & videography department. In 2023, I took on the responsibility for James Boogie’s social media visuals. Between 2020-2023, I also ventured into the filmmaking department for 2 years. After that, my instinct remained in the world of fashion, particularly fashion photography and videography. Being at James Boogie subdued my hunger for capturing fashion visuals. Until now, I still feel hungry.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Rev2-1-of-1-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Mega Wastukencana - Videographer and Graphic Designer portrait"
   },
   {
     name: "MARWAN SEVANTA",
     role: "Production Coordinator",
-    bio: "Let me introduce myself, I’m Marwan. I’ve been with James Boogie since 2022, initially starting as a shopkeeper. Immersing myself in the world of James Boogie products was a novel experience, allowing me to grasp their distinctive character. In the past year, I earned a promotion to the production department, where I’ve been responsible for overseeing the production flow. I utilize my problem-solving skills to efficiently address any issues that arise during production. I am deeply committed to continually learning about James Boogie and its unique characteristics. My goal is to leverage this knowledge to consistently provide the best possible experience for our customers",
+    bio: "Let me introduce myself, I'm Marwan. I've been with James Boogie since 2022, initially starting as a shopkeeper. Immersing myself in the world of James Boogie products was a novel experience, allowing me to grasp their distinctive character. In the past year, I earned a promotion to the production department, where I’ve been responsible for overseeing the production flow. I utilize my problem-solving skills to efficiently address any issues that arise during production. I am deeply committed to continually learning about James Boogie and its unique characteristics. My goal is to leverage this knowledge to consistently provide the best possible experience for our customers",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Marwan-cina-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Marwan Sevanta - Production Coordinator portrait"
   },
   {
     name: "RIZAL PRATAMA",
     role: "Research And Development",
-    bio: "Joined in February, a fashion enthusiast. Interested in deconstructing jackets, especially military based jackets.",
-    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Mang-Ijal-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    bio: "Joined in February 2024, a fashion enthusiast. Interested in deconstructing jackets, especially military based jackets.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-5-2-scaled.jpg", 
+    alt: "Rizal Pratama - Research And Development portrait"
   },
   {
-    name: "ARIF MULYANA",
-    role: "Quality Control",
-    bio: "As an aspiring professional in the world of fashion, I am grateful to James Boogie for providing me with the opportunity to join their esteemed team. This marks the beginning of my career journey in the fashion industry, leveraging my background and passion for all things fashion-related. At James Boogie, I have actively engaged with my peers, exchanging ideas, and experiences, thereby expanding my knowledge and perspective within this creative space. Through collaboration and learning, I strive to continually broaden my skill set and insights, contributing meaningfully to the innovative endeavors of the team.",
-    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Mang-Aiphone-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
-  },
-    {
     name: "M FATHUROCHMAN",
     role: "Sales Associate",
-    bio: "",
+    bio: "I'm also called Kentob, joined James Boogie at the beginning of 2024 and a lot here I learned a lot with everyone in the james boogie division. now I'm in the warehouse and shopkeeper division",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Kentob-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "M Fathurochman - Sales Associate portrait"
   },
   {
     name: "RIFQI MAULANA",
     role: "Content Writer",
     bio: "Starting the journey as a journalist in one of the national media who based in Bandung. I’m a copywriter with a strong passion for fashion and other youth culture. Contributing at James Boogie since 2024. My work blends storytelling with a sharp eye for detail, especially when it comes to exploring different fashion cultures and aesthetics. I’m particularly drawn to workwear and military-inspired styles—both for their functionality and rich historical context. Through my writing, I aim to unpack the layers behind these fashion movements and share the stories that make them compelling",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Profile-Pic-QQ-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Rifqi Maulana - Content Writer portrait"
   },
   {
     name: "VEGGA SEPTIAN",
     role: "Marketing Communication",
-    bio: "",
+    bio: "I'm Vegga Septian Mulyawan, a creative problem-solver who thrives on discovering unconventional solutions and infusing every project with passion and originality. Every challenge is an opportunity to learn, grow, and push boundaries—and every lesson I learn, no matter how small, finds its way into my work at James Boogie, where I'm committed to delivering nothing but the best. Beyond creativity, I deeply value strong collaboration and meaningful connections, ensuring that every project is not only successful but also leaves a lasting impact. Outside of work, I'm passionate about music, film, and various forms of art and entertainment—because inspiration can come from anywhere.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Profile-Pic-Kapeg-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Vegga Septian - Marketing Communication portrait"
   },
   {
     name: "AKHIL VIRGIAWAN",
     role: "Sales Associate",
-    bio: "",
+    bio: "James Boogie has never felt foreign to me. it grew from the very same place that shaped me",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Profile-Pic-Akil-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
+    alt: "Akhil Virgiawan - Sales Associate portrait"
   },
   {
     name: "SAMIR ASWADIE",
-    role: "Sales Associate",
-    bio: "",
+    role: "Sales Advisor",
+    bio: "Part of the team behind James Boogie, taking care of customer relations, online orders, and the details that complete the experience of the brand.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/02/Profile-Pic-Omkuh-scaled.jpg", 
-    alt: "Elena Rossetic - Head of Operations portrait"
-  }
+    alt: "Samir Aswadie - Sales Advisor portrait"
+  },
+  {
+    name: "HELMY ADAM",
+    role: "Photographer",
+    bio: "With a background in journalism and a focus on photojournalism, I eventually found my way into a career as a product photographer. When I first joined James Boogie, I worked closely with the Quality Control team. After some time, I was given the opportunity to join the Creative Team as a photographer. I was excited about the opportunity and genuinely enjoyed the work.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-8-scaled.jpg", 
+    alt: "Helmy Adam - Photographer portrait"
+  },
+  {
+    name: "YOGI GUNAWAN",
+    role: "Research & Development",
+    bio: "Finding my way to the James Boogie family was no coincidence; it was all part of God's plan. I hope to contribute goodness to this family, not only in this world but also in a way that proves beneficial for the eternal life God has promised.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-4-scaled.jpg", 
+    alt: "Yogi Gunawan - Photographer portrait"
+  },
+  {
+    name: "M FERRY S",
+    role: "Sales Associate",
+    bio: "My name is Muhammad Ferry Sodikin, but I'm more often called Phey. It's simpler, more casual, and more personal. I joined James Boogie with a personal mission: to help develop this brand and take it 10 steps ahead of other brands in Indonesia, while building a presence that can be recognized around the world—especially across Asia, Europe, and America. My message is simple, never be afraid or ashamed to learn, and never stop learning. Because even the smallest things can teach us something valuable, and from those small things, we can create changes that lead to something much bigger.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-6-scaled.jpg", 
+    alt: "M Ferry S - Photographer portrait"
+  },
+  {
+    name: "KURNIAWAN",
+    role: "Head Quality Control",
+    bio: "It all started when a friend introduced me to the James Boogie brand in 2022, prompting me to begin collecting some of their products. Then, in April 2025 following a rather complicated yet amusing series of events. I joined the James Boogie team, where I remain to this day.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-7-scaled.jpg", 
+    alt: "Kurniawan - Head Quality Control portrait"
+  },
+  {
+    name: "HENDRA KURNIA",
+    role: "Product Developer",
+    bio: "Being parts of James Boogie aligned creative team is in line with a personal vision that feels challenges to explore fashionable jacket design models.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-2-scaled.jpg", 
+    alt: "Hendra Kurnia - Product Developer portrait"
+  },
+  {
+    name: "MUSTOFA RISQI",
+    role: "Product Designer",
+    bio: "I've been passionate about drawing since I was a kid, which eventually led me to study Visual Communication Design and Product Design. Along the way, I developed a strong interest in fashion and exploring new creative ideas. I joined James Boogie as a university intern and later became part of the R&D team. Today, I focus on developing fresh ideas and turning sketches into products that people can actually wear. What I enjoy most is seeing an idea come to life—from a simple sketch on paper into a finished product.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-10-scaled.jpg", 
+    alt: "Mustofa Risqi - Product Designer portrait"
+  },
+  {
+    name: "REHAN PRATAMA",
+    role: "Quality Control Staff",
+    bio: "Starting my career at James Boogie as a Quality Control in 2025 since James Boogie started the Fancy season. From the beginning I knew very well that James Boogie is not just an ordinary brand, he shows his pop military identity which is so thick and very professional in his field. so what I always do is always guided by There is a soul in every product. that every product that I work on really has its own soul, making sure that everything I do is in accordance with what has become a provision for james boogie, so that everyone who wears products from james boogie feels so proud and comfortable with what he wears. and lastly for me james boogie is not just A brand, but an identity and family so I will always serve and dedicate my life to James Boogie.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-1-scaled.jpg", 
+    alt: "Rehan Pratama - Quality Control Staff portrait"
+  },
+  {
+    name: "ILHAM FATHIR",
+    role: "Quality Control Staff",
+    bio: "It all started with an invitation from a friend joining James Boogie was a new experience for me one that stood in stark contrast to my previous work background. I learned how to work in the creative industry and the importance of constantly exploring new possibilities. A new family, a new journey, and a new spirit.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-9-scaled.jpg", 
+    alt: "Ilham Fathir - Quality Control Staff portrait"
+  },
+  {
+    name: "KIKI MUHAMMAD",
+    role: "Office Assistant",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-3-scaled.jpg", 
+    alt: "Kiki Muhammad - Office Assistant portrait"
+  },
+  {
+    name: "FIKRI SYABAN ALGHIFARI",
+    role: "Quality Control Staff",
+    bio: "Hello, I am Fikri, and I am often called Tarjoe by some of my close relatives. Visuals and fashion have always drawn me to learn about and dive into this industry. I started my career as a Quality Control in 2025, and as time went on, by the will and permission of Allah, I had the opportunity to join the Quality Control team at James Boogie. Working with the incredible people there has been one of the most unimaginable moments of my life. I also want to thank my wife, parents, and friends who always pray for the best in my life. I hope my presence on the James Boogie team will bring positive value to both the team and the company.",
+    image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-11-scaled.jpg", 
+    alt: "Fikri Syaban Alghifari - Quality Control Staff"
+  },
 ];
 
 export function OurPeopleClient() {

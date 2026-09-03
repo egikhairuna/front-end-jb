@@ -7,8 +7,24 @@ import { cn } from '@/lib/utils';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 export const StoryTimeline: React.FC = () => {
-  const [activeYear, setActiveYear] = useState(STORY_DATA[0].year);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  // Extract unique 4-digit years and the first entry ID for each year
+  const yearTabs = React.useMemo(() => {
+    const map = new Map<string, string>();
+    STORY_DATA.forEach((item) => {
+      const cleanYear = item.year.replace(/[a-z]/gi, '');
+      if (!map.has(cleanYear)) {
+        map.set(cleanYear, item.year);
+      }
+    });
+    return Array.from(map.entries()).map(([displayYear, firstAnchorId]) => ({
+      displayYear,
+      firstAnchorId,
+    }));
+  }, []);
+
+  const [activeYear, setActiveYear] = useState(
+    STORY_DATA[0].year.replace(/[a-z]/gi, '')
+  );
   const tabRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
   const { scrollYProgress } = useScroll();
@@ -22,12 +38,13 @@ export const StoryTimeline: React.FC = () => {
     const observers: IntersectionObserver[] = [];
     
     STORY_DATA.forEach((item) => {
+      const cleanYear = item.year.replace(/[a-z]/gi, '');
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setActiveYear(item.year);
+            setActiveYear(cleanYear);
             // Scroll tabs into view on mobile
-            const tab = tabRefs.current[item.year];
+            const tab = tabRefs.current[cleanYear];
             if (tab) {
               tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             }
@@ -44,8 +61,8 @@ export const StoryTimeline: React.FC = () => {
     return () => observers.forEach(o => o.disconnect());
   }, []);
 
-  const scrollToYear = (year: string) => {
-    const element = document.getElementById(`year-${year}`);
+  const scrollToYear = (anchorYearId: string, displayYear: string) => {
+    const element = document.getElementById(`year-${anchorYearId}`);
     if (element) {
       const offset = 120; // Sticky header + tabs height
       const bodyRect = document.body.getBoundingClientRect().top;
@@ -59,7 +76,7 @@ export const StoryTimeline: React.FC = () => {
       });
       
       // Update hash without jumping
-      window.history.pushState(null, '', `#${year}`);
+      window.history.pushState(null, '', `#${displayYear}`);
     }
   };
 
@@ -75,20 +92,20 @@ export const StoryTimeline: React.FC = () => {
       <nav className="sticky top-0 bg-background/80 backdrop-blur-md border-b border-border z-50 pt-20">
         <div className="w-full overflow-x-auto scrollbar-hide">
           <div className="flex px-6 md:px-8 lg:px-12 space-x-8 md:space-x-12 w-full justify-center">
-            {STORY_DATA.map((item) => (
+            {yearTabs.map((tab) => (
               <button
-                key={item.year}
-                ref={(el) => { tabRefs.current[item.year] = el; }}
-                onClick={() => scrollToYear(item.year)}
+                key={tab.displayYear}
+                ref={(el) => { tabRefs.current[tab.displayYear] = el; }}
+                onClick={() => scrollToYear(tab.firstAnchorId, tab.displayYear)}
                 className={cn(
                   "py-4 text-sm md:text-base font-medium transition-all relative whitespace-nowrap",
-                  activeYear === item.year 
-                    ? "text-foreground" 
+                  activeYear === tab.displayYear 
+                    ? "text-foreground font-semibold" 
                     : "text-muted-foreground hover:text-foreground"
                 )}
               >
-                {item.year}
-                {activeYear === item.year && (
+                {tab.displayYear}
+                {activeYear === tab.displayYear && (
                   <motion.div
                     layoutId="activeTab"
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-foreground"
@@ -103,68 +120,82 @@ export const StoryTimeline: React.FC = () => {
 
       {/* Timeline Content */}
       <div className="w-full px-0 py-16 space-y-32 md:space-y-48">
-        {STORY_DATA.map((item, index) => (
-          <section
-            key={item.year}
-            id={`year-${item.year}`}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center overflow-hidden"
-          >
-            {/* Left Column: Text */}
-            <div className={cn(
-              "space-y-8 px-6 md:px-8 lg:px-12 py-12 lg:py-24",
-              index % 2 === 1 ? "lg:order-2" : "lg:order-1"
-            )}>
-              <div className="space-y-4">
-                <span className="text-sm font-semibold tracking-widest text-muted-foreground uppercase block">
-                  Est. {item.year}
-                </span>
-                <h2 className="text-3xl md:text-5xl font-bold uppercase">
-                  {item.title}
-                </h2>
-                <time dateTime={item.year} className="hidden">{item.year}</time>
-              </div>
-              
-              <div className="prose prose-lg dark:prose-invert">
-                <p className="text-xl md:text-2xl font-light leading-relaxed text-foreground/80">
-                  {item.description}
-                </p>
+        {STORY_DATA.map((item, index) => {
+          const cleanYear = item.year.replace(/[a-z]/gi, '');
+          return (
+            <section
+              key={item.year}
+              id={`year-${item.year}`}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-0 items-center overflow-hidden"
+            >
+              {/* Left Column: Text */}
+              <div className={cn(
+                "space-y-8 px-6 md:px-8 lg:px-12 py-12 lg:py-24",
+                index % 2 === 1 ? "lg:order-2" : "lg:order-1"
+              )}>
+                <div className="space-y-4">
+                  <span className="text-sm font-semibold tracking-widest text-muted-foreground uppercase block">
+                    Est. {cleanYear}
+                  </span>
+                  <h2 className="text-3xl md:text-5xl font-bold uppercase">
+                    {item.title}
+                  </h2>
+                  <time dateTime={cleanYear} className="hidden">{item.year}</time>
+                </div>
+                
+                <div className="prose prose-lg dark:prose-invert">
+                  <p className="text-xl md:text-2xl font-light leading-relaxed text-foreground/80">
+                    {item.description}
+                  </p>
+                </div>
+
+                <div className="space-y-4 pt-4">
+                  <h3 className="text-sm font-bold uppercase tracking-widest text-foreground">Key Milestones</h3>
+                  <ul className="grid grid-cols-1 gap-3">
+                    {item.milestones.map((milestone, i) => (
+                      <li key={i} className="flex items-center text-muted-foreground">
+                        <span className="w-1.5 h-1.5 bg-foreground rounded-full mr-3" />
+                        {milestone}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
 
-              <div className="space-y-4 pt-4">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-foreground">Key Milestones</h3>
-                <ul className="grid grid-cols-1 gap-3">
-                  {item.milestones.map((milestone, i) => (
-                    <li key={i} className="flex items-center text-muted-foreground">
-                      <span className="w-1.5 h-1.5 bg-foreground rounded-full mr-3" />
-                      {milestone}
-                    </li>
-                  ))}
-                </ul>
+              {/* Right Column: Image */}
+              <div className={cn(
+                "relative aspect-[4/5] lg:aspect-[3/4] group overflow-hidden bg-muted flex items-center justify-center",
+                index % 2 === 1 ? "lg:order-1" : "lg:order-2"
+              )}>
+                {item.image && item.image !== "#" && !item.image.startsWith("#") ? (
+                  <Image
+                    src={item.image}
+                    alt={`${item.year} - ${item.title}`}
+                    fill
+                    className="object-cover transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    priority={index < 2}
+                  />
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center bg-zinc-900/60 p-8 text-center border border-border/40 select-none">
+                    <span className="text-3xl md:text-4xl font-extrabold tracking-widest text-foreground/20 uppercase mb-2">
+                      JAMES BOOGIE
+                    </span>
+                    <span className="text-xs uppercase tracking-widest text-muted-foreground/60 font-mono">
+                      {item.title}
+                    </span>
+                  </div>
+                )}
+                {/* Optional Year Overlay for luxury feel */}
+                <div className="absolute inset-x-0 bottom-0 p-8 flex justify-end items-end select-none pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
+                  <span className="text-8xl md:text-9xl font-black text-white leading-none">
+                    {cleanYear.slice(-2)}
+                  </span>
+                </div>
               </div>
-            </div>
-
-            {/* Right Column: Image */}
-            <div className={cn(
-              "relative aspect-[4/5] lg:aspect-[3/4] group overflow-hidden bg-muted",
-              index % 2 === 1 ? "lg:order-1" : "lg:order-2"
-            )}>
-              <Image
-                src={item.image}
-                alt={`${item.year} - ${item.title}`}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 50vw"
-                priority={index < 2}
-              />
-              {/* Optional Year Overlay for luxury feel */}
-              <div className="absolute inset-x-0 bottom-0 p-8 flex justify-end items-end select-none pointer-events-none opacity-20 group-hover:opacity-40 transition-opacity">
-                <span className="text-8xl md:text-9xl font-black text-white leading-none">
-                  {item.year.slice(-2)}
-                </span>
-              </div>
-            </div>
-          </section>
-        ))}
+            </section>
+          );
+        })}
       </div>
     </div>
   );
