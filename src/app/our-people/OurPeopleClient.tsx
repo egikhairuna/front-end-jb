@@ -105,11 +105,11 @@ const TEAM = [
     alt: "Yogi Gunawan - Photographer portrait"
   },
   {
-    name: "M FERRY S",
+    name: "MUHAMMAD FERRY SODIKIN",
     role: "Sales Associate",
     bio: "My name is Muhammad Ferry Sodikin, but I'm more often called Phey. It's simpler, more casual, and more personal. I joined James Boogie with a personal mission: to help develop this brand and take it 10 steps ahead of other brands in Indonesia, while building a presence that can be recognized around the world—especially across Asia, Europe, and America. My message is simple, never be afraid or ashamed to learn, and never stop learning. Because even the smallest things can teach us something valuable, and from those small things, we can create changes that lead to something much bigger.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-6-scaled.jpg", 
-    alt: "M Ferry S - Photographer portrait"
+    alt: "Muhammad Ferry Sodikin - Sales Associate portrait"
   },
   {
     name: "KURNIAWAN",
@@ -149,6 +149,7 @@ const TEAM = [
   {
     name: "KIKI MUHAMMAD",
     role: "Office Assistant",
+    bio: "James Boogie is not just a workplace, it has become a second family to me.",
     image: "https://vps.jamesboogie.com/wp-content/uploads/2026/09/OUR-PEOPLE-3-scaled.jpg", 
     alt: "Kiki Muhammad - Office Assistant portrait"
   },
