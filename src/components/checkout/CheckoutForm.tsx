@@ -858,14 +858,29 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                       <span className="text-sm font-bold uppercase">Credit / Debit Card (Visa / Mastercard)</span>
                     </div>
                     <div className="pl-6 space-y-3">
-                      <p className="text-xs text-neutral-600 font-sans leading-relaxed">
-                        You will be redirected to our secure payment partner (DOKU) to enter your card details safely with 3D Secure verification.
-                      </p>
-                      <div className="flex flex-wrap items-center gap-2 pt-1 text-[10px] font-bold uppercase tracking-wider text-neutral-600">
-                        <span className="bg-neutral-100 px-2.5 py-1 border border-neutral-200">Visa</span>
-                        <span className="bg-neutral-100 px-2.5 py-1 border border-neutral-200">Mastercard</span>
-                        <span className="bg-neutral-100 px-2.5 py-1 border border-neutral-200">3D Secure</span>
+                      <div className="flex items-center gap-3">
+                        <div className="h-6 flex items-center">
+                          <Image 
+                            src="/images/visa_logo.webp" 
+                            alt="Visa" 
+                            width={48} 
+                            height={16} 
+                            className="h-4 w-auto object-contain"
+                          />
+                        </div>
+                        <div className="h-6 flex items-center">
+                          <Image 
+                            src="/images/mastercard_logo.svg" 
+                            alt="Mastercard" 
+                            width={32} 
+                            height={20} 
+                            className="h-5 w-auto object-contain"
+                          />
+                        </div>
                       </div>
+                      <p className="text-xs text-neutral-600 font-sans leading-relaxed">
+                        You will be redirected to our secure payment partner DOKU to enter your card details safely with 3D Secure verification.
+                      </p>
                     </div>
                   </div>
                 )}
