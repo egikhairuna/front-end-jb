@@ -11,6 +11,7 @@ import { COUNTRIES } from '@/constants/countries';
 import { InternationalShippingSelector } from './InternationalShippingSelector';
 import { FormError } from '@/components/ui/FormError';
 import { formatPrice } from '@/lib/currency/config';
+import { isDomesticPaymentCountry, getPaymentMethodForCountry } from '@/lib/payment';
 
 
 interface ShippingOption {
@@ -28,10 +29,6 @@ interface CheckoutFormProps {
     shipping?: WCAddress;
   };
 }
-
-const isPaymentAvailable = (countryName: string): boolean => {
-  return countryName === 'Indonesia' || countryName === 'Malaysia';
-};
 
 export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {}) {
   const { items: cartItems, getCartTotal, getTotalWeight, clearCart } = useCartStore();
@@ -98,7 +95,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
   const [formData, setFormData] = useState<CheckoutFormData>(getInitialFormData);
 
   // Calculate display currency locally based on checkout country
-  const checkoutCurrency = isPaymentAvailable(formData.country || 'Indonesia') ? 'IDR' : 'USD';
+  const checkoutCurrency = isDomesticPaymentCountry(formData.country || 'Indonesia') ? 'IDR' : 'USD';
 
   // Shipping state
   const [shippingOptions, setShippingOptions] = useState<ShippingOption[]>([]);
@@ -383,11 +380,6 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
   const total = subtotal + shippingCost;
 
   const handlePlaceOrder = async () => {
-    if (!isPaymentAvailable(formData.country || 'Indonesia')) {
-      setError('Payment is not available for the selected country.');
-      return;
-    }
-
     if (formData.country !== 'Indonesia') {
       if (!formData.internationalState?.trim()) {
         setError('State / Province is required for international shipping.');
@@ -419,6 +411,8 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
     try {
       console.log('🚀 Creating order via REST API...');
 
+      const paymentMethod = getPaymentMethodForCountry(formData.country);
+
       // Call Next.js API route to create order via WooCommerce REST API
       const response = await fetch('/api/orders/create', {
         method: 'POST',
@@ -430,7 +424,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
           cartItems,
           formData,
           shippingOption: selectedShipping,
-          paymentMethod: 'bacs',
+          paymentMethod,
         }),
       });
 
@@ -837,16 +831,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                 <h2 className="text-sm font-bold uppercase tracking-wider mb-6 border-b border-black pb-2">
                   Payment Method
                 </h2>
-                {!isPaymentAvailable(formData.country || 'Indonesia') ? (
-                  <div className="bg-white border border-black p-6 rounded-sm">
-                    <p className="text-sm font-bold text-red-700 uppercase tracking-wide">
-                      Payment Option Unavailable
-                    </p>
-                    <p className="text-xs text-red-700 mt-2 font-sans font-medium uppercase leading-relaxed">
-                      International card payment is currently being set up — please check back soon.
-                    </p>
-                  </div>
-                ) : (
+                {isDomesticPaymentCountry(formData.country || 'Indonesia') ? (
                   <div className="bg-white border border-gray-100 p-6 rounded-sm shadow-sm">
                      <div className="flex flex-col gap-4">
                         <div className="flex items-center gap-3">
@@ -865,6 +850,23 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                            </div>
                         </div>
                      </div>
+                  </div>
+                ) : (
+                  <div className="bg-white border border-black p-6 rounded-sm shadow-xs space-y-4">
+                    <div className="flex items-center gap-3">
+                      <input type="radio" checked readOnly className="accent-black" />
+                      <span className="text-sm font-bold uppercase">Credit / Debit Card (Visa / Mastercard)</span>
+                    </div>
+                    <div className="pl-6 space-y-3">
+                      <p className="text-xs text-neutral-600 font-sans leading-relaxed">
+                        You will be redirected to our secure payment partner (DOKU) to enter your card details safely with 3D Secure verification.
+                      </p>
+                      <div className="flex flex-wrap items-center gap-2 pt-1 text-[10px] font-bold uppercase tracking-wider text-neutral-600">
+                        <span className="bg-neutral-100 px-2.5 py-1 border border-neutral-200">Visa</span>
+                        <span className="bg-neutral-100 px-2.5 py-1 border border-neutral-200">Mastercard</span>
+                        <span className="bg-neutral-100 px-2.5 py-1 border border-neutral-200">3D Secure</span>
+                      </div>
+                    </div>
                   </div>
                 )}
               </section>
@@ -889,7 +891,7 @@ export default function CheckoutPage({ savedAddresses }: CheckoutFormProps = {})
                 <FormError message={error} />
 
                 <button
-                  disabled={!agreedToTerms || !selectedShipping || loadingOrder || !isPaymentAvailable(formData.country || 'Indonesia')}
+                  disabled={!agreedToTerms || !selectedShipping || loadingOrder}
                   onClick={handlePlaceOrder}
                   className="w-full bg-black text-white cursor-pointer border border-black py-4 uppercase font-bold text-sm tracking-widest hover:bg-black hover:text-white transition-all disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-black"
                 >

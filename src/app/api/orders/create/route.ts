@@ -8,6 +8,8 @@ import { getSession } from '@/lib/auth/session';
 import { validateOrigin } from '@/lib/auth/csrf';
 import { checkRateLimit, getClientIP } from '@/lib/auth/rate-limit';
 import { redis } from '@/lib/redis';
+import { isDomesticPaymentCountry } from '@/lib/payment';
+import { createCardPaymentPage } from '@/lib/doku/client';
 
 export async function POST(request: NextRequest) {
   const ip = getClientIP(request);
@@ -80,7 +82,7 @@ export async function POST(request: NextRequest) {
     const wooCommerceClient = getWooCommerceClient();
     // Parse request body
     const body = await request.json();
-    const { cartItems, formData, shippingOption, paymentMethod } = body;
+    const { cartItems, formData, shippingOption } = body;
 
     // 🔒 SECURITY: Server-side price & shipping validation
     // DO NOT trust prices or shipping totals sent from the client.
@@ -208,6 +210,10 @@ export async function POST(request: NextRequest) {
     // Update payloads to use validated data
     const validatedShippingOption = { ...shippingOption, price: validatedShippingPrice };
 
+    // Determine payment method from destination country
+    const isDomestic = isDomesticPaymentCountry(formData.country);
+    const effectivePaymentMethod = isDomestic ? 'bacs' : 'doku_card';
+
     // Build order payload using validated items
     const orderPayload = buildOrderPayload(
       validatedCartItems.map((item: any) => ({
@@ -217,7 +223,7 @@ export async function POST(request: NextRequest) {
       })),
       formData,
       validatedShippingOption,
-      paymentMethod || 'bacs'
+      effectivePaymentMethod
     );
 
     // 🔒 SECURITY: Attach customer_id from session if user is logged in
@@ -248,9 +254,55 @@ export async function POST(request: NextRequest) {
     // Create order via WooCommerce REST API
     const order = await wooCommerceClient.createOrder(orderPayload);
 
-    // 🔧 Override payment_url to point to Next.js frontend
+    // 🔧 Determine payment / redirect URL
     const frontendUrl = process.env.NEXT_PUBLIC_FRONTEND_URL || 'http://localhost:3000';
-    const customPaymentUrl = `${frontendUrl}/order-success/${order.id}?key=${order.order_key}`;
+    let paymentUrl = `${frontendUrl}/order-success/${order.id}?key=${order.order_key}`;
+
+    if (!isDomestic) {
+      // 💳 Call DOKU Payment Page API for international card payment
+      const dokuLineItems = [
+        ...validatedCartItems.map((item: any) => ({
+          name: item.product.name,
+          price: Math.round(item.officialPrice),
+          quantity: item.quantity,
+        })),
+        {
+          name: `Shipping (${validatedShippingOption.service || 'International'})`,
+          price: Math.round(validatedShippingPrice),
+          quantity: 1,
+        },
+      ];
+
+      try {
+        const dokuResult = await createCardPaymentPage({
+          invoiceNumber: order.number || order.id.toString(),
+          amountIDR: Math.round(parseFloat(order.total)),
+          lineItems: dokuLineItems,
+          customer: {
+            id: session?.id ? session.id.toString() : formData.email,
+            name: `${formData.firstName} ${formData.lastName || ''}`.trim(),
+            email: formData.email,
+            phone: formData.phone,
+            address: formData.address,
+            country: formData.internationalCountryCode || 'US',
+            city: formData.internationalCity || formData.city || '',
+          },
+          callbackUrl: `${frontendUrl}/order-success/${order.id}?key=${order.order_key}`,
+          failedUrl: `${frontendUrl}/order-success/${order.id}?key=${order.order_key}&status=failed`,
+          autoRedirect: true,
+        });
+
+        paymentUrl = dokuResult.url;
+      } catch (dokuError) {
+        console.error('💥 Failed to generate DOKU Payment Page:', dokuError);
+        try {
+          await wooCommerceClient.updateOrderStatus(order.id, 'failed');
+        } catch (updateErr) {
+          console.error('⚠️ Failed to update order status to failed after DOKU error:', updateErr);
+        }
+        throw dokuError;
+      }
+    }
 
     const successResponse = {
       success: true,
@@ -260,7 +312,7 @@ export async function POST(request: NextRequest) {
         orderKey: order.order_key,
         status: order.status,
         total: order.total,
-        paymentUrl: customPaymentUrl,
+        paymentUrl,
       },
     };
 

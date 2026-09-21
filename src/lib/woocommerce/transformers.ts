@@ -184,11 +184,12 @@ export function buildOrderPayload(
   }
 
   // Build payload
+  const initialStatus = paymentMethod === 'bacs' ? 'on-hold' : 'pending';
   const payload: WCOrderPayload = {
     payment_method: paymentMethod,
     payment_method_title: getPaymentMethodTitle(paymentMethod),
     set_paid: false,
-    status: 'on-hold',
+    status: initialStatus,
     billing,
     shipping,
     line_items: lineItems,
@@ -227,6 +228,7 @@ export function buildOrderPayload(
 function getPaymentMethodTitle(method: string): string {
   const titles: Record<string, string> = {
     'bacs': 'Direct Bank Transfer',
+    'doku_card': 'Credit / Debit Card',
     'cod': 'Cash on Delivery',
     'cheque': 'Check Payment',
   };
