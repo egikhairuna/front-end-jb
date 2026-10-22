@@ -43,7 +43,7 @@ export function Hero() {
           BALLSY &apos;026
         </h1>
         <p className="text-[10px] md:text-xs text-neutral-300 tracking-[0.4em] uppercase font-medium">
-          A rogue transmission who ignites the canvas.
+          A different kind of nerve, a different kind of freedom.
         </p>
         <div className="flex items-center justify-center pt-1">
           <Link
