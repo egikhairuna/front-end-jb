@@ -150,7 +150,7 @@ export default function LinksPage() {
              <h2 className="text-sm font-medium text-white uppercase">COMING SOON !</h2>
           </div>
           
-          <Link href="#" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
+          <Link href="/shop/category/ballsy" className="block group relative aspect-[4/3] w-full overflow-hidden rounded-xl">
             <Image 
               src="https://vps.jamesboogie.com/wp-content/uploads/2026/10/Ballsy_Cover-Teaser.jpg-scaled.jpeg" 
               alt="Ballsy '026 Campaign" 
