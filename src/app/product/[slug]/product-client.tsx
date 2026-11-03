@@ -15,6 +15,7 @@ import { Minus, Plus, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { FindMySizeModal } from "@/components/shop/FindMySizeModal";
+import { CareIcons } from "@/components/product/CareIcons";
 
 interface ProductDetailClientProps {
   product: Product;
@@ -413,16 +414,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                   isOpen={openSections.includes('care')} 
                   onClick={() => toggleSection('care')}
                 >
-                  {product.shortDescription ? (
-                     <div 
-                      className="text-[14px] leading-snug text-black/70 [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-4 [&_li]:mb-1"
-                      dangerouslySetInnerHTML={{ __html: product.shortDescription }} 
-                    />
-                  ) : (
-                    <p className="text-[14px] leading-snug">
-                      Machine wash cold. Do not tumble dry.
-                    </p>
-                  )}
+                  <CareIcons shortDescription={product.shortDescription || ''} />
                 </AccordionItem>
               </div>
             </div>

@@ -36,7 +36,7 @@ export default function ContactUsPage() {
                                     <div className="group">
                                         <p className="text-sm text-neutral-500 mb-1">Email Us</p>
                                         <a 
-                                            href="mailto:info@jamesboogie.com" 
+                                            href="mailto:sales@jamesboogie.com" 
                                             className="text-2xl md:text-2xl font-medium hover:opacity-50 transition-opacity flex items-center gap-2"
                                         >
                                             info@jamesboogie.com
