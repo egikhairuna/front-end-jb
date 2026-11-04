@@ -116,13 +116,7 @@ const RemoveAccessoriesIcon = () => (
   </svg>
 )
 
-const DefaultBulletIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.25" className="w-5 h-5 shrink-0">
-    <circle cx="17" cy="12" r="2.5" fill="currentColor" />
-  </svg>
-)
-
-// ─── Helpers ───────────────────────────────────────────────────────────────────
+// ─── Text & Entity Helpers ────────────────────────────────────────────────────
 
 function stripHtml(html: string): string {
   return html
@@ -153,7 +147,36 @@ function parseCareInstructions(shortDescription: string): string[] {
     .filter(Boolean)
 }
 
-function matchCareIcon(instruction: string): React.ReactNode | null {
+// ─── Classification & Laundry Matching ────────────────────────────────────────
+
+// Checks if an instruction is genuinely a textile/apparel laundry care instruction
+function isTextileLaundryInstruction(instruction: string): boolean {
+  const lower = instruction.toLowerCase()
+  return (
+    lower.includes('do not wash') ||
+    lower.includes('machine wash') ||
+    lower.includes('hand wash') ||
+    lower.includes('wash max') ||
+    lower.includes('30°') ||
+    lower.includes('40°') ||
+    lower.includes('60°') ||
+    lower.includes('bleach') ||
+    lower.includes('tumble dry') ||
+    lower.includes('do not iron') ||
+    lower.includes('iron max') ||
+    (lower.includes('iron') && (lower.includes('steam') || lower.includes('heat') || lower.includes('110'))) ||
+    lower.includes('dry clean') ||
+    lower.includes('dryclean') ||
+    lower.includes('dry-clean') ||
+    lower.includes('wet clean') ||
+    lower.includes('wetclean') ||
+    lower.includes('line dry') ||
+    lower.includes('flat dry') ||
+    lower.includes('hang dry')
+  )
+}
+
+function matchLaundryIcon(instruction: string): React.ReactNode | null {
   const lower = instruction.toLowerCase()
 
   // 1. Wash
@@ -221,11 +244,18 @@ function matchCareIcon(instruction: string): React.ReactNode | null {
 
 // ─── Main Component ───────────────────────────────────────────────────────────
 
-interface CareIconsProps {
-  shortDescription: string
+interface ProductCategoryNode {
+  id?: string
+  name?: string
+  slug?: string
 }
 
-export function CareIcons({ shortDescription }: CareIconsProps) {
+interface CareIconsProps {
+  shortDescription: string
+  categories?: ProductCategoryNode[]
+}
+
+export function CareIcons({ shortDescription, categories = [] }: CareIconsProps) {
   if (!shortDescription) {
     return (
       <p className="text-[14px] leading-snug text-black/70">
@@ -235,15 +265,9 @@ export function CareIcons({ shortDescription }: CareIconsProps) {
   }
 
   const instructions = parseCareInstructions(shortDescription)
-  const items = instructions.map((inst) => ({
-    text: inst,
-    icon: matchCareIcon(inst),
-  }))
 
-  const matchedCount = items.filter((x) => x.icon !== null).length
-
-  // Fallback if no care instruction matched
-  if (matchedCount === 0) {
+  // Empty or unparseable
+  if (instructions.length === 0) {
     return (
       <div
         className="text-[14px] leading-snug text-black/80 [&_p]:mb-2"
@@ -252,21 +276,86 @@ export function CareIcons({ shortDescription }: CareIconsProps) {
     )
   }
 
-  return (
-    <div className="flex flex-col space-y-4 py-1">
-      {items.map(({ text, icon }, idx) => (
-        <div key={`${text}-${idx}`} className="flex items-center gap-4 text-black">
-          <div className="w-6 h-6 flex items-center justify-center shrink-0 text-black">
-            {icon ?? <DefaultBulletIcon />}
+  // Check category hints for non-apparel
+  const isExplicitAccessoryCategory = categories.some((c) => {
+    const slug = (c.slug || '').toLowerCase()
+    const name = (c.name || '').toLowerCase()
+    return (
+      slug.includes('accessori') ||
+      name.includes('accessori') ||
+      slug.includes('instrument') ||
+      name.includes('instrument') ||
+      slug.includes('hardware') ||
+      name.includes('hardware') ||
+      slug.includes('gear') ||
+      name.includes('gear')
+    )
+  })
+
+  // Detect genuine apparel laundry care instructions
+  const laundryMatches = instructions.filter(isTextileLaundryInstruction)
+
+  // A product is considered textile apparel care IF:
+  // 1. It is not an explicit accessory category, AND
+  // 2. It has at least 2 genuine laundry instructions (e.g. wash + dry, bleach + iron, etc.)
+  const isApparelCare = !isExplicitAccessoryCategory && laundryMatches.length >= 2
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // MODE 1: APPAREL CARE (ISO Laundry Icons + Regulation Footer)
+  // ─────────────────────────────────────────────────────────────────────────────
+  if (isApparelCare) {
+    const items = instructions.map((inst) => ({
+      text: inst,
+      icon: matchLaundryIcon(inst),
+    }))
+
+    return (
+      <div className="flex flex-col space-y-4 py-1">
+        {items.map(({ text, icon }, idx) => (
+          <div key={`${text}-${idx}`} className="flex items-center gap-4 text-black">
+            <div className="w-6 h-6 flex items-center justify-center shrink-0 text-black">
+              {icon ?? (
+                <span className="w-1.5 h-1.5 rounded-full bg-black/60" />
+              )}
+            </div>
+            <span className="text-[14px] leading-snug font-normal text-black/85">
+              {text}
+            </span>
           </div>
-          <span className="text-[14px] leading-snug font-normal text-black/85">
-            {text}
-          </span>
-        </div>
-      ))}
-      <p className="mt-4 pt-2 text-[14px] sm:text-[14px] leading-relaxed text-black font-normal">
-        The care icons have been updated in line with the latest regulations
-      </p>
-    </div>
+        ))}
+        <p className="mt-4 pt-2 text-[14px] leading-relaxed text-black/80 font-normal">
+          The care icons have been updated in line with the latest regulations
+        </p>
+      </div>
+    )
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // MODE 2: ACCESSORIES & MAINTENANCE (Minimalist Editorial Checklist)
+  // ─────────────────────────────────────────────────────────────────────────────
+  // If there are multiple instructions, render as a clean, elegant checklist
+  if (instructions.length > 1) {
+    return (
+      <div className="flex flex-col space-y-3 py-1">
+        {instructions.map((inst, idx) => (
+          <div key={`${inst}-${idx}`} className="flex items-start gap-3 text-black">
+            <span className="w-1.5 h-1.5 rounded-full bg-black/70 mt-2 shrink-0" />
+            <span className="text-[14px] leading-relaxed font-normal text-black/85">
+              {inst}
+            </span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // MODE 3: SINGLE SENTENCE OR FREEFORM PROSE
+  // ─────────────────────────────────────────────────────────────────────────────
+  return (
+    <div
+      className="text-[14px] leading-relaxed text-black/80 [&_p]:mb-2"
+      dangerouslySetInnerHTML={{ __html: shortDescription }}
+    />
   )
 }

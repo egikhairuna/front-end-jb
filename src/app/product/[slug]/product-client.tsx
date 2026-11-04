@@ -414,7 +414,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                   isOpen={openSections.includes('care')} 
                   onClick={() => toggleSection('care')}
                 >
-                  <CareIcons shortDescription={product.shortDescription || ''} />
+                  <CareIcons 
+                    shortDescription={product.shortDescription || ''} 
+                    categories={product.productCategories?.nodes}
+                  />
                 </AccordionItem>
               </div>
             </div>
